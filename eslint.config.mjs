@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Static sites under sites/ are plain browser HTML/CSS/JS with no build
+    // step and no relationship to the Next.js app. Next's rules do not apply.
+    "sites/**",
   ]),
 ]);
 
