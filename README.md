@@ -6,6 +6,24 @@ personal training departments, and sports-performance organizations.
 **This repository is fully independent.** It must never connect to, reference,
 or deploy over any other application, Supabase project, or Vercel project.
 
+## Repository layout
+
+The Next.js application at the root is the Performance Operations platform and
+is the subject of everything below. Alongside it, `sites/` holds standalone
+static web properties that share this repository and nothing else — no imports
+into `src/`, no Supabase, no environment, no build step. The independence rule
+above applies to them in both directions: the app must not reach into `sites/`,
+and nothing in `sites/` may reach into the app.
+
+| Path | What it is |
+|---|---|
+| `src/`, `supabase/`, `tests/`, `e2e/`, `docs/` | The Performance Operations application |
+| `sites/personal-training-hub/` | Timberhill Athletic Club personal-training website — plain HTML/CSS/JS, deployed separately. See its own README. |
+
+The app's tooling is scoped so that `sites/` never enters it: `vitest` collects
+`tests/unit`, `playwright` collects `e2e`, `tsconfig` collects `**/*.ts`, and
+`eslint.config.mjs` ignores `sites/**` explicitly.
+
 ## Stack
 
 Next.js (App Router) · TypeScript · Tailwind CSS 4 · Supabase (Postgres,

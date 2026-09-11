@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- PHASE 3. Build after the hub has been live 30 days. BUILD_BRIEF §3.
+     This route is the template for /personal-training/trainers/[slug]/; the
+     other seven published trainers get the same page from the same post type.
+     Their cards on the index deliberately carry no "Full profile" link until
+     their page exists. -->
+<title>JR Romero, CSCS — Personal Trainer in Corvallis | Timberhill Athletic Club</title>
+<meta name="description" content="JR Romero, CSCS, Head Trainer at Timberhill Athletic Club in Corvallis. Body recomposition, muscle, strength and performance. Book a free 30-minute consultation.">
+<link rel="canonical" href="https://timberhillac.com/personal-training/trainers/jr-romero/">
+
+<meta property="og:type" content="profile">
+<meta property="og:title" content="JR Romero, CSCS — Personal Trainer in Corvallis | Timberhill Athletic Club">
+<meta property="og:description" content="Head Trainer at Timberhill Athletic Club. Body recomposition, muscle, strength and performance.">
+<meta property="og:url" content="https://timberhillac.com/personal-training/trainers/jr-romero/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+
+<link rel="stylesheet" href="../../assets/tokens.css">
+<link rel="stylesheet" href="../../assets/site.css">
+
+<!-- Person on trainer profiles: name, jobTitle, worksFor, hasCredential,
+     knowsAbout. BUILD_BRIEF §8. jobTitle carries both titles because the
+     canonical one is still unresolved — the Drive bio heading says Head
+     Trainer, the body says Director of Training. Phase 2 gate. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "JR Romero",
+  "honorificSuffix": "CSCS",
+  "jobTitle": ["Head Trainer", "Director of Training"],
+  "worksFor": { "@type": "HealthClub", "@id": "https://timberhillac.com/#organization", "name": "Timberhill Athletic Club" },
+  "url": "https://timberhillac.com/personal-training/trainers/jr-romero/",
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "Oregon State University" },
+  "hasCredential": [
+    { "@type": "EducationalOccupationalCredential", "name": "B.S. Exercise and Sport Science, Oregon State University" },
+    { "@type": "EducationalOccupationalCredential", "name": "Certified Strength and Conditioning Specialist (CSCS)" },
+    { "@type": "EducationalOccupationalCredential", "name": "Certified Personal Trainer (NSCA-CPT)" },
+    { "@type": "EducationalOccupationalCredential", "name": "Performance Enhancement Specialist (NASM-PES)" },
+    { "@type": "EducationalOccupationalCredential", "name": "Physique & Bodybuilding Coach (NASM-PBC)" },
+    { "@type": "EducationalOccupationalCredential", "name": "Precision Nutrition Level 1 Coach (Pn1)" },
+    { "@type": "EducationalOccupationalCredential", "name": "Certified Speed & Agility Coach (CSAC-NSPA)" },
+    { "@type": "EducationalOccupationalCredential", "name": "Kinetic Integration Exercise Professional (KIEP)" },
+    { "@type": "EducationalOccupationalCredential", "name": "CrossFit Level 1 Trainer (CF-L1)" }
+  ],
+  "knowsAbout": ["Fat Loss", "Muscle Building", "Strength", "Nutrition Coaching", "Athletic Performance"]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://timberhillac.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Personal Training", "item": "https://timberhillac.com/personal-training/" },
+    { "@type": "ListItem", "position": 3, "name": "Our Trainers", "item": "https://timberhillac.com/personal-training/trainers/" },
+    { "@type": "ListItem", "position": 4, "name": "JR Romero", "item": "https://timberhillac.com/personal-training/trainers/jr-romero/" }
+  ]
+}
+</script>
+</head>
+
+<body>
+<div class="pg">
+
+<a class="visually-hidden" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-bar">
+    <a class="brand" href="/">
+      <span class="brand-mark">TIMBERHILL</span>
+      <span class="brand-sub">ATHLETIC CLUB</span>
+    </a>
+
+    <nav class="nav-main only-w" aria-label="Main">
+      <ul>
+        <li><a class="nav-link" href="/about/">About</a></li>
+        <li class="nav-has-drop nav-parent nav-parent--current">
+          <a class="nav-link" href="../../index.html">Personal Training</a>
+          <button class="nav-disclose" type="button" data-disclose="pt-drop" aria-controls="pt-drop" aria-expanded="false">
+            <span class="nav-caret" aria-hidden="true">▾</span>
+            <span class="visually-hidden">Show Personal Training pages</span>
+          </button>
+          <ul class="nav-drop" id="pt-drop" hidden>
+            <li><a href="../../index.html">Overview</a></li>
+            <li><a href="../index.html">Our Trainers</a></li>
+            <li><a href="../../consultation/index.html">Free Consultation</a></li>
+          </ul>
+        </li>
+        <li class="nav-parent"><a class="nav-link" href="/amenities/">Amenities</a><span class="nav-caret" aria-hidden="true">▾</span></li>
+        <li class="nav-parent"><a class="nav-link" href="/family/">Family</a><span class="nav-caret" aria-hidden="true">▾</span></li>
+        <li><a class="nav-link" href="/join/">Join</a></li>
+        <li><a class="nav-link" href="/schedules/">Schedules</a></li>
+        <li><a class="nav-link" href="/members/">Members</a></li>
+        <li><a class="nav-link" href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+
+    <a class="btn btn-primary header-cta only-w" data-cta-section="header" href="https://timberhill-personal-training.setmore.com/book?step=time-slot&amp;products=8aff2d32-3927-4531-a6ba-f12c9e5ab214&amp;type=service&amp;staff=91f71610-48fd-4e00-bd4e-2017f4f4a65b&amp;staffSelected=true">FREE CONSULTATION</a>
+
+    <div class="only-n nav-mobile">
+      <a class="btn btn-primary" data-cta-section="header" href="https://timberhill-personal-training.setmore.com/book?step=time-slot&amp;products=8aff2d32-3927-4531-a6ba-f12c9e5ab214&amp;type=service&amp;staff=91f71610-48fd-4e00-bd4e-2017f4f4a65b&amp;staffSelected=true">FREE CONSULTATION</a>
+      <button class="hamburger" type="button" data-menu-toggle aria-controls="mobile-menu" aria-expanded="false">
+        <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+        <span class="visually-hidden">Menu</span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-menu only-n" id="mobile-menu" aria-label="Main" hidden>
+    <ul>
+      <li><a href="/about/">About</a></li>
+      <li><a href="../../index.html">Personal Training</a></li>
+      <li class="sub"><a href="../../index.html">Overview</a></li>
+      <li class="sub"><a href="../index.html">Our Trainers</a></li>
+      <li class="sub"><a href="../../consultation/index.html">Free Consultation</a></li>
+      <li><a href="/amenities/">Amenities</a></li>
+      <li><a href="/family/">Family</a></li>
+      <li><a href="/join/">Join</a></li>
+      <li><a href="/schedules/">Schedules</a></li>
+      <li><a href="/members/">Members</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="subnav">
+    <div class="wrap">
+      <span class="subnav-label">Personal Training ›</span>
+      <a href="../../index.html">Overview</a>
+      <a href="../index.html">Our Trainers</a>
+      <a href="../../consultation/index.html">Free Consultation</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="crumb-strip">
+  <nav class="wrap" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">HOME</a> ›</li>
+      <li><a href="../../index.html">PERSONAL TRAINING</a> ›</li>
+      <li><a href="../index.html">OUR TRAINERS</a> ›</li>
+      <li aria-current="page">JR</li>
+    </ol>
+  </nav>
+</div>
+
+<section class="sec" style="padding-top:clamp(28px,4vw,52px)">
+  <div class="wrap">
+    <div class="g2 profile-grid">
+
+      <!-- Trainer headshot outstanding: 3:4, ≥800×1066, release signed and
+           filed. -->
+      <div class="blueprint slot profile-slot">
+        <span>trainer headshot · 3:4 · ≥800×1066 · release signed and filed</span>
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      </div>
+
+      <div>
+        <span class="tag tag-accent" style="font-size:10px;letter-spacing:.1em">ACCEPTING CLIENTS</span>
+        <h1 class="profile-h1">JR Romero, CSCS</h1>
+        <div class="profile-role">HEAD TRAINER · DIRECTOR OF TRAINING</div>
+        <div class="taglist" style="margin-bottom:22px">
+          <span class="tag tag-outline">Fat Loss</span><span class="tag tag-outline">Muscle Building</span><span class="tag tag-outline">Strength</span><span class="tag tag-outline">Nutrition Coaching</span><span class="tag tag-outline">Athletic Performance</span>
+        </div>
+        <p class="profile-best">You want a structured, measurable plan for body composition, muscle and strength — and you want the standard held.</p>
+
+        <!-- Full biography lives here, not on the hub card. Existing copy,
+             trimmed rather than rewritten. BUILD_BRIEF §6. -->
+        <div class="blocks">
+          <div>
+            <h2 class="block-h">Approach</h2>
+            <p class="block-d">JR Romero serves as the Director of Training at Timberhill Athletic Club and Director of Performance at G3 Performance. With more than 15,000 hours of hands-on coaching experience, he has spent over a decade helping clients build stronger bodies, improve their health, enhance performance, and achieve lasting physical transformation. His coaching philosophy is rooted in biomechanics, exercise science, behavior change, and progressive overload. He believes lasting success is built through consistency, accountability, and a commitment to continual improvement. The Standard is the product.</p>
+          </div>
+          <div>
+            <h2 class="block-h">Who he works with</h2>
+            <p class="block-d">JR's coaching experience spans a wide range of populations, from beginners starting their fitness journey to competitive athletes and high-performing professionals seeking to maximize their physical potential. His approach combines evidence-based training, practical nutrition coaching, and individualized programming to create measurable results and sustainable progress. He specializes in body recomposition, muscle hypertrophy, strength development, and performance enhancement.</p>
+          </div>
+          <div>
+            <h2 class="block-h">Built For Her</h2>
+            <p class="block-d">JR is the creator of Built For Her, a standards-based coaching system for women's physique and performance. The system integrates progressive strength training, nutrition strategy, recovery, and accountability to help women develop strength, build muscle, improve body composition, and achieve a higher standard of physical capability.</p>
+          </div>
+          <div>
+            <h2 class="block-h">Credentials</h2>
+            <p class="block-d">B.S. Exercise and Sport Science, Oregon State University · Certified Strength and Conditioning Specialist (CSCS) · Certified Personal Trainer (NSCA-CPT) · Performance Enhancement Specialist (NASM-PES) · Physique &amp; Bodybuilding Coach (NASM-PBC) · Precision Nutrition Level 1 Coach (Pn1) · Certified Speed &amp; Agility Coach (CSAC-NSPA) · Kinetic Integration Exercise Professional (KIEP) · CrossFit Level 1 Trainer (CF-L1)</p>
+          </div>
+        </div>
+
+        <!-- The CTA goes to the consultation, not to this trainer's calendar.
+             Starting must not require choosing a trainer. BUILD_BRIEF §12. -->
+        <a class="btn btn-primary btn-cta blueprint" data-primary-cta data-cta-section="profile" href="https://timberhill-personal-training.setmore.com/book?step=time-slot&amp;products=8aff2d32-3927-4531-a6ba-f12c9e5ab214&amp;type=service&amp;staff=91f71610-48fd-4e00-bd4e-2017f4f4a65b&amp;staffSelected=true"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>BOOK A COMPLIMENTARY CONSULTATION</a>
+        <p class="cta-note">Booking goes to the consultation, not to this trainer's calendar.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--surface" aria-labelledby="says-h">
+  <div class="wrap">
+    <h2 class="sec-title sec-title--xs" id="says-h" style="margin-bottom:6px">What clients say</h2>
+    <p style="font-size:14px;opacity:.7;margin:0 0 24px">Verbatim from the club's Setmore reviews. Displayed, not marked up — AggregateRating is deliberately not implemented.</p>
+    <div class="g2">
+      <div class="blueprint review-card">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="stars"><span aria-hidden="true">★★★★★</span><span class="visually-hidden">Rated 5 out of 5</span></div>
+        <div class="review-box">“Working with JR has helped me safely continue progressing long after formal physical therapy ended, giving me the guidance, accountability, and confidence to keep getting stronger.”</div>
+        <div class="review-attrib"><strong>Jen · client since May 2025</strong></div>
+      </div>
+      <div class="blueprint review-card">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="stars"><span aria-hidden="true">★★★★★</span><span class="visually-hidden">Rated 5 out of 5</span></div>
+        <div class="review-box">[VERBATIM — paste from Setmore]</div>
+        <div class="review-attrib"><strong>[REVIEWER NAME]</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="others-h">
+  <div class="wrap">
+    <h2 class="sec-title sec-title--xs" id="others-h" style="margin-bottom:22px">Other trainers</h2>
+    <!-- Unlinked until each profile is published in Phase 3. -->
+    <div class="g4">
+      <article class="blueprint other-card">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="slot slot--portrait"><span>headshot 3:4</span></div>
+        <div class="other-body">
+          <h3 class="other-name">Jess Caze</h3>
+          <div class="other-spec">Corrective Exercise · Athletic Performance · Strength · Healthy Aging</div>
+        </div>
+      </article>
+      <article class="blueprint other-card">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="slot slot--portrait"><span>headshot 3:4</span></div>
+        <div class="other-body">
+          <h3 class="other-name">Mason Morgan</h3>
+          <div class="other-spec">Athletic Performance · Youth Athletes · Strength · Beginners</div>
+        </div>
+      </article>
+      <article class="blueprint other-card">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="slot slot--portrait"><span>headshot 3:4</span></div>
+        <div class="other-body">
+          <h3 class="other-name">Becca Reeve</h3>
+          <div class="other-spec">Pre and Postnatal · Corrective Exercise · Nutrition Coaching · Strength</div>
+        </div>
+      </article>
+      <article class="blueprint other-card">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="slot slot--portrait"><span>headshot 3:4</span></div>
+        <div class="other-body">
+          <h3 class="other-name">Josiah Iwamizu</h3>
+          <div class="other-spec">Martial Arts and Combat Sports · Athletic Performance · Strength · Youth Athletes</div>
+        </div>
+      </article>
+    </div>
+    <div class="cta-row" style="margin-top:26px">
+      <a class="btn btn-ghost f-link" href="../index.html">See the whole team ›</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="g4 footer-grid">
+      <div>
+        <div class="f-brand">TIMBERHILL</div>
+        <div class="f-brand-sub">ATHLETIC CLUB</div>
+        <div class="f-addr">2855 Northwest 29th Street<br>Corvallis, Oregon 97330<br><a href="tel:5417578559">541-757-8559</a></div>
+      </div>
+      <div>
+        <div class="f-label">Club</div>
+        <div class="f-links">
+          <a href="/about/">About Timberhill</a>
+          <a href="/amenities/">Amenities</a>
+          <a href="/schedules/">Schedules</a>
+          <a href="/join/">Join</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-label">Personal Training</div>
+        <div class="f-links">
+          <a href="../../index.html">Personal Training Overview</a>
+          <a href="../index.html">Meet the Training Team</a>
+          <a class="is-strong" data-cta-section="footer" href="https://timberhill-personal-training.setmore.com/book?step=time-slot&amp;products=8aff2d32-3927-4531-a6ba-f12c9e5ab214&amp;type=service&amp;staff=91f71610-48fd-4e00-bd4e-2017f4f4a65b&amp;staffSelected=true">Book a Free Consultation</a>
+          <a href="https://timberhill-personal-training.setmore.com/reviews?sortBy=highestRated" target="_blank" rel="noopener">Read Our Reviews</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-label">Hours</div>
+        <div class="f-addr">Mon–Fri 5:00 AM–10:00 PM<br>Sat–Sun 7:00 AM–7:00 PM</div>
+        <div class="f-addr" style="margin-top:14px"><a href="mailto:jr@timberhillsports.com">jr@timberhillsports.com</a></div>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>Established 1980 · 65,000 sq ft · Corvallis, Oregon</span>
+      <span>facebook.com/TimberhillAthleticClub · instagram.com/timberhill_ac</span>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky-cta only-n" data-sticky-cta>
+  <a class="btn btn-primary" data-cta-section="sticky" href="https://timberhill-personal-training.setmore.com/book?step=time-slot&amp;products=8aff2d32-3927-4531-a6ba-f12c9e5ab214&amp;type=service&amp;staff=91f71610-48fd-4e00-bd4e-2017f4f4a65b&amp;staffSelected=true">BOOK A COMPLIMENTARY CONSULTATION</a>
+</div>
+
+</div>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

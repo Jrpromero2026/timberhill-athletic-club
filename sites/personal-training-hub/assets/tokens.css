@@ -1,0 +1,78 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   tokens.css — Timberhill brand tokens over the Industry design system.
+
+   The design system supplies the grammar (square corners, hairline frames,
+   registration marks, a shared tonal-ramp scale). The brand tokens in
+   BUILD_BRIEF §14 supply the values, and they win: Industry's steel accent
+   and Barlow pairing are replaced by Royal Blue and League Spartan / Inter.
+   Verified against the club's own style-guide PDF — identical to the brief.
+
+   Industry's neutral ramp, spacing scale, radii and elevations carry over
+   unchanged; the accent ramp is regenerated on Royal Blue.
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* — roles — */
+  --color-bg: #FFFFFF;        /* White */
+  --color-surface: #F2F4F7;   /* Light Gray */
+  --color-text: #2A2A2A;      /* Charcoal */
+  --color-accent: #1F4E95;    /* Royal Blue */
+  --color-accent-2: #7FC8FF;  /* Light Blue — see the AA note below */
+  --color-divider: color-mix(in srgb, #2A2A2A 16%, transparent);
+
+  /* Light Blue fails AA for body text on white. It is restricted throughout
+     this build to large text, icons, rules and accents on dark grounds.
+     Body copy is #2A2A2A or #1F4E95. (BUILD_BRIEF §9.) */
+
+  /* — neutral ramp (Industry, unchanged) — */
+  --color-neutral-100: #f5f5f8;
+  --color-neutral-200: #e7e7ea;
+  --color-neutral-300: #d4d4d7;
+  --color-neutral-400: #b7b7ba;
+  --color-neutral-500: #98989b;
+  --color-neutral-600: #7a7a7d;
+  --color-neutral-700: #5d5d60;
+  --color-neutral-800: #424244;
+  --color-neutral-900: #2b2b2d;
+
+  /* — accent ramp, regenerated on Royal Blue — */
+  --color-accent-100: #eaf0fa;
+  --color-accent-200: #cfdcf0;
+  --color-accent-300: #a9c0e2;
+  --color-accent-400: #7c9dcf;
+  --color-accent-500: #4c78b6;
+  --color-accent-600: #1a4179;
+  --color-accent-700: #14315b;
+  --color-accent-800: #0e2340;
+  --color-accent-900: #0a1a30;
+
+  /* — type — */
+  --font-heading: "League Spartan", system-ui, sans-serif;
+  --font-heading-weight: 700;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* — space (Industry, unchanged) — */
+  --space-1: 3.4px;
+  --space-2: 6.8px;
+  --space-3: 10.2px;
+  --space-4: 13.6px;
+  --space-6: 20.4px;
+  --space-8: 27.2px;
+
+  /* Square by system. Kept as tokens because the DS defines them, but every
+     component below resolves to 0 — the blueprint frame is the grammar. */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2b2b2d 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2b2b2d 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2b2b2d 22%, transparent);
+
+  /* — layout — */
+  --wrap: 1120px;
+  --gutter: 40px;
+  --gutter-sm: 20px;
+  --bp: 760px; /* documentation only — media queries need a literal */
+}

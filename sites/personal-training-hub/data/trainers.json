@@ -1,0 +1,139 @@
+{
+  "_about": "Source of truth for the WordPress `trainer` custom post type (BUILD_BRIEF §6). Not fetched at runtime — the cards on /personal-training/ and /personal-training/trainers/ are rendered into the HTML so the roster stays crawlable. Keep this file and those two pages in step until the CPT exists, then this file becomes the import and the pages become templates.",
+
+  "specialty_vocabulary": [
+    "Strength",
+    "Muscle Building",
+    "Fat Loss",
+    "Beginners",
+    "Returning to Fitness",
+    "Healthy Aging",
+    "Injury and Rehabilitation",
+    "Pre and Postnatal",
+    "Athletic Performance",
+    "Youth Athletes",
+    "Endurance and Events",
+    "Nutrition Coaching",
+    "Martial Arts and Combat Sports",
+    "Corrective Exercise"
+  ],
+  "_vocabulary_note": "Fixed list, closed taxonomy. Free text breaks the index filter.",
+
+  "published": [
+    {
+      "slug": "jr-romero",
+      "name": "JR Romero",
+      "credentials": "CSCS · Head Trainer · B.S. Exercise and Sport Science, OSU",
+      "specialties": ["Fat Loss", "Muscle Building", "Strength", "Nutrition Coaching", "Athletic Performance"],
+      "works_best_with": "You want a structured, measurable plan for body composition, muscle and strength — and you want the standard held.",
+      "philosophy": "His coaching philosophy is rooted in biomechanics, exercise science, behavior change, and progressive overload. He believes lasting success is built through consistency, accountability, and a commitment to continual improvement. The Standard is the product.",
+      "accepting_clients": true,
+      "photo": null,
+      "has_profile_page": true,
+      "_open": "Title unresolved: the Drive bio heading says Head Trainer, the body says Director of Training at Timberhill Athletic Club. Both are carried until one is picked. Phase 2 gate."
+    },
+    {
+      "slug": "jess-caze",
+      "name": "Jess Caze",
+      "credentials": "CSCS · B.S. Exercise & Sports Science",
+      "specialties": ["Corrective Exercise", "Athletic Performance", "Strength", "Healthy Aging"],
+      "works_best_with": "You want to move well and keep doing the things you love, with the mechanics fixed rather than worked around.",
+      "philosophy": "Jess is passionate about helping clients build confidence, stay active, and maintain the physical capabilities needed to enjoy the activities that matter most to them. She focuses on creating sustainable habits and meaningful results that last.",
+      "accepting_clients": true,
+      "photo": null,
+      "has_profile_page": false
+    },
+    {
+      "slug": "mason-morgan",
+      "name": "Mason Morgan",
+      "credentials": "CSCS · Kinesiology, Oregon State University",
+      "specialties": ["Athletic Performance", "Youth Athletes", "Strength", "Beginners"],
+      "works_best_with": "You are an athlete, or a parent of one, and want training that transfers to the sport.",
+      "philosophy": "My goal as a coach is to inspire people to become more active and confident in their abilities, whether that means taking more daily walks, beginning a fitness journey, or striving for athletic excellence. I believe movement has the power to improve quality of life at every stage.",
+      "accepting_clients": true,
+      "photo": null,
+      "has_profile_page": false
+    },
+    {
+      "slug": "becca-reeve",
+      "name": "Becca Reeve",
+      "credentials": "CPT · Pregnancy and Postpartum Corrective Exercise Specialist · PN1 Nutrition Coach",
+      "specialties": ["Pre and Postnatal", "Corrective Exercise", "Nutrition Coaching", "Strength"],
+      "works_best_with": "You are a woman training through pregnancy, postpartum, or any stage where you want to feel functionally strong.",
+      "philosophy": "I work with women to improve general fitness and wellness and aim to empower them to feel functionally strong and confident in their bodies.",
+      "accepting_clients": true,
+      "photo": null,
+      "has_profile_page": false,
+      "_resolved": "Canonical form is Becca, not Rebecca. Phase 2 gate closed."
+    },
+    {
+      "slug": "josiah-iwamizu",
+      "name": "Josiah Iwamizu",
+      "credentials": "CPT · Corrective Exercise Specialist · Certified Nutrition Coach · Brown belt, judo and jujitsu",
+      "specialties": ["Martial Arts and Combat Sports", "Athletic Performance", "Strength", "Youth Athletes"],
+      "works_best_with": "You come from combat sports, or you want conditioning built by someone who has competed at that level.",
+      "philosophy": "With nearly two decades immersed in the world of sports and fitness, I bring a deep passion and wealth of experience to every training session. I've coached a wide range of clients — from kids just starting out to adults chasing personal bests — so I know how to adapt and motivate at every level.",
+      "accepting_clients": true,
+      "photo": null,
+      "has_profile_page": false
+    },
+    {
+      "slug": "conner-mcadams",
+      "name": "Conner McAdams",
+      "credentials": "CPT-ACE",
+      "specialties": ["Strength", "Healthy Aging", "Corrective Exercise", "Beginners"],
+      "works_best_with": "You want clear standards and a roadmap, whether you are starting out or already performing.",
+      "philosophy": "His philosophy is simple: meet people exactly where they are, then guide them — methodically and relentlessly — toward where they want to be. Every client shares a common goal of self-improvement, and Conner excels at building the roadmap that turns that ambition into measurable progress.",
+      "accepting_clients": true,
+      "photo": null,
+      "has_profile_page": false,
+      "_resolved": "Canonical spelling is Conner, matching the roster rather than the reviews. Phase 2 gate closed."
+    },
+    {
+      "slug": "emma-ciechanowski",
+      "name": "Emma Ciechanowski",
+      "credentials": "ACSM-CPT · H.B.S. Kinesiology, Oregon State University",
+      "specialties": ["Beginners", "Healthy Aging", "Strength", "Returning to Fitness"],
+      "works_best_with": "You are starting from the beginning, or returning after time away, and want a program built to your real life. Spanish-speaking training available.",
+      "philosophy": "As a personal trainer, my goal is to help clients build sustainable habits, gain confidence, and achieve meaningful results that improve their everyday lives. My coaching philosophy focuses on creating realistic, personalized programs that support long-term success both inside and outside the gym.",
+      "accepting_clients": true,
+      "photo": null,
+      "has_profile_page": false
+    },
+    {
+      "slug": "devin-shelfer",
+      "name": "Devin Shelfer",
+      "credentials": "NASM-CPT",
+      "specialties": ["Beginners", "Strength", "Returning to Fitness"],
+      "works_best_with": "You are new to lifting and want someone patient while you learn what your body can do.",
+      "philosophy": "The world of physical fitness has always been an interest of mine. What started as an interest has slowly turned into an obsession as I've delved deeper into learning the human body. Beginning the journey is always an excitingly scary process but every step taken is matched with realizations on just how powerful both your mind and body can be.",
+      "accepting_clients": true,
+      "photo": null,
+      "has_profile_page": false
+    }
+  ],
+
+  "pending": [
+    {
+      "name": "Amanda Knight",
+      "status": "coming_soon",
+      "blocked_on": "Bio and credentials."
+    },
+    {
+      "name": "Steve Sackmann",
+      "status": "off_roster",
+      "blocked_on": "Listed as published in the brief, but has no bio in the Drive Trainer Bios doc. Add the bio and he goes back on."
+    },
+    { "name": "Kyra Schulties", "status": "missing", "blocked_on": "Bio, credentials, specialties." },
+    { "name": "Jayna Davis", "status": "missing", "blocked_on": "Bio, credentials, specialties." }
+  ],
+
+  "_photos": "No headshot is mapped. 23 files sit in Drive under Trainer Pictures, all camera filenames (_DSC4987.jpeg and similar). Nobody should guess who is who on a public roster — rename them to trainer names in Drive, or supply a mapping, and the slots fill. Required: 3:4, ≥800×1066, release signed and filed.",
+
+  "_accepting_clients": "Every published trainer is currently flagged true, which the design shows as an ACCEPTING badge. When the flag is false the card shows nothing at all — never a \"full\" state.",
+
+  "review_count": 160,
+  "review_average": "5.0",
+  "five_star_count": 159,
+  "_review_count": "Rendered in three places on the hub and once in the footer. Read from the live Setmore figure or review it monthly — do not let a hard-coded number go stale. BUILD_BRIEF §7."
+}
