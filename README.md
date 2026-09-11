@@ -1,28 +1,35 @@
+# Timberhill Athletic Club
+
+Everything Timberhill needs is built and maintained here. Each build-out lives
+in its own directory, is deployed on its own, and shares this repository with
+the others and nothing else.
+
+| Path | What it is |
+|---|---|
+| `src/`, `supabase/`, `docs/`, `tests/`, `e2e/`, `scripts/` | **Performance Operations** — payroll, revenue, KPI and department analytics. Next.js + Supabase. Documented below. |
+| `sites/personal-training-hub/` | **Personal training website** — the `/personal-training/` hub, trainers index, consultation page and trainer profile for timberhillac.com. Plain HTML/CSS/JS, no build step. See its own README. |
+
+Nothing under `sites/` imports from the application, and the application never
+reaches into `sites/`. The app's tooling is scoped to match: `vitest` collects
+`tests/unit`, `playwright` collects `e2e`, `tsconfig` collects `**/*.ts`, and
+`eslint.config.mjs` ignores `sites/**` explicitly.
+
+**Adding a build-out:** give it its own top-level directory — or a folder under
+`sites/` if it is a web property — keep it self-contained, and add a row to the
+table above.
+
+---
+
 # Performance Operations
 
 Internal payroll, revenue, KPI, and department analytics platform for gyms,
 personal training departments, and sports-performance organizations.
 
-**This repository is fully independent.** It must never connect to, reference,
-or deploy over any other application, Supabase project, or Vercel project.
+**This application is fully independent.** It must never connect to, reference,
+or deploy over any other application, Supabase project, or Vercel project —
+including anything else in this repository.
 
-## Repository layout
-
-The Next.js application at the root is the Performance Operations platform and
-is the subject of everything below. Alongside it, `sites/` holds standalone
-static web properties that share this repository and nothing else — no imports
-into `src/`, no Supabase, no environment, no build step. The independence rule
-above applies to them in both directions: the app must not reach into `sites/`,
-and nothing in `sites/` may reach into the app.
-
-| Path | What it is |
-|---|---|
-| `src/`, `supabase/`, `tests/`, `e2e/`, `docs/` | The Performance Operations application |
-| `sites/personal-training-hub/` | Timberhill Athletic Club personal-training website — plain HTML/CSS/JS, deployed separately. See its own README. |
-
-The app's tooling is scoped so that `sites/` never enters it: `vitest` collects
-`tests/unit`, `playwright` collects `e2e`, `tsconfig` collects `**/*.ts`, and
-`eslint.config.mjs` ignores `sites/**` explicitly.
+Everything from here down documents it.
 
 ## Stack
 
