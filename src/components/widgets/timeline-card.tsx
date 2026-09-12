@@ -20,7 +20,7 @@ export function TimelineCard({
       title={title}
       testId={testId}
       action={
-        <a href="/audit" className="text-xs font-medium text-accent hover:text-accent-strong">
+        <a href="/performance-operations/audit" className="text-xs font-medium text-accent hover:text-accent-strong">
           Full audit →
         </a>
       }

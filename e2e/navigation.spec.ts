@@ -7,15 +7,15 @@ import { expect, test } from "@playwright/test";
  */
 
 const ROUTES: Array<{ path: string; heading: string }> = [
-  { path: "/imports", heading: "Imports" },
-  { path: "/appointments", heading: "Appointments" },
-  { path: "/revenue", heading: "Revenue" },
-  { path: "/payroll", heading: "Payroll" },
-  { path: "/trainers", heading: "Trainers" },
-  { path: "/clients", heading: "Clients" },
-  { path: "/reports", heading: "Reports" },
-  { path: "/configuration", heading: "Configuration" },
-  { path: "/audit", heading: "Audit" },
+  { path: "/performance-operations/imports", heading: "Imports" },
+  { path: "/performance-operations/appointments", heading: "Appointments" },
+  { path: "/performance-operations/revenue", heading: "Revenue" },
+  { path: "/performance-operations/payroll", heading: "Payroll" },
+  { path: "/performance-operations/trainers", heading: "Trainers" },
+  { path: "/performance-operations/clients", heading: "Clients" },
+  { path: "/performance-operations/reports", heading: "Reports" },
+  { path: "/performance-operations/configuration", heading: "Configuration" },
+  { path: "/performance-operations/audit", heading: "Audit" },
 ];
 
 test("root redirects to the public site, not the operations app", async ({
@@ -28,14 +28,14 @@ test("root redirects to the public site, not the operations app", async ({
 });
 
 test("the operations app is still reachable at /overview", async ({ page }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await expect(page).toHaveTitle(/Overview · Performance Operations/);
 });
 
 test("overview renders workspace data and honest KPI placeholders", async ({
   page,
 }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   // Default workspace resolves to the first seeded organization.
   await expect(
     page.getByRole("heading", { name: "Timberhill Athletic Club" })
@@ -48,7 +48,7 @@ test("overview renders workspace data and honest KPI placeholders", async ({
 });
 
 test("unauthenticated state is explicit in the user menu", async ({ page }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await page.getByRole("button", { name: "User menu" }).click();
   await expect(page.getByRole("menu").getByText("Not signed in")).toBeVisible();
 });
@@ -84,7 +84,7 @@ test("sidebar navigation moves between routes without full reloads", async ({
   isMobile,
 }) => {
   test.skip(isMobile, "covered by drawer navigation test");
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await page
     .getByRole("navigation", { name: "Main navigation" })
     .getByRole("link", { name: "Payroll" })
@@ -100,7 +100,7 @@ test("mobile drawer opens, navigates, and closes", async ({
   isMobile,
 }) => {
   test.skip(!isMobile, "mobile-only behavior");
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await page.getByRole("button", { name: "Open navigation" }).click();
   await page
     .getByRole("navigation", { name: "Main navigation" })

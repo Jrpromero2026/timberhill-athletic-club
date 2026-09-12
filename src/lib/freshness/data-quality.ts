@@ -73,7 +73,7 @@ export function assessDataQuality(
         : setmore?.ingest === "manual_snapshot"
           ? "Appointments arrive by manual CSV import. Currency depends on someone uploading an export; there is no automated sync."
           : "Connected and syncing.",
-    href: "/integrations",
+    href: "/performance-operations/integrations",
   });
 
   checks.push({
@@ -87,7 +87,7 @@ export function assessDataQuality(
           : "ok",
     count: 0,
     detail: setmore?.summary ?? "Unknown.",
-    href: "/imports",
+    href: "/performance-operations/imports",
   });
 
   const club = freshness.sources.find((s) => s.key === "gym_management_solutions");
@@ -100,7 +100,7 @@ export function assessDataQuality(
         : "ok",
     count: 0,
     detail: club?.summary ?? "Unknown.",
-    href: "/snapshots",
+    href: "/performance-operations/snapshots",
   });
 
   checks.push({
@@ -112,7 +112,7 @@ export function assessDataQuality(
       counts.unresolvedTrainerMappings > 0
         ? "Imported rows name a trainer this organization does not recognize. These rows cannot post, so the affected sessions are missing from every trainer's production."
         : "Every imported trainer name resolves.",
-    href: "/imports",
+    href: "/performance-operations/imports",
   });
 
   checks.push({
@@ -124,7 +124,7 @@ export function assessDataQuality(
       counts.unresolvedClientMappings > 0
         ? "Imported rows reference a client that could not be matched. Sessions still post, but client counts and retention will understate reality."
         : "Every imported client resolves.",
-    href: "/imports",
+    href: "/performance-operations/imports",
   });
 
   checks.push({
@@ -136,7 +136,7 @@ export function assessDataQuality(
       counts.unmatchedServices > 0
         ? "Imported rows name a service with no alias. These rows cannot post; map the name to a service (saving an alias fixes it permanently)."
         : "Every imported service name maps to a catalogued service.",
-    href: "/configuration/services",
+    href: "/performance-operations/configuration/services",
   });
 
   const unknownTotal = counts.unknownStatuses + counts.unknownStatusAppointments;
@@ -149,7 +149,7 @@ export function assessDataQuality(
       unknownTotal > 0
         ? "Appointments whose source status has no canonical mapping sit at `unknown`. They are excluded from completed counts and from every revenue figure — deliberately, since an unknown status is not evidence of delivered work."
         : "Every source status maps to a canonical status.",
-    href: "/appointments",
+    href: "/performance-operations/appointments",
   });
 
   checks.push({
@@ -161,7 +161,7 @@ export function assessDataQuality(
       counts.openImportExceptions > 0
         ? "Blocking issues are holding rows out of the ledger. Nothing in the affected batches counts until they are resolved."
         : "No blocking import issues.",
-    href: "/imports",
+    href: "/performance-operations/imports",
   });
 
   checks.push({
@@ -173,7 +173,7 @@ export function assessDataQuality(
       counts.openPayrollExceptions > 0
         ? "Payroll issues are open. A run with unresolved issues must not be approved."
         : "No open payroll issues.",
-    href: "/payroll",
+    href: "/performance-operations/payroll",
   });
 
   checks.push({
@@ -185,7 +185,7 @@ export function assessDataQuality(
       counts.trainersMissingCompensation > 0
         ? "These trainers have no compensation plan assignment, so payroll cannot be calculated for them at all."
         : "Every active trainer has a compensation assignment.",
-    href: "/configuration/compensation",
+    href: "/performance-operations/configuration/compensation",
   });
 
   return checks;

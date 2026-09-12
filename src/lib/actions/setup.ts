@@ -115,8 +115,8 @@ export async function bulkCreateTrainers(
     created += 1;
   }
 
-  revalidatePath("/trainers");
-  revalidatePath(`/setup/${organizationId}/trainers`);
+  revalidatePath("/performance-operations/trainers");
+  revalidatePath(`/performance-operations/setup/${organizationId}/trainers`);
 
   if (created === 0) {
     return { error: `Could not create any trainers. ${failures.join(", ")}` };
@@ -253,8 +253,8 @@ export async function bulkCreateServices(
     created += 1;
   }
 
-  revalidatePath("/configuration/services");
-  revalidatePath(`/setup/${organizationId}/services`);
+  revalidatePath("/performance-operations/configuration/services");
+  revalidatePath(`/performance-operations/setup/${organizationId}/services`);
 
   if (created === 0) {
     return { error: `Could not create any services. ${failures.join(", ")}` };
@@ -384,8 +384,8 @@ export async function bulkAssignCompensation(
     assigned += 1;
   }
 
-  revalidatePath(`/setup/${organizationId}/compensation`);
-  revalidatePath("/trainers");
+  revalidatePath(`/performance-operations/setup/${organizationId}/compensation`);
+  revalidatePath("/performance-operations/trainers");
 
   if (assigned === 0) {
     return { error: "Could not assign any plans. Check for existing assignments that overlap." };

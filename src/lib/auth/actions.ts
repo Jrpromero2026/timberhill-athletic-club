@@ -21,9 +21,9 @@ export interface AuthFormState {
 
 /** Only allow same-site relative destinations (no open redirects). */
 function safeNext(raw: unknown): string {
-  if (typeof raw !== "string") return "/overview";
+  if (typeof raw !== "string") return "/performance-operations/overview";
   if (!raw.startsWith("/") || raw.startsWith("//") || raw.startsWith("/auth")) {
-    return "/overview";
+    return "/performance-operations/overview";
   }
   return raw;
 }
@@ -128,7 +128,7 @@ export async function updatePassword(
   });
   if (error) return { error: "Could not update the password. Try again." };
 
-  redirect("/overview");
+  redirect("/performance-operations/overview");
 }
 
 /* ---------------------------------------------------------------------------
@@ -211,7 +211,7 @@ export async function acceptInviteSignUp(
     return { error: mapAcceptError(acceptError.message) };
   }
   cookieStore.delete(INVITE_COOKIE);
-  redirect("/overview");
+  redirect("/performance-operations/overview");
 }
 
 /** Accept an invitation while already signed in (email must match). */
@@ -234,7 +234,7 @@ export async function acceptInviteSignedIn(
 
   const cookieStore = await cookies();
   cookieStore.delete(INVITE_COOKIE);
-  redirect("/overview");
+  redirect("/performance-operations/overview");
 }
 
 /**

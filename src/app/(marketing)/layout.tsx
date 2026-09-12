@@ -6,11 +6,11 @@ import "./marketing.css";
 /**
  * Public marketing shell.
  *
- * This route group sits OUTSIDE `(app)`, which is where authentication is
- * enforced — `(app)/layout.tsx` resolves the workspace context and redirects
- * to `/login`. Nothing in this group touches that layout, so these pages are
- * public by construction, and they read no Supabase data, take no session and
- * render no forms.
+ * This route group sits OUTSIDE `performance-operations/`, which is where
+ * authentication is enforced — that segment's layout resolves the workspace
+ * context and redirects to `/login`. Nothing in this group touches that
+ * layout, so these pages are public by construction, and they read no Supabase
+ * data, take no session and render no forms.
  *
  * The root layout still wraps this one, so `globals.css` and the Geist font
  * variables are present on the document. `marketing.css` scopes its own tokens

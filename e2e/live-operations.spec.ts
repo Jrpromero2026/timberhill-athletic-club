@@ -31,9 +31,9 @@ async function selectPeriod(page: Page): Promise<void> {
 }
 
 test("1. executive overview renders role-aware operations widgets", async ({ page }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await selectPeriod(page);
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await page.getByTestId("overview-status").waitFor({ timeout: 20_000 });
 
   // Engine-driven status cards with health attributes.
@@ -52,7 +52,7 @@ test("1. executive overview renders role-aware operations widgets", async ({ pag
 });
 
 test("2. command palette searches pages, actions, and entities", async ({ page }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await page.waitForLoadState("networkidle");
   await page.getByTestId("open-palette").click();
   await page.getByTestId("command-palette").waitFor({ timeout: 10_000 });
@@ -78,7 +78,7 @@ test("2. command palette searches pages, actions, and entities", async ({ page }
 });
 
 test("3. trainer overview shows engine performance section", async ({ page }) => {
-  await page.goto("/trainers");
+  await page.goto("/performance-operations/trainers");
   await selectPeriod(page);
   await page.getByRole("link", { name: "Payton E2E Payroll" }).first().click();
   await page.waitForURL(/\/trainers\/[0-9a-f-]{36}$/, { timeout: 15_000 });
@@ -92,7 +92,7 @@ test("3. trainer overview shows engine performance section", async ({ page }) =>
 });
 
 test("4. department overview renders engine metrics and deep links", async ({ page }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await selectPeriod(page);
   // Find a department via the palette's entity search.
   await page.getByTestId("open-palette").click();
@@ -111,11 +111,11 @@ test("4. department overview renders engine metrics and deep links", async ({ pa
 });
 
 test("5. notification center lists, and the bell shows the fixture", async ({ page }) => {
-  await page.goto("/notifications?tab=pinned");
+  await page.goto("/performance-operations/notifications?tab=pinned");
   await expect(page.getByText("E2E fixture notification").first()).toBeVisible({
     timeout: 15_000,
   });
-  await page.goto("/notifications?tab=all");
+  await page.goto("/performance-operations/notifications?tab=all");
   await expect(page.getByTestId("notification-tabs")).toBeVisible();
   await expect(page.getByText("E2E fixture notification").first()).toBeVisible();
 
@@ -129,14 +129,14 @@ test("5. notification center lists, and the bell shows the fixture", async ({ pa
 });
 
 test("6. report center: tabs, saved view CRUD, export history", async ({ page }) => {
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   await selectPeriod(page);
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   await page.getByTestId("report-tabs").waitFor({ timeout: 20_000 });
   await expect(page.getByTestId("report-org-metrics")).toBeVisible();
 
   // Saved views: create → visible → pin → delete (self-cleaning).
-  await page.goto("/reports?tab=saved");
+  await page.goto("/performance-operations/reports?tab=saved");
   await page.getByLabel(/Save current report as/).fill(VIEW_NAME);
   await page.waitForLoadState("networkidle");
   await page.getByRole("button", { name: "Save view" }).click();
@@ -149,7 +149,7 @@ test("6. report center: tabs, saved view CRUD, export history", async ({ page })
   });
 
   // CSV export through the engine, recorded in history.
-  const response = await page.request.get("/reports/export");
+  const response = await page.request.get("/performance-operations/reports/export");
   expect(response.status()).toBe(200);
   expect(response.headers()["content-type"]).toContain("text/csv");
   const body = await response.text();
@@ -157,17 +157,17 @@ test("6. report center: tabs, saved view CRUD, export history", async ({ page })
   expect(body).toContain("appointments_completed");
   expect(body).toContain("intel-v1");
 
-  await page.goto("/reports?tab=exports");
+  await page.goto("/performance-operations/reports?tab=exports");
   await expect(page.getByTestId("report-exports")).toBeVisible({ timeout: 15_000 });
   await expect(page.getByText("metric_report").first()).toBeVisible();
 });
 
 test("7. workspace switching rescopes the operations center", async ({ page }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await page.waitForLoadState("networkidle");
   await page.getByLabel("Workspace").selectOption({ label: "G3 Sports & Fitness" });
   await page.waitForTimeout(2000);
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   // G3 has no reporting period selected → honest empty/no-period widget,
   // and no Timberhill pipeline rows leak across.
   await expect(
@@ -182,7 +182,7 @@ test("7. workspace switching rescopes the operations center", async ({ page }) =
 });
 
 test("8. responsive shell: sidebar collapses and mobile drawer works", async ({ page }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await page.waitForLoadState("networkidle");
   await expect(page.getByTestId("sidebar")).toHaveAttribute("data-collapsed", "false");
   await page.getByRole("button", { name: "Collapse sidebar" }).click();

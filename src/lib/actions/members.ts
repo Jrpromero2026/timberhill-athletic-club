@@ -24,7 +24,7 @@ import {
  *     the final enforcement layer.
  */
 
-const USERS_PATH = "/configuration/users";
+const USERS_PATH = "/performance-operations/configuration/users";
 
 /* ---------------------------------------------------------------- invites */
 

@@ -89,7 +89,7 @@ export function NotificationBell({
               {recent.map((notification) => (
                 <li key={notification.id}>
                   <Link
-                    href={notification.linkPath ?? "/notifications"}
+                    href={notification.linkPath ?? "/performance-operations/notifications"}
                     onClick={() => setOpen(false)}
                     className={`block px-3 py-2.5 hover:bg-surface-sunken ${
                       notification.unread ? "" : "opacity-70"
@@ -110,7 +110,7 @@ export function NotificationBell({
             </ul>
           )}
           <Link
-            href="/notifications"
+            href="/performance-operations/notifications"
             onClick={() => setOpen(false)}
             className="block border-t border-border px-3 py-2 text-center text-xs font-medium text-accent hover:text-accent-strong"
           >

@@ -237,7 +237,7 @@ export async function runSync(
       category: "system",
       title: "Integration sync failed",
       body: `${connection.name}: ${classified.operatorMessage}`,
-      linkPath: `/integrations/runs/${runRow.id}`,
+      linkPath: `/performance-operations/integrations/runs/${runRow.id}`,
       entityType: "integration_sync_run",
       entityId: runRow.id,
     });
@@ -452,7 +452,7 @@ export async function runSync(
         category: "imports",
         title: "Integration sync created an import batch",
         body: `${connection.name}: ${accepted} record(s) staged — review required before posting.`,
-        linkPath: `/imports/${importBatchId}`,
+        linkPath: `/performance-operations/imports/${importBatchId}`,
         entityType: "import_batch",
         entityId: importBatchId,
       });

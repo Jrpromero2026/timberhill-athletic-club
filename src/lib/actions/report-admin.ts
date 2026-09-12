@@ -62,7 +62,7 @@ export async function shareSavedView(
     action: "saved_view_shared",
     metadata: { scope, name: view.name },
   });
-  revalidatePath("/reports");
+  revalidatePath("/performance-operations/reports");
   return { message: `View is now ${scope === "personal" ? "personal" : `${scope}-shared`}.` };
 }
 
@@ -112,7 +112,7 @@ export async function setDefaultView(
     action: makeDefault ? "saved_view_default_set" : "saved_view_default_cleared",
     metadata: { scope: view.shared_scope, name: view.name },
   });
-  revalidatePath("/reports");
+  revalidatePath("/performance-operations/reports");
   return { message: makeDefault ? "Set as default view." : "Default cleared." };
 }
 
@@ -213,11 +213,11 @@ export async function createScheduledReport(
     category: "reporting",
     title: "Scheduled report definition created",
     body: `${reportType} · ${frequency}. Execution is NOT yet enabled — definitions only.`,
-    linkPath: "/reports?tab=scheduled",
+    linkPath: "/performance-operations/reports?tab=scheduled",
     entityType: "scheduled_report_definition",
     entityId: created.id,
   });
-  revalidatePath("/reports");
+  revalidatePath("/performance-operations/reports");
   return { message: "Definition saved. Execution not yet enabled." };
 }
 
@@ -249,7 +249,7 @@ export async function toggleScheduledReport(
     entityId: id,
     action: active ? "scheduled_report_disabled" : "scheduled_report_enabled",
   });
-  revalidatePath("/reports");
+  revalidatePath("/performance-operations/reports");
   return { message: active ? "Definition disabled." : "Definition enabled (execution still not available)." };
 }
 
@@ -280,6 +280,6 @@ export async function deleteScheduledReport(
     entityId: id,
     action: "scheduled_report_deleted",
   });
-  revalidatePath("/reports");
+  revalidatePath("/performance-operations/reports");
   return { message: "Definition deleted." };
 }

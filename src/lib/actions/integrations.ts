@@ -19,11 +19,11 @@ import {
 } from "@/lib/integrations/reports/execute";
 import type { Json } from "@/lib/supabase/types";
 
-const INTEGRATIONS_PATH = "/configuration/integrations";
+const INTEGRATIONS_PATH = "/performance-operations/configuration/integrations";
 
 function revalidateIntegrations(connectionId?: string): void {
   revalidatePath(INTEGRATIONS_PATH);
-  revalidatePath("/integrations");
+  revalidatePath("/performance-operations/integrations");
   if (connectionId) revalidatePath(`${INTEGRATIONS_PATH}/${connectionId}`);
 }
 
@@ -380,7 +380,7 @@ export async function runSyncNow(
   const definitionId = String(formData.get("definition_id") ?? "");
   const result = await runSync(actor, { definitionId, trigger: "manual" });
   revalidateIntegrations();
-  if (result.runId) revalidatePath(`/integrations/runs/${result.runId}`);
+  if (result.runId) revalidatePath(`/performance-operations/integrations/runs/${result.runId}`);
   return result.ok
     ? {
         message: result.message,
@@ -499,7 +499,7 @@ export async function discardIntegrationBatch(
     action: "integration_batch_discarded",
     metadata: { filename: batch.original_filename, prior_status: batch.status },
   });
-  revalidatePath("/imports");
+  revalidatePath("/performance-operations/imports");
   revalidateIntegrations();
   return { message: "Batch discarded (evidence preserved; nothing was posted)." };
 }
@@ -528,8 +528,8 @@ async function jobAction(
     };
     return { error: friendly[error.message] ?? "The job action was rejected." };
   }
-  revalidatePath("/integrations/jobs");
-  revalidatePath("/integrations");
+  revalidatePath("/performance-operations/integrations/jobs");
+  revalidatePath("/performance-operations/integrations");
   return { message: "Done." };
 }
 
@@ -591,8 +591,8 @@ export async function configureDeliveryChannel(
       allow_trainer_statements: allowStatements,
     },
   });
-  revalidatePath("/integrations/deliveries");
-  revalidatePath("/reports");
+  revalidatePath("/performance-operations/integrations/deliveries");
+  revalidatePath("/performance-operations/reports");
   return {
     message:
       provider === "test"
@@ -629,7 +629,7 @@ export async function toggleReportExecution(
     entityId: definitionId,
     action: enable ? "scheduled_report_execution_enabled" : "scheduled_report_execution_disabled",
   });
-  revalidatePath("/reports");
+  revalidatePath("/performance-operations/reports");
   return {
     message: enable
       ? "Execution enabled — the worker will run this schedule when due."
@@ -649,8 +649,8 @@ export async function runReportNow(
     intendedRunAt: new Date().toISOString(),
     trigger: "manual",
   });
-  revalidatePath("/reports");
-  revalidatePath("/integrations/deliveries");
+  revalidatePath("/performance-operations/reports");
+  revalidatePath("/performance-operations/integrations/deliveries");
   return result.ok ? { message: result.message } : { error: result.message };
 }
 
@@ -704,7 +704,7 @@ export async function retryDelivery(
     action: "email_delivery_manually_retried",
     metadata: { retry_key: retryKey, outcome: result.state },
   });
-  revalidatePath("/integrations/deliveries");
+  revalidatePath("/performance-operations/integrations/deliveries");
   return result.ok
     ? { message: `Retry ${result.state}.` }
     : { error: `Retry ${result.state}: ${result.message}` };

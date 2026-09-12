@@ -62,7 +62,7 @@ export async function searchApp(
             group: "People",
             label: t.display_name,
             sublabel: `Trainer · ${t.status}`,
-            href: `/trainers/${t.id}`,
+            href: `/performance-operations/trainers/${t.id}`,
           });
         }
       })(),
@@ -82,7 +82,7 @@ export async function searchApp(
             group: "Clients",
             label: c.display_name,
             sublabel: `Client · ${c.status}`,
-            href: `/clients`,
+            href: `/performance-operations/clients`,
           });
         }
       })(),
@@ -102,7 +102,7 @@ export async function searchApp(
             group: "Departments",
             label: d.name,
             sublabel: `Department · ${d.status}`,
-            href: `/departments/${d.id}`,
+            href: `/performance-operations/departments/${d.id}`,
           });
         }
       })(),
@@ -122,7 +122,7 @@ export async function searchApp(
             group: "Services",
             label: s.display_name,
             sublabel: `Service · ${s.status}`,
-            href: `/configuration/services/${s.id}`,
+            href: `/performance-operations/configuration/services/${s.id}`,
           });
         }
       })(),
@@ -143,7 +143,7 @@ export async function searchApp(
             group: "Imports",
             label: b.original_filename,
             sublabel: `Import · ${b.status.replaceAll("_", " ")}`,
-            href: `/imports/${b.id}`,
+            href: `/performance-operations/imports/${b.id}`,
           });
         }
       })(),
@@ -164,7 +164,7 @@ export async function searchApp(
             group: "Payroll",
             label: r.name,
             sublabel: `Payroll run · ${r.status.replaceAll("_", " ")}`,
-            href: `/payroll/${r.id}`,
+            href: `/performance-operations/payroll/${r.id}`,
           });
         }
       })(),
@@ -183,7 +183,7 @@ export async function searchApp(
             group: "Organizations",
             label: o.name,
             sublabel: "Organization",
-            href: "/overview",
+            href: "/performance-operations/overview",
           });
         }
       })(),
@@ -211,8 +211,8 @@ async function updateNotification(
     .eq("id", id)
     .eq("recipient_id", actor.userId);
   if (error) return { error: "Could not update the notification." };
-  revalidatePath("/notifications");
-  revalidatePath("/overview");
+  revalidatePath("/performance-operations/notifications");
+  revalidatePath("/performance-operations/overview");
   return { message: "Updated." };
 }
 
@@ -238,8 +238,8 @@ export async function markAllNotificationsRead(): Promise<ActionState> {
     .is("read_at", null)
     .is("archived_at", null);
   if (error) return { error: "Could not mark notifications read." };
-  revalidatePath("/notifications");
-  revalidatePath("/overview");
+  revalidatePath("/performance-operations/notifications");
+  revalidatePath("/performance-operations/overview");
   return { message: "All notifications marked read." };
 }
 
@@ -326,7 +326,7 @@ export async function renameSavedView(
       error: error.code === "23505" ? "You already have a view with that name." : "Could not rename the view.",
     };
   }
-  revalidatePath("/reports");
+  revalidatePath("/performance-operations/reports");
   return { message: "View renamed." };
 }
 
@@ -343,7 +343,7 @@ export async function toggleSavedViewPin(
     .eq("id", String(formData.get("id") ?? ""))
     .eq("owner_id", actor.userId);
   if (error) return { error: "Could not update the view." };
-  revalidatePath("/reports");
+  revalidatePath("/performance-operations/reports");
   return { message: pinned ? "Unpinned." : "Pinned." };
 }
 
@@ -359,7 +359,7 @@ export async function deleteSavedView(
     .eq("id", String(formData.get("id") ?? ""))
     .eq("owner_id", actor.userId);
   if (error) return { error: "Could not delete the view." };
-  revalidatePath("/reports");
+  revalidatePath("/performance-operations/reports");
   return { message: "View deleted." };
 }
 

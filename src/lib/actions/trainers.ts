@@ -19,7 +19,7 @@ import {
   type ActorContext,
 } from "./shared";
 
-const TRAINERS_PATH = "/trainers";
+const TRAINERS_PATH = "/performance-operations/trainers";
 
 function sourceIdentifiers(setmoreId: string, acuityId: string) {
   const ids: Record<string, string> = {};
@@ -187,7 +187,7 @@ export async function createTrainer(
   });
 
   revalidatePath(TRAINERS_PATH);
-  redirect(`/trainers/${trainer.id}`);
+  redirect(`/performance-operations/trainers/${trainer.id}`);
 }
 
 export async function updateTrainer(
@@ -262,8 +262,8 @@ export async function updateTrainer(
   });
 
   revalidatePath(TRAINERS_PATH);
-  revalidatePath(`/trainers/${trainerId.data}`);
-  redirect(`/trainers/${trainerId.data}`);
+  revalidatePath(`/performance-operations/trainers/${trainerId.data}`);
+  redirect(`/performance-operations/trainers/${trainerId.data}`);
 }
 
 /* ------------------------------------------------------------ assignments */
@@ -326,7 +326,7 @@ export async function addTrainerOrganizationAssignment(
     action: "trainer_org_assignment_added",
     metadata: { trainer_id: parsed.data.trainerId, title: parsed.data.title },
   });
-  revalidatePath(`/trainers/${parsed.data.trainerId}`);
+  revalidatePath(`/performance-operations/trainers/${parsed.data.trainerId}`);
   return { message: "Organization assignment added." };
 }
 
@@ -358,7 +358,7 @@ export async function endTrainerOrganizationAssignment(
     action: "trainer_org_assignment_ended",
     metadata: { trainer_id: assignment.trainer_id },
   });
-  revalidatePath(`/trainers/${assignment.trainer_id}`);
+  revalidatePath(`/performance-operations/trainers/${assignment.trainer_id}`);
 }
 
 const deptAssignmentSchema = z.object({
@@ -411,7 +411,7 @@ export async function addTrainerDepartmentAssignment(
       department_id: parsed.data.departmentId,
     },
   });
-  revalidatePath(`/trainers/${parsed.data.trainerId}`);
+  revalidatePath(`/performance-operations/trainers/${parsed.data.trainerId}`);
   return { message: "Department assignment added." };
 }
 
@@ -446,5 +446,5 @@ export async function endTrainerDepartmentAssignment(
       department_id: assignment.department_id,
     },
   });
-  revalidatePath(`/trainers/${assignment.trainer_id}`);
+  revalidatePath(`/performance-operations/trainers/${assignment.trainer_id}`);
 }

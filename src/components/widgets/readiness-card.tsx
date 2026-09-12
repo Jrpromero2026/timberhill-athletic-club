@@ -9,13 +9,13 @@ import { Widget, WidgetEmpty } from "./section";
 
 /** Readiness row config: label + the workflow the gap links to. */
 export const READINESS_LINKS: Record<string, { label: string; href: string }> = {
-  organization_readiness_bp: { label: "Organization readiness", href: "/configuration" },
-  trainer_assignment_coverage_bp: { label: "Trainer assignments", href: "/trainers" },
-  compensation_coverage_bp: { label: "Compensation", href: "/configuration/compensation" },
-  service_alias_coverage_bp: { label: "Import aliases", href: "/configuration/services" },
-  reporting_period_coverage_bp: { label: "Reporting periods", href: "/configuration/reporting-periods" },
-  import_health_bp: { label: "Import health", href: "/imports" },
-  payroll_readiness_bp: { label: "Payroll readiness", href: "/payroll" },
+  organization_readiness_bp: { label: "Organization readiness", href: "/performance-operations/configuration" },
+  trainer_assignment_coverage_bp: { label: "Trainer assignments", href: "/performance-operations/trainers" },
+  compensation_coverage_bp: { label: "Compensation", href: "/performance-operations/configuration/compensation" },
+  service_alias_coverage_bp: { label: "Import aliases", href: "/performance-operations/configuration/services" },
+  reporting_period_coverage_bp: { label: "Reporting periods", href: "/performance-operations/configuration/reporting-periods" },
+  import_health_bp: { label: "Import health", href: "/performance-operations/imports" },
+  payroll_readiness_bp: { label: "Payroll readiness", href: "/performance-operations/payroll" },
 };
 
 function Bar({ valueBp }: { valueBp: number | null }) {
@@ -52,7 +52,7 @@ export function ReadinessCard({
               <li key={result.metricId} data-metric={result.metricId} data-health={result.health}>
                 <div className="flex items-center justify-between gap-2">
                   <Link
-                    href={link?.href ?? "/configuration"}
+                    href={link?.href ?? "/performance-operations/configuration"}
                     className="text-sm font-medium text-ink hover:text-accent"
                   >
                     {link?.label ?? result.metricId}

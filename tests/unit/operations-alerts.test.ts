@@ -36,7 +36,7 @@ describe("deriveAlerts", () => {
     expect(codes).toContain("late_arriving_appointments");
     const blocked = alerts.find((a) => a.code === "payroll_blocked")!;
     expect(blocked.severity).toBe("critical");
-    expect(blocked.link).toBe("/payroll/r1/review");
+    expect(blocked.link).toBe("/performance-operations/payroll/r1/review");
     expect(blocked.action.length).toBeGreaterThan(0);
   });
 
@@ -74,7 +74,7 @@ describe("deriveAlerts", () => {
     expect(alerts).toHaveLength(1);
     expect(alerts[0].code).toBe("compensation_missing");
     expect(alerts[0].detail).toBe("2 of 4 still unconfigured."); // engine's reason verbatim
-    expect(alerts[0].link).toBe("/configuration/compensation");
+    expect(alerts[0].link).toBe("/performance-operations/configuration/compensation");
   });
 
   it("notes a missing reporting period as info", () => {

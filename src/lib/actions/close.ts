@@ -28,12 +28,12 @@ import {
 import { buildCloseExport, type CloseExportType } from "@/lib/close/export-data";
 import { INTELLIGENCE_VERSION } from "@/lib/intelligence/shared/types";
 
-const CLOSE_PATH = "/period-close";
+const CLOSE_PATH = "/performance-operations/period-close";
 
 function revalidateClose(runId?: string): void {
   revalidatePath(CLOSE_PATH);
   if (runId) {
-    for (const sub of ["", "/readiness", "/reports", "/exports", "/approval", "/manifest"]) {
+    for (const sub of ["", "/readiness", "/performance-operations/reports", "/exports", "/approval", "/manifest"]) {
       revalidatePath(`${CLOSE_PATH}/${runId}${sub}`);
     }
   }
@@ -575,7 +575,7 @@ export async function executeClose(
     entityId: run.id,
   });
   revalidateClose(runId);
-  revalidatePath("/overview");
+  revalidatePath("/performance-operations/overview");
   const result = data as { manifest_sha256?: string } | null;
   return {
     message: `Period closed. Manifest ${result?.manifest_sha256?.slice(0, 12) ?? manifestSha.slice(0, 12)}… recorded.`,

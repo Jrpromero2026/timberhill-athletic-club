@@ -16,7 +16,7 @@ import { loadEngineData, persistEngineResult } from "@/lib/payroll/run";
 import { CALCULATION_VERSION } from "@/lib/payroll/types";
 import { notifyPermissionHolders } from "@/lib/operations/notify";
 
-const PAYROLL_PATH = "/payroll";
+const PAYROLL_PATH = "/performance-operations/payroll";
 
 type PayrollRun = Tables<"payroll_runs">;
 
@@ -667,8 +667,8 @@ export async function addTrainerAssignment(
     action: "appointment_trainer_assigned",
     metadata: { trainer_id: trainerId, role },
   });
-  revalidatePath("/appointments");
-  revalidatePath(`/appointments/${appointmentId}`);
+  revalidatePath("/performance-operations/appointments");
+  revalidatePath(`/performance-operations/appointments/${appointmentId}`);
   return { message: "Trainer assignment added." };
 }
 
@@ -700,7 +700,7 @@ export async function removeTrainerAssignment(
     action: "appointment_trainer_unassigned",
     metadata: { trainer_id: assignment.trainer_id, role: assignment.role },
   });
-  revalidatePath("/appointments");
-  revalidatePath(`/appointments/${assignment.appointment_id}`);
+  revalidatePath("/performance-operations/appointments");
+  revalidatePath(`/performance-operations/appointments/${assignment.appointment_id}`);
   return { message: "Trainer assignment removed." };
 }

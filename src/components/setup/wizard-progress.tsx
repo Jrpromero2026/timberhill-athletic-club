@@ -77,7 +77,7 @@ export function WizardProgress({
             <li key={step} aria-current={isCurrent ? "step" : undefined}>
               {reachable ? (
                 <Link
-                  href={slug ? `/setup/${organizationId}/${slug}` : `/setup/${organizationId}`}
+                  href={slug ? `/performance-operations/setup/${organizationId}/${slug}` : `/performance-operations/setup/${organizationId}`}
                   className="block rounded-[--radius-control] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   {content}

@@ -48,7 +48,7 @@ let batchUrl = "";
 let runUrl = "";
 
 test("1. import synthetic completed sessions for the payroll trainer", async ({ page }) => {
-  await page.goto("/imports/new");
+  await page.goto("/performance-operations/imports/new");
   await page.getByLabel("Source system").selectOption("setmore");
   await page.getByLabel(/CSV file/).setInputFiles({
     name: FILE_NAME,
@@ -139,7 +139,7 @@ test("2. approve and post the batch", async ({ page }) => {
 });
 
 test("3. create a payroll run for the e2e window", async ({ page }) => {
-  await page.goto("/payroll/new");
+  await page.goto("/performance-operations/payroll/new");
   // #run-period, not the header's period selector (both say "Reporting period").
   const periodSelect = page.locator("#run-period");
   const optionValue = await periodSelect

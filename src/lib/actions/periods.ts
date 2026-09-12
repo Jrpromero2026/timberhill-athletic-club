@@ -16,7 +16,7 @@ import {
   type ActionState,
 } from "./shared";
 
-const PERIODS_PATH = "/configuration/reporting-periods";
+const PERIODS_PATH = "/performance-operations/configuration/reporting-periods";
 
 const periodSchema = z.object({
   organizationId: z.uuid("Choose an organization."),

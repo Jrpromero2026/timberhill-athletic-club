@@ -15,9 +15,9 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const tokenHash = searchParams.get("token_hash");
   const type = searchParams.get("type") as EmailOtpType | null;
-  const rawNext = searchParams.get("next") ?? "/overview";
+  const rawNext = searchParams.get("next") ?? "/performance-operations/overview";
   const next =
-    rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/overview";
+    rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/performance-operations/overview";
 
   const redirectTo = (path: string, params?: Record<string, string>) => {
     const url = new URL(path, request.url);

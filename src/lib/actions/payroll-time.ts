@@ -12,8 +12,8 @@ import {
   type ActorContext,
 } from "@/lib/actions/shared";
 
-const TIME_PATH = "/payroll/time";
-const ADJUSTMENTS_PATH = "/payroll/adjustments";
+const TIME_PATH = "/performance-operations/payroll/time";
+const ADJUSTMENTS_PATH = "/performance-operations/payroll/adjustments";
 
 const WORK_CATEGORIES = [
   "admin",

@@ -37,9 +37,9 @@ async function selectPeriod(page: Page, label: string): Promise<void> {
 }
 
 test("1. analytics landing renders headline comparisons and sections", async ({ page }) => {
-  await page.goto("/analytics");
+  await page.goto("/performance-operations/analytics");
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/analytics");
+  await page.goto("/performance-operations/analytics");
   await expect(page.getByTestId("analytics-headline")).toBeVisible({ timeout: 20_000 });
   // Four headline metrics with engine-honest states.
   await expect(page.locator('[data-testid="analytics-headline"] [data-metric]')).toHaveCount(4);
@@ -52,14 +52,14 @@ test("1. analytics landing renders headline comparisons and sections", async ({ 
 });
 
 test("2. period switch relabels finality: closed period is FINAL", async ({ page }) => {
-  await page.goto("/analytics");
+  await page.goto("/performance-operations/analytics");
   await selectPeriod(page, "E2E Analytics Closed Window");
-  await page.goto("/analytics");
+  await page.goto("/performance-operations/analytics");
   await expect(page.locator('[data-finality="final"]').first()).toBeVisible({
     timeout: 20_000,
   });
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/analytics");
+  await page.goto("/performance-operations/analytics");
   await expect(page.locator('[data-finality="not_final"]').first()).toBeVisible({
     timeout: 20_000,
   });
@@ -67,9 +67,9 @@ test("2. period switch relabels finality: closed period is FINAL", async ({ page
 
 test("3. executive scorecard compares periods with honest eligibility", async ({ page }) => {
   test.setTimeout(60_000);
-  await page.goto("/analytics/executive");
+  await page.goto("/performance-operations/analytics/executive");
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/analytics/executive");
+  await page.goto("/performance-operations/analytics/executive");
   await expect(page.getByTestId("analytical-summaries")).toBeVisible({ timeout: 30_000 });
   // Deterministic finality statement, never AI.
   await expect(page.getByTestId("analytical-summaries")).toContainText(/not final/i);
@@ -99,19 +99,19 @@ test("3. executive scorecard compares periods with honest eligibility", async ({
 
 test("4. scorecards drill from organization to department to trainer", async ({ page }) => {
   test.setTimeout(60_000);
-  await page.goto("/analytics/scorecards");
+  await page.goto("/performance-operations/analytics/scorecards");
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/analytics/scorecards");
+  await page.goto("/performance-operations/analytics/scorecards");
   await expect(page.getByTestId("scorecard-tabs")).toBeVisible({ timeout: 20_000 });
   await expect(page.getByTestId("scorecard-view")).toBeVisible();
 
-  await page.goto("/analytics/scorecards?card=department");
+  await page.goto("/performance-operations/analytics/scorecards?card=department");
   await expect(page.getByTestId("scorecard-department-picker")).toBeVisible({ timeout: 20_000 });
   const firstDept = page.getByTestId("scorecard-department-picker").locator("a").first();
   await firstDept.click();
   await expect(page.getByTestId("scorecard-view")).toBeVisible({ timeout: 20_000 });
 
-  await page.goto("/analytics/scorecards?card=trainer");
+  await page.goto("/performance-operations/analytics/scorecards?card=trainer");
   await expect(page.getByTestId("scorecard-trainer-picker")).toBeVisible({ timeout: 20_000 });
   await page.getByTestId("scorecard-trainer-picker").locator("a").first().click();
   await expect(page.getByTestId("scorecard-view")).toBeVisible({ timeout: 20_000 });
@@ -123,9 +123,9 @@ test("4. scorecards drill from organization to department to trainer", async ({ 
 
 test("5. goal lifecycle: create organization goal, approve, see progress", async ({ page }) => {
   test.setTimeout(90_000);
-  await page.goto("/analytics/goals");
+  await page.goto("/performance-operations/analytics/goals");
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/analytics/goals");
+  await page.goto("/performance-operations/analytics/goals");
   await page.locator("summary", { hasText: "New goal" }).click();
   const form = page.getByTestId("goal-create-form");
   await form.locator('input[name="name"]').fill(GOAL_NAME);
@@ -154,9 +154,9 @@ test("5. goal lifecycle: create organization goal, approve, see progress", async
 
 test("6. department-scoped goal is created and labeled", async ({ page }) => {
   test.setTimeout(60_000);
-  await page.goto("/analytics/goals");
+  await page.goto("/performance-operations/analytics/goals");
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/analytics/goals");
+  await page.goto("/performance-operations/analytics/goals");
   await page.locator("summary", { hasText: "New goal" }).click();
   const form = page.getByTestId("goal-create-form");
   await form.locator('input[name="name"]').fill(DEPT_GOAL_NAME);
@@ -175,9 +175,9 @@ test("6. department-scoped goal is created and labeled", async ({ page }) => {
 
 test("7. benchmark lifecycle: create internal standard, approve, compare", async ({ page }) => {
   test.setTimeout(90_000);
-  await page.goto("/analytics/benchmarks");
+  await page.goto("/performance-operations/analytics/benchmarks");
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/analytics/benchmarks");
+  await page.goto("/performance-operations/analytics/benchmarks");
   await page.locator("summary", { hasText: "New benchmark" }).click();
   const form = page.getByTestId("benchmark-create-form");
   await form.locator('input[name="name"]').fill(BENCH_NAME);
@@ -208,14 +208,14 @@ test("7. benchmark lifecycle: create internal standard, approve, compare", async
 
 test("8. dashboard builder: widgets, reorder, default, share, duplicate, archive", async ({ page }) => {
   test.setTimeout(180_000);
-  await page.goto("/analytics/dashboards");
+  await page.goto("/performance-operations/analytics/dashboards");
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/analytics/dashboards");
+  await page.goto("/performance-operations/analytics/dashboards");
   const createForm = page.getByTestId("dashboard-create-form");
   await createForm.locator('input[name="name"]').fill(DASH_NAME);
   await createForm.getByRole("button", { name: "Create dashboard" }).click();
   await expect(page.getByText("Dashboard created.")).toBeVisible({ timeout: 20_000 });
-  await page.goto("/analytics/dashboards");
+  await page.goto("/performance-operations/analytics/dashboards");
   await page.getByRole("link", { name: DASH_NAME }).first().click();
   await expect(page.getByTestId("widget-add-form")).toBeVisible({ timeout: 20_000 });
 
@@ -263,7 +263,7 @@ test("8. dashboard builder: widgets, reorder, default, share, duplicate, archive
   await expect(page.getByText("Sharing set to department.")).toBeVisible({ timeout: 20_000 });
 
   // default, duplicate, archive-the-copy from the list
-  await page.goto("/analytics/dashboards");
+  await page.goto("/performance-operations/analytics/dashboards");
   const row = page.locator("li", { hasText: DASH_NAME }).first();
   await row.getByTestId("dashboard-set-default").click();
   await expect(
@@ -279,7 +279,7 @@ test("8. dashboard builder: widgets, reorder, default, share, duplicate, archive
     .getByTestId("dashboard-archive")
     .click();
   await expect(page.getByText(/archived/i).first()).toBeVisible({ timeout: 20_000 });
-  await page.goto("/analytics/dashboards?show=archived");
+  await page.goto("/performance-operations/analytics/dashboards?show=archived");
   await expect(page.locator("li", { hasText: `${DASH_NAME} (copy)` })).toBeVisible({
     timeout: 20_000,
   });
@@ -287,9 +287,9 @@ test("8. dashboard builder: widgets, reorder, default, share, duplicate, archive
 
 test("9. cohorts render privacy-safe counts with department filters", async ({ page }) => {
   test.setTimeout(60_000);
-  await page.goto("/analytics/cohorts");
+  await page.goto("/performance-operations/analytics/cohorts");
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/analytics/cohorts");
+  await page.goto("/performance-operations/analytics/cohorts");
   await expect(page.getByTestId("cohort-filters")).toBeVisible({ timeout: 30_000 });
   // Either a populated heat map with the privacy note, or the explicit
   // empty state — never client names, never silent placeholders.
@@ -308,9 +308,9 @@ test("9. cohorts render privacy-safe counts with department filters", async ({ p
 
 test("10. presentation mode renders print-ready executive view", async ({ page }) => {
   test.setTimeout(60_000);
-  await page.goto("/analytics/presentation");
+  await page.goto("/performance-operations/analytics/presentation");
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/analytics/presentation");
+  await page.goto("/performance-operations/analytics/presentation");
   await expect(page.getByTestId("presentation-root")).toBeVisible({ timeout: 30_000 });
   await expect(page.getByText(/Confidential — internal use only/).first()).toBeVisible();
   await expect(page.getByText(/Not final — figures may change/i).first()).toBeVisible();
@@ -321,12 +321,12 @@ test("10. presentation mode renders print-ready executive view", async ({ page }
 
 test("11. dataset export downloads hashed CSV and records the event", async ({ page }) => {
   test.setTimeout(60_000);
-  await page.goto("/analytics/datasets");
+  await page.goto("/performance-operations/analytics/datasets");
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/analytics/datasets");
+  await page.goto("/performance-operations/analytics/datasets");
   await expect(page.getByTestId("dataset-list")).toBeVisible({ timeout: 20_000 });
 
-  const response = await page.request.get("/analytics/datasets/export?dataset=metric_time_series");
+  const response = await page.request.get("/performance-operations/analytics/datasets/export?dataset=metric_time_series");
   expect(response.status()).toBe(200);
   expect(response.headers()["x-export-sha256"]).toMatch(/^[0-9a-f]{64}$/);
   const body = await response.text();
@@ -336,22 +336,22 @@ test("11. dataset export downloads hashed CSV and records the event", async ({ p
   // No projected values, machine currency in cents: the note is embedded.
   expect(body).toContain("no projected values");
 
-  await page.goto("/analytics/datasets");
+  await page.goto("/performance-operations/analytics/datasets");
   await expect(page.getByText("metric_time_series").first()).toBeVisible({ timeout: 20_000 });
 });
 
 test("12. analytics subscription executes with NOT FINAL labeling", async ({ page }) => {
   test.setTimeout(180_000);
-  await page.goto("/reports?tab=scheduled");
+  await page.goto("/performance-operations/reports?tab=scheduled");
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/reports?tab=scheduled");
+  await page.goto("/performance-operations/reports?tab=scheduled");
   await page.locator("#sched-type").waitFor({ timeout: 20_000 });
   await page.locator("#sched-type").selectOption("executive_scorecard");
   await page.locator("#sched-frequency").selectOption("monthly");
   await page.getByRole("button", { name: "Save definition" }).click();
   await expect(page.getByRole("status").first()).toBeVisible({ timeout: 20_000 });
 
-  await page.goto("/reports?tab=scheduled");
+  await page.goto("/performance-operations/reports?tab=scheduled");
   const definitionRow = page
     .locator("li", { hasText: "executive scorecard" })
     .first();
@@ -384,15 +384,15 @@ test("12. analytics subscription executes with NOT FINAL labeling", async ({ pag
 test("13. responsive layout and keyboard navigation", async ({ page }) => {
   // Select the period at desktop width (the header selector hides on
   // mobile) — the cookie persists across the resize.
-  await page.goto("/analytics");
+  await page.goto("/performance-operations/analytics");
   await selectPeriod(page, "E2E Payroll Window");
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/analytics");
+  await page.goto("/performance-operations/analytics");
   await expect(page.getByTestId("analytics-headline")).toBeVisible({ timeout: 20_000 });
   await page.setViewportSize({ width: 1280, height: 800 });
 
   // Keyboard: tabbing reaches the scorecard tab links.
-  await page.goto("/analytics/scorecards");
+  await page.goto("/performance-operations/analytics/scorecards");
   await expect(page.getByTestId("scorecard-tabs")).toBeVisible({ timeout: 20_000 });
   for (let i = 0; i < 60; i++) {
     const inTabs = await page.evaluate(
@@ -411,11 +411,11 @@ test("13. responsive layout and keyboard navigation", async ({ page }) => {
 test("14. saved period persists across analytics pages; cleanup leaves honest state", async ({ page }) => {
   test.setTimeout(120_000);
   // The period cookie persists across navigation within the session.
-  await page.goto("/analytics");
+  await page.goto("/performance-operations/analytics");
   await selectPeriod(page, "E2E Payroll Window");
-  await page.goto("/analytics/executive");
+  await page.goto("/performance-operations/analytics/executive");
   await expect(page.getByTestId("analytical-summaries")).toBeVisible({ timeout: 30_000 });
-  await page.goto("/analytics/goals");
+  await page.goto("/performance-operations/analytics/goals");
   await expect(page.getByTestId("goal-list")).toBeVisible({ timeout: 20_000 });
 
   // Cleanup: cancel + archive the run's goals; deprecate + archive the
@@ -441,7 +441,7 @@ test("14. saved period persists across analytics pages; cleanup leaves honest st
     page.locator("li", { hasText: DEPT_GOAL_NAME }).first(),
   ).toHaveAttribute("data-goal-status", "cancelled", { timeout: 20_000 });
 
-  await page.goto("/analytics/benchmarks");
+  await page.goto("/performance-operations/analytics/benchmarks");
   const bench = page.locator("li", { hasText: BENCH_NAME }).first();
   await bench.getByRole("button", { name: "Deprecate" }).click();
   await expect(page.locator("li", { hasText: BENCH_NAME }).first()).toHaveAttribute(
