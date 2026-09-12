@@ -119,3 +119,11 @@ test("unknown routes show the not-found page", async ({ page }) => {
     page.getByRole("link", { name: "Back to Overview" })
   ).toBeVisible();
 });
+
+test("/performance-operations is the named entrance to the platform", async ({
+  page,
+}) => {
+  await page.goto("/performance-operations");
+  await page.waitForURL("**/overview");
+  await expect(page).toHaveTitle(/Overview · Performance Operations/);
+});
