@@ -1,0 +1,679 @@
+/**
+ * Personal Training marketing content — the single source of truth for the
+ * public `/personal-training/*` routes.
+ *
+ * Everything here traces to `docs/TAC_PT_WEBSITE_BUILD_BRIEF.md`; the § numbers
+ * in the comments are its sections. Three rules from that brief are enforced
+ * by the shape of this file rather than by review:
+ *
+ *   1. The primary CTA string is a single exported constant, so the six
+ *      placements cannot drift apart (§2).
+ *   2. Specialties are a closed union derived from SPECIALTIES, so a typo
+ *      fails typecheck instead of silently breaking the roster filter (§6).
+ *   3. A testimonial carries either verbatim `quote` text or `pending: true`.
+ *      There is no way to express an invented one (§7).
+ *
+ * Nothing in here imports from the Performance Operations application, and the
+ * application does not import from here.
+ */
+
+/* ── constants ─────────────────────────────────────────────────────────── */
+
+/** §1. These URLs embed Setmore product and staff IDs. If a service is
+ *  rebuilt in Setmore the ID changes and every CTA breaks silently — so they
+ *  are defined once, here, and nowhere else. */
+export const SETMORE = {
+  consultation:
+    "https://timberhill-personal-training.setmore.com/book?step=time-slot&products=8aff2d32-3927-4531-a6ba-f12c9e5ab214&type=service&staff=91f71610-48fd-4e00-bd4e-2017f4f4a65b&staffSelected=true",
+  freeTrial:
+    "https://timberhill-personal-training.setmore.com/book?step=staff&products=470be690-c1b9-4664-80da-0502ed6e8565&type=service",
+  performanceLab:
+    "https://timberhill-personal-training.setmore.com/book?step=time-slot&products=5a6177c8-a52d-4389-a527-37529c61b6ac&type=class&staff=a40500bff96f74d68968fdebe47af4658&staffSelected=true",
+  reviews:
+    "https://timberhill-personal-training.setmore.com/reviews?sortBy=highestRated",
+} as const;
+
+/** §2. Exact, no variants. Not "Get Started", not "Book Now", not
+ *  "Free Consult" — recognition is the mechanism. */
+export const PRIMARY_CTA = "BOOK A COMPLIMENTARY CONSULTATION";
+
+/** §14. Verified reference data. */
+export const CLUB = {
+  name: "Timberhill Athletic Club",
+  canonical: "https://timberhillac.com/personal-training/",
+  origin: "https://timberhillac.com",
+  street: "2855 Northwest 29th Street",
+  city: "Corvallis",
+  region: "OR",
+  postalCode: "97330",
+  phone: "541-757-8559",
+  phoneHref: "tel:5417578559",
+  phoneE164: "+1-541-757-8559",
+  email: "jr@timberhillsports.com",
+  founded: "1980",
+  squareFeet: "65,000",
+  trainerCount: 12,
+  facebook: "https://www.facebook.com/TimberhillAthleticClub",
+  instagram: "https://www.instagram.com/timberhill_ac",
+  /** Website hours. Setmore advertises Mon–Fri 5 AM–9 PM; §14 flags the
+   *  discrepancy as unreconciled. These are the website's. */
+  hours: ["Mon–Fri 5:00 AM–10:00 PM", "Sat–Sun 7:00 AM–7:00 PM"],
+} as const;
+
+/** §7. Read from the live Setmore figure or review monthly — do not let a
+ *  hard-coded number go stale. One definition so the audit is one edit. */
+export const REVIEW_STATS = {
+  average: "5.0",
+  count: 160,
+  fiveStar: 159,
+} as const;
+
+/* ── specialties ───────────────────────────────────────────────────────── */
+
+/** §6. Fixed vocabulary. Free text breaks the index filter, so the type
+ *  system closes the set. */
+export const SPECIALTIES = [
+  "Strength",
+  "Muscle Building",
+  "Fat Loss",
+  "Beginners",
+  "Returning to Fitness",
+  "Healthy Aging",
+  "Injury and Rehabilitation",
+  "Pre and Postnatal",
+  "Athletic Performance",
+  "Youth Athletes",
+  "Endurance and Events",
+  "Nutrition Coaching",
+  "Martial Arts and Combat Sports",
+  "Corrective Exercise",
+] as const;
+
+export type Specialty = (typeof SPECIALTIES)[number];
+
+/* ── trainers ──────────────────────────────────────────────────────────── */
+
+export type Trainer = {
+  slug: string;
+  name: string;
+  credentials: string;
+  specialties: readonly Specialty[];
+  /** One sentence, second person. */
+  worksBestWith: string;
+  /** §6: 2–3 sentences, hard limit. Existing copy trimmed, not rewritten.
+   *  The full biography belongs on the profile page. */
+  philosophy: string;
+  /** §6: show a badge when true, show *nothing* when false — never a
+   *  "full" state. */
+  acceptingClients: boolean;
+  /** Headshot, 3:4, ≥800×1066, release signed and filed. Null until the
+   *  Drive files are renamed to trainer names — nobody should guess who is
+   *  who on a public roster. */
+  photo: string | null;
+  /** Long-form biography blocks. Present only where a Phase 3 profile page
+   *  exists; the roster links to a profile only when this is set. */
+  profile?: readonly { heading: string; body: string }[];
+  /** Job title, for the profile page and its Person schema. */
+  jobTitles?: readonly string[];
+};
+
+export const TRAINERS: readonly Trainer[] = [
+  {
+    slug: "jr-romero",
+    name: "JR Romero",
+    credentials: "CSCS · Head Trainer · B.S. Exercise and Sport Science, OSU",
+    specialties: [
+      "Fat Loss",
+      "Muscle Building",
+      "Strength",
+      "Nutrition Coaching",
+      "Athletic Performance",
+    ],
+    worksBestWith:
+      "You want a structured, measurable plan for body composition, muscle and strength — and you want the standard held.",
+    philosophy:
+      "His coaching philosophy is rooted in biomechanics, exercise science, behavior change, and progressive overload. He believes lasting success is built through consistency, accountability, and a commitment to continual improvement. The Standard is the product.",
+    acceptingClients: true,
+    photo: null,
+    // Unresolved Phase 2 gate: the Drive bio heading says Head Trainer, the
+    // body says Director of Training. Both are carried until one is picked.
+    jobTitles: ["Head Trainer", "Director of Training"],
+    profile: [
+      {
+        heading: "Approach",
+        body: "JR Romero serves as the Director of Training at Timberhill Athletic Club and Director of Performance at G3 Performance. With more than 15,000 hours of hands-on coaching experience, he has spent over a decade helping clients build stronger bodies, improve their health, enhance performance, and achieve lasting physical transformation. His coaching philosophy is rooted in biomechanics, exercise science, behavior change, and progressive overload. He believes lasting success is built through consistency, accountability, and a commitment to continual improvement. The Standard is the product.",
+      },
+      {
+        heading: "Who he works with",
+        body: "JR's coaching experience spans a wide range of populations, from beginners starting their fitness journey to competitive athletes and high-performing professionals seeking to maximize their physical potential. His approach combines evidence-based training, practical nutrition coaching, and individualized programming to create measurable results and sustainable progress. He specializes in body recomposition, muscle hypertrophy, strength development, and performance enhancement.",
+      },
+      {
+        heading: "Built For Her",
+        body: "JR is the creator of Built For Her, a standards-based coaching system for women's physique and performance. The system integrates progressive strength training, nutrition strategy, recovery, and accountability to help women develop strength, build muscle, improve body composition, and achieve a higher standard of physical capability.",
+      },
+      {
+        heading: "Credentials",
+        body: "B.S. Exercise and Sport Science, Oregon State University · Certified Strength and Conditioning Specialist (CSCS) · Certified Personal Trainer (NSCA-CPT) · Performance Enhancement Specialist (NASM-PES) · Physique & Bodybuilding Coach (NASM-PBC) · Precision Nutrition Level 1 Coach (Pn1) · Certified Speed & Agility Coach (CSAC-NSPA) · Kinetic Integration Exercise Professional (KIEP) · CrossFit Level 1 Trainer (CF-L1)",
+      },
+    ],
+  },
+  {
+    slug: "jess-caze",
+    name: "Jess Caze",
+    credentials: "CSCS · B.S. Exercise & Sports Science",
+    specialties: [
+      "Corrective Exercise",
+      "Athletic Performance",
+      "Strength",
+      "Healthy Aging",
+    ],
+    worksBestWith:
+      "You want to move well and keep doing the things you love, with the mechanics fixed rather than worked around.",
+    philosophy:
+      "Jess is passionate about helping clients build confidence, stay active, and maintain the physical capabilities needed to enjoy the activities that matter most to them. She focuses on creating sustainable habits and meaningful results that last.",
+    acceptingClients: true,
+    photo: null,
+  },
+  {
+    slug: "mason-morgan",
+    name: "Mason Morgan",
+    credentials: "CSCS · Kinesiology, Oregon State University",
+    specialties: [
+      "Athletic Performance",
+      "Youth Athletes",
+      "Strength",
+      "Beginners",
+    ],
+    worksBestWith:
+      "You are an athlete, or a parent of one, and want training that transfers to the sport.",
+    philosophy:
+      "My goal as a coach is to inspire people to become more active and confident in their abilities, whether that means taking more daily walks, beginning a fitness journey, or striving for athletic excellence. I believe movement has the power to improve quality of life at every stage.",
+    acceptingClients: true,
+    photo: null,
+  },
+  {
+    slug: "becca-reeve",
+    name: "Becca Reeve",
+    credentials:
+      "CPT · Pregnancy and Postpartum Corrective Exercise Specialist · PN1 Nutrition Coach",
+    specialties: [
+      "Pre and Postnatal",
+      "Corrective Exercise",
+      "Nutrition Coaching",
+      "Strength",
+    ],
+    worksBestWith:
+      "You are a woman training through pregnancy, postpartum, or any stage where you want to feel functionally strong.",
+    philosophy:
+      "I work with women to improve general fitness and wellness and aim to empower them to feel functionally strong and confident in their bodies.",
+    acceptingClients: true,
+    photo: null,
+  },
+  {
+    slug: "josiah-iwamizu",
+    name: "Josiah Iwamizu",
+    credentials:
+      "CPT · Corrective Exercise Specialist · Certified Nutrition Coach · Brown belt, judo and jujitsu",
+    specialties: [
+      "Martial Arts and Combat Sports",
+      "Athletic Performance",
+      "Strength",
+      "Youth Athletes",
+    ],
+    worksBestWith:
+      "You come from combat sports, or you want conditioning built by someone who has competed at that level.",
+    philosophy:
+      "With nearly two decades immersed in the world of sports and fitness, I bring a deep passion and wealth of experience to every training session. I've coached a wide range of clients — from kids just starting out to adults chasing personal bests — so I know how to adapt and motivate at every level.",
+    acceptingClients: true,
+    photo: null,
+  },
+  {
+    slug: "conner-mcadams",
+    name: "Conner McAdams",
+    credentials: "CPT-ACE",
+    specialties: [
+      "Strength",
+      "Healthy Aging",
+      "Corrective Exercise",
+      "Beginners",
+    ],
+    worksBestWith:
+      "You want clear standards and a roadmap, whether you are starting out or already performing.",
+    philosophy:
+      "His philosophy is simple: meet people exactly where they are, then guide them — methodically and relentlessly — toward where they want to be. Every client shares a common goal of self-improvement, and Conner excels at building the roadmap that turns that ambition into measurable progress.",
+    acceptingClients: true,
+    photo: null,
+  },
+  {
+    slug: "emma-ciechanowski",
+    name: "Emma Ciechanowski",
+    credentials: "ACSM-CPT · H.B.S. Kinesiology, Oregon State University",
+    specialties: [
+      "Beginners",
+      "Healthy Aging",
+      "Strength",
+      "Returning to Fitness",
+    ],
+    worksBestWith:
+      "You are starting from the beginning, or returning after time away, and want a program built to your real life. Spanish-speaking training available.",
+    philosophy:
+      "As a personal trainer, my goal is to help clients build sustainable habits, gain confidence, and achieve meaningful results that improve their everyday lives. My coaching philosophy focuses on creating realistic, personalized programs that support long-term success both inside and outside the gym.",
+    acceptingClients: true,
+    photo: null,
+  },
+  {
+    slug: "devin-shelfer",
+    name: "Devin Shelfer",
+    credentials: "NASM-CPT",
+    specialties: ["Beginners", "Strength", "Returning to Fitness"],
+    worksBestWith:
+      "You are new to lifting and want someone patient while you learn what your body can do.",
+    philosophy:
+      "The world of physical fitness has always been an interest of mine. What started as an interest has slowly turned into an obsession as I've delved deeper into learning the human body. Beginning the journey is always an excitingly scary process but every step taken is matched with realizations on just how powerful both your mind and body can be.",
+    acceptingClients: true,
+    photo: null,
+  },
+];
+
+/** §6 roster status. Not rendered as trainers — recorded so the gap is
+ *  visible in code review rather than only in a document. */
+export const ROSTER_PENDING = [
+  { name: "Amanda Knight", status: "Coming soon", blockedOn: "Bio and credentials." },
+  {
+    name: "Steve Sackmann",
+    status: "Off roster",
+    blockedOn:
+      "Listed as published in the brief, but has no bio in the Drive Trainer Bios doc.",
+  },
+  { name: "Kyra Schulties", status: "Missing", blockedOn: "Bio, credentials, specialties." },
+  { name: "Jayna Davis", status: "Missing", blockedOn: "Bio, credentials, specialties." },
+] as const;
+
+export function trainerBySlug(slug: string): Trainer | undefined {
+  return TRAINERS.find((trainer) => trainer.slug === slug);
+}
+
+/* ── hub sections ──────────────────────────────────────────────────────── */
+
+/** §4 section 03. Thirteen situation cards, before any service is named. */
+export const RECOGNITION = [
+  "You have not trained in years and the gym floor feels like someone else's territory.",
+  "You train regularly and nothing has changed in six months.",
+  "You are coming back from an injury and are not sure what is safe.",
+  "You want to get stronger and every program you read contradicts the last one.",
+  "You have an event with a date on it and a distance you have never covered.",
+  "You are in your sixties or seventies and want to stay independent.",
+  "You are pregnant or postpartum and need a program built for that, not adjusted for it.",
+  "Your teenager wants to lift and you want it taught properly the first time.",
+  "Your doctor told you to exercise without telling you which exercise.",
+  "You are in season and cannot afford to break down before it ends.",
+  "You take the classes and want something built around you instead.",
+  "You know what to do. You just do not do it unless someone is expecting you.",
+  "You have lost weight before and would like it to be the last time.",
+] as const;
+
+/** §4 section 04. */
+export const PILLARS = [
+  {
+    key: "ASSESS",
+    body: "Movement, training history, and what you actually want out of this — before anything is prescribed.",
+  },
+  {
+    key: "PLAN",
+    body: "A written program with a starting point and a direction, not a workout picked on the day.",
+  },
+  {
+    key: "COACH",
+    body: "Sessions on the floor with someone watching the reps and correcting them.",
+  },
+  {
+    key: "PROGRESS",
+    body: "Load, volume and difficulty move on a schedule, so the work keeps asking something of you.",
+  },
+  {
+    key: "ADAPT",
+    body: "Travel, illness, a bad week. The plan changes. The direction does not.",
+  },
+  {
+    key: "MEASURE",
+    body: "Numbers you can see, reviewed with you, so progress is not a matter of opinion.",
+  },
+] as const;
+
+/** §4 section 05. */
+export const STEPS = [
+  {
+    title: "Book a complimentary consultation",
+    body: "Thirty minutes, free, no commitment. Pick a time that works — the booking page opens straight on available slots.",
+  },
+  {
+    title: "Talk it through",
+    body: "Goals, history, schedule, injuries, and what has and has not worked for you before. Mostly we listen.",
+  },
+  {
+    title: "We match you to a trainer",
+    body: "You do not have to choose one from a page of photographs. We put you with the trainer whose specialty fits what you described.",
+  },
+  {
+    title: "First session",
+    body: "An assessment and the first version of your program, so you leave knowing exactly what you are doing next week.",
+  },
+  {
+    title: "Train, review, adjust",
+    body: "Sessions at whatever frequency you agreed, with progress reviewed on a set cadence rather than whenever it comes up.",
+  },
+] as const;
+
+/** §4 section 02. */
+export const TRUST_POINTS = [
+  { big: CLUB.founded, small: "Corvallis-owned and operating since" },
+  { big: String(CLUB.trainerCount), small: "Trainers on staff" },
+  {
+    big: REVIEW_STATS.average,
+    small: `Average across ${REVIEW_STATS.count} client reviews`,
+  },
+  { big: CLUB.squareFeet, small: "Square feet of floor, courts and pool" },
+] as const;
+
+/** §4 section 07. Four differentiators, each evidenced. */
+export const DIFFERENTIATORS = [
+  {
+    title: "A department, not an amenity",
+    body: "Twelve trainers, five program families and a director who owns the standard. Personal training is not something the front desk arranges on the side.",
+    evidence: "12 TRAINERS · 5 PROGRAM FAMILIES",
+  },
+  {
+    title: "Corvallis-owned since 1980",
+    body: "The club has been here for four decades under local ownership. The trainers coach members they see in the parking lot.",
+    evidence: "FOUNDED 1980",
+  },
+  {
+    title: "The reviews are public and they are ours",
+    body: "Every review on our booking page is written by a client under their own name. We do not curate them.",
+    evidence: `${REVIEW_STATS.average} AVERAGE · ${REVIEW_STATS.fiveStar} OF ${REVIEW_STATS.count} FIVE-STAR`,
+  },
+  {
+    title: "Room to train properly",
+    body: "Sixty-five thousand square feet means a squat rack when you need one and space to move without queueing.",
+    evidence: "65,000 SQ FT",
+  },
+] as const;
+
+/** §5. Five public families covering nine internal categories. "PACK
+ *  Training" is retired entirely — the live name is Performance Lab. No
+ *  prices, and no per-service booking link: every card ends in the
+ *  consultation. */
+export const SERVICE_FAMILIES = [
+  {
+    name: "One-to-One Coaching",
+    body: "Your trainer, your hour, your program. The default for anyone who wants the plan built and coached around them alone.",
+  },
+  {
+    name: "Partner and Small Group",
+    body: "Two to a handful of people training the same program together. Coached, not a class.",
+  },
+  {
+    name: "Hybrid Coaching",
+    body: "Your program delivered through Everfit with regular check-ins, on its own or between in-person sessions.",
+  },
+  {
+    name: "Performance Lab",
+    body: "Small-group performance work on a set schedule for people who want to train hard in a room with others doing the same.",
+  },
+  {
+    name: "Seasonal and Focused Programs",
+    body: "Time-boxed programs with a specific brief — Built For Her and Peak Ready Performance run to their own calendar.",
+  },
+] as const;
+
+/** §4 section 10. Two columns on desktop, two labelled blocks on mobile. */
+export const COMPARISON = [
+  {
+    label: "What it is",
+    orientation: "A walkthrough of the equipment and how to use it safely.",
+    training: "A coach who builds and runs a program for your goal.",
+  },
+  {
+    label: "How long",
+    orientation: "One appointment.",
+    training: "For as long as you are working toward something.",
+  },
+  {
+    label: "Cost",
+    orientation: "Included with membership.",
+    training: "Discussed in your consultation.",
+  },
+  {
+    label: "Who it suits",
+    orientation:
+      "You know what you want to do and need to learn the machines.",
+    training: "You want the plan made, coached and progressed for you.",
+  },
+  {
+    label: "What you leave with",
+    orientation: "Confidence on the floor.",
+    training:
+      "A written program, a schedule and someone accountable for it.",
+  },
+] as const;
+
+/* ── FAQ ───────────────────────────────────────────────────────────────── */
+
+export type FaqItem = {
+  question: string;
+  answer: string;
+  /** True where the answer is a `[CONFIRM]` placeholder awaiting the PT
+   *  Director. §8: only settled answers enter the FAQPage markup — marking a
+   *  placeholder as an answer would be worse than omitting the question. */
+  unconfirmed?: boolean;
+};
+
+/** §4 section 11. Twelve items, all collapsed. */
+export const HUB_FAQS: readonly FaqItem[] = [
+  {
+    question: "Is the consultation really free?",
+    answer:
+      "Yes. It is completely free, it lasts thirty minutes, and there is nothing to buy at the end of it. You do not need to be a member to book one.",
+  },
+  {
+    question: "Do I have to be a member of the club?",
+    answer:
+      "[CONFIRM — non-member eligibility for the consultation and for training packages.]",
+    unconfirmed: true,
+  },
+  {
+    question: "How much does personal training cost?",
+    answer:
+      "[CONFIRM — whether any rate may be published on the website. Until confirmed, pricing is discussed in the consultation and shown on the Join page.]",
+    unconfirmed: true,
+  },
+  {
+    question: "Do I have to choose a trainer?",
+    answer:
+      "No. Tell us what you are working toward and we match you. If the match is wrong, we change it.",
+  },
+  {
+    question: "What happens in the first session?",
+    answer:
+      "An assessment — movement, history, and where you are starting from — and the first version of your program.",
+  },
+  {
+    question: "How often would I train?",
+    answer:
+      "Most people start at one or two sessions a week. The consultation is where that gets decided against your schedule, not a package.",
+  },
+  {
+    question: "I have an injury. Can I still train?",
+    answer:
+      "Usually yes, and often that is the reason to. Bring any restrictions your provider has given you to the consultation.",
+  },
+  {
+    question: "Can two of us train together?",
+    answer: "Yes — Partner and Small Group Training is built for that.",
+  },
+  {
+    question: "Can I be coached without coming into the club?",
+    answer:
+      "Yes. Hybrid Coaching runs your program through Everfit with check-ins, either on its own or between in-person sessions.",
+  },
+  {
+    question: "What should I bring to the consultation?",
+    answer:
+      "Training shoes, water, and anything you already track. You will not be asked to work out.",
+  },
+  {
+    question: "What if I need to cancel or reschedule?",
+    answer:
+      "[CONFIRM — cancellation and rescheduling policy as configured in Setmore.]",
+    unconfirmed: true,
+  },
+  {
+    question: "Do you offer nutrition support?",
+    answer:
+      "[CONFIRM — current nutrition coaching scope and who delivers it.]",
+    unconfirmed: true,
+  },
+];
+
+export const CONSULTATION_FAQS: readonly FaqItem[] = [
+  {
+    question: "Is it really free?",
+    answer:
+      "Yes. It is completely free and there is no obligation to book anything afterwards.",
+  },
+  {
+    question: "Do I need to be a member?",
+    answer: "[CONFIRM — non-member eligibility.]",
+    unconfirmed: true,
+  },
+  {
+    question: "Will I be asked to work out?",
+    answer:
+      "No. Wear something comfortable, but the thirty minutes is a conversation and a look at how you move. Nothing strenuous.",
+  },
+  {
+    question: "Will I be given prices?",
+    answer:
+      "[CONFIRM — whether rates may be published or quoted in the consultation.]",
+    unconfirmed: true,
+  },
+  {
+    question: "What if I need to reschedule?",
+    answer:
+      "[CONFIRM — cancellation and rescheduling policy as configured in Setmore.]",
+    unconfirmed: true,
+  },
+];
+
+/* ── testimonials ──────────────────────────────────────────────────────── */
+
+/**
+ * §7. Verbatim only — light trimming for length is fine, rewriting is not.
+ * Never fabricate or composite a testimonial: not for a placeholder, not for
+ * a mockup, not "temporarily". A card either carries real `quote` text or
+ * declares `pending`, and the type makes those the only two options.
+ */
+export type Testimonial =
+  | { reviewer: string; trainer?: string; quote: string; pending?: never }
+  | { reviewer: string; trainer?: string; quote?: never; pending: true };
+
+/** From the Drive testimonials folder, trimmed for length only. */
+export const FEATURED_TESTIMONIAL = {
+  reviewer: "Jen",
+  attribution: "training with JR Romero since May 2025",
+  pull: "The accomplishment I'm most proud of is getting back to most of the sports and activities I enjoyed before my injury. I honestly wasn't sure that would be possible.",
+  body: [
+    "When I started training with JR at Timberhill Athletic Club, my primary goal was to continue the strength-building journey I had started in physical therapy after a complete proximal hamstring rupture. I spent a full year in physical therapy rebuilding basic function.",
+    "Despite consistently getting stronger and seeing remarkable muscle growth, I never feel sore after workouts. JR's programming is thoughtfully structured and progressive in a way that challenges me without leaving me feeling beat up.",
+    "To anyone considering personal training, I'd say it's never too late to start. Strength is one of the best investments you can make in your future.",
+  ],
+} as const;
+
+/** §7. Approved for immediate use — already public under the reviewer's own
+ *  name on the club's Setmore review page. The text still needs pasting. */
+export const REVIEWS: readonly Testimonial[] = [
+  { reviewer: "Jennifer Gervais", trainer: "Jess Caze", pending: true },
+  { reviewer: "Shawn Collins", trainer: "Josiah Iwamizu", pending: true },
+  { reviewer: "Barb LeBoss", trainer: "Conner McAdams", pending: true },
+  { reviewer: "Judy Saslow", trainer: "Emma Ciechanowski", pending: true },
+];
+
+export const PROFILE_REVIEWS: Record<string, readonly Testimonial[]> = {
+  "jr-romero": [
+    {
+      reviewer: "Jen · client since May 2025",
+      quote:
+        "Working with JR has helped me safely continue progressing long after formal physical therapy ended, giving me the guidance, accountability, and confidence to keep getting stronger.",
+    },
+    { reviewer: "[REVIEWER NAME]", pending: true },
+  ],
+};
+
+/* ── consultation page ─────────────────────────────────────────────────── */
+
+export const CONSULTATION_FACTS = [
+  { big: "30 min", small: "Length of the appointment" },
+  { big: "Free", small: "No charge, no commitment" },
+  // §9: there are no forms anywhere in this build. Booking is Setmore.
+  { big: "No forms", small: "Book straight into an open slot" },
+  {
+    big: REVIEW_STATS.average,
+    small: `Average across ${REVIEW_STATS.count} client reviews`,
+  },
+] as const;
+
+export const CONSULTATION_AGENDA = [
+  {
+    title: "What you want out of this",
+    body: "The goal in your own words. Not a category — the actual thing you want to be able to do.",
+  },
+  {
+    title: "Where you are starting",
+    body: "Training history, injuries, anything a provider has told you, and how much time you realistically have in a week.",
+  },
+  {
+    title: "How you move",
+    body: "A short look at a few basic movements so the first program starts from something real.",
+  },
+  {
+    title: "What happens next",
+    body: "Which trainer fits, what a first block would look like, and how to book it. Or nothing, if you would rather think about it.",
+  },
+] as const;
+
+export const CONSULTATION_IS_NOT = [
+  "A sales appointment. Nothing is signed in the room.",
+  "A workout. You will not leave sweating.",
+  "A commitment to a package, a trainer or a number of sessions.",
+  "Members only. Anyone can book one. [CONFIRM]",
+] as const;
+
+export const CONSULTATION_PREP = [
+  {
+    title: "Bring training shoes",
+    body: "You will be asked to move through a few basic patterns. Nothing you need to warm up for.",
+  },
+  {
+    title: "Bring your restrictions",
+    body: "Anything a doctor or physical therapist has told you to avoid. It shapes the program from day one.",
+  },
+  {
+    title: "Bring the honest schedule",
+    body: "Not the schedule you wish you had. A plan built for two days a week that you keep beats four that you do not.",
+  },
+] as const;
+
+/* ── analytics ─────────────────────────────────────────────────────────── */
+
+/** §9. One CTA event, with the source section as a parameter. Without the
+ *  parameter the placement map cannot be evaluated after launch. */
+export type CtaSection =
+  | "header"
+  | "hero"
+  | "how-it-works"
+  | "team"
+  | "options"
+  | "final"
+  | "sticky"
+  | "footer"
+  | "profile";

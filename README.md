@@ -1,22 +1,35 @@
 # Timberhill Athletic Club
 
-Everything Timberhill needs is built and maintained here. Each build-out lives
-in its own directory, is deployed on its own, and shares this repository with
-the others and nothing else.
+Everything Timberhill needs is built and maintained here. Today that is one
+Next.js application serving two audiences from one deployment: the private
+operations platform, and the public website.
 
 | Path | What it is |
 |---|---|
-| `src/`, `supabase/`, `docs/`, `tests/`, `e2e/`, `scripts/` | **Performance Operations** — payroll, revenue, KPI and department analytics. Next.js + Supabase. Documented below. |
-| `sites/personal-training-hub/` | **Personal training website** — the `/personal-training/` hub, trainers index, consultation page and trainer profile for timberhillac.com. Plain HTML/CSS/JS, no build step. See its own README. |
+| `src/app/(app)/` + `src/lib/`, `supabase/`, `tests/`, `e2e/`, `docs/` | **Performance Operations** — payroll, revenue, KPI and department analytics. Private; every route requires a session. Documented below. |
+| `src/app/(marketing)/` | **Public website** — the Personal Training hub, trainers index, consultation page and trainer profiles for timberhillac.com. Open to the world. |
 
-Nothing under `sites/` imports from the application, and the application never
-reaches into `sites/`. The app's tooling is scoped to match: `vitest` collects
-`tests/unit`, `playwright` collects `e2e`, `tsconfig` collects `**/*.ts`, and
-`eslint.config.mjs` ignores `sites/**` explicitly.
+Both are served by the one Next.js application, from one deployment, on one
+domain. The seam between them is enforced in three places, and all three matter:
 
-**Adding a build-out:** give it its own top-level directory — or a folder under
-`sites/` if it is a web property — keep it self-contained, and add a row to the
-table above.
+- **Access.** `src/proxy.ts` protects everything by default. The marketing
+  prefixes are the single explicit exception, matched by whole segment, and
+  answered before any Supabase work — those pages need no session and must not
+  pay for one. `e2e/live-marketing.spec.ts` is the regression test.
+- **Design tokens.** The marketing design system and the application both
+  define `--color-accent` and `--color-surface` with different values. The
+  marketing tokens live on `.tac-site`, never `:root`; on `:root` they would
+  repaint the operations UI. `e2e/marketing.spec.ts` asserts the isolation in
+  both directions.
+- **Data.** Nothing under `(marketing)` reads Supabase, takes a session or
+  renders a form. Its content is typed constants in
+  `src/lib/marketing/personal-training.ts`, so the public pages prerender as
+  static HTML and carry no access to anything private.
+
+**Adding a build-out:** a public page belongs in `src/app/(marketing)/`, with its
+route prefix added to `PUBLIC_MARKETING_PREFIXES` in `src/proxy.ts` and a case
+in `e2e/live-marketing.spec.ts`. Anything that is not a web page gets its own
+top-level directory. Either way, add a row to the table above.
 
 ---
 
@@ -26,10 +39,15 @@ Internal payroll, revenue, KPI, and department analytics platform for gyms,
 personal training departments, and sports-performance organizations.
 
 **This application is fully independent.** It must never connect to, reference,
-or deploy over any other application, Supabase project, or Vercel project —
-including anything else in this repository.
+or deploy over any other application, Supabase project, or Vercel project.
 
-Everything from here down documents it.
+The public marketing pages in `src/app/(marketing)/` share its deployment and
+nothing else: they read no Supabase data, take no session, and are reachable
+from the application only as ordinary outbound links. The dependency runs one
+way and is deliberate — `src/proxy.ts` has to know which prefixes are public in
+order to protect everything else by default.
+
+Everything from here down documents the operations platform.
 
 ## Stack
 

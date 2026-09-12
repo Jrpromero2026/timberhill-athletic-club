@@ -24,7 +24,32 @@ function isPublic(pathname: string): boolean {
   return PUBLIC_PATHS.has(pathname) || pathname.startsWith("/auth/");
 }
 
+/**
+ * Public marketing routes — the Personal Training hub and everything beneath
+ * it, served by the `(marketing)` route group.
+ *
+ * These are the ONLY paths in this application open to the world. They are
+ * matched by exact segment rather than loose prefix, so a path such as
+ * `/personal-training-internal` can never fall through as public.
+ *
+ * They are answered before any Supabase work below, for two reasons: they need
+ * no session at all, and they are statically prerendered pages whose hero
+ * image is the LCP element — a `getUser()` round trip on every request would
+ * be pure latency against the < 2.5s target in the build brief §9.
+ */
+const PUBLIC_MARKETING_PREFIXES = ["/personal-training"] as const;
+
+function isPublicMarketing(pathname: string): boolean {
+  return PUBLIC_MARKETING_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
+}
+
 export async function proxy(request: NextRequest) {
+  if (isPublicMarketing(request.nextUrl.pathname)) {
+    return NextResponse.next();
+  }
+
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) return NextResponse.next();
