@@ -18,9 +18,17 @@ const ROUTES: Array<{ path: string; heading: string }> = [
   { path: "/audit", heading: "Audit" },
 ];
 
-test("root redirects to /overview", async ({ page }) => {
+test("root redirects to the public site, not the operations app", async ({
+  page,
+}) => {
+  // The public owns the front door; staff enter the platform at /overview.
   await page.goto("/");
-  await page.waitForURL("**/overview");
+  await page.waitForURL("**/personal-training");
+  await expect(page).toHaveTitle(/Timberhill Athletic Club/);
+});
+
+test("the operations app is still reachable at /overview", async ({ page }) => {
+  await page.goto("/overview");
   await expect(page).toHaveTitle(/Overview · Performance Operations/);
 });
 

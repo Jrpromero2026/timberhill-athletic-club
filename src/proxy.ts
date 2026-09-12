@@ -40,6 +40,11 @@ function isPublic(pathname: string): boolean {
 const PUBLIC_MARKETING_PREFIXES = ["/personal-training"] as const;
 
 function isPublicMarketing(pathname: string): boolean {
+  // The root is public because it is the public front door: it redirects to
+  // the marketing hub, and an anonymous visitor must reach that redirect
+  // rather than being bounced to /login on the way.
+  if (pathname === "/") return true;
+
   return PUBLIC_MARKETING_PREFIXES.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
   );
