@@ -21,7 +21,7 @@ import {
  * RLS back these checks).
  */
 
-const COMP_PATH = "/configuration/compensation";
+const COMP_PATH = "/performance-operations/configuration/compensation";
 
 /* ------------------------------------------------------------------ plans */
 
@@ -581,7 +581,7 @@ export async function assignTrainerCompensation(
       effective_from: values.effectiveFrom,
     },
   });
-  revalidatePath(`/trainers/${values.trainerId}/compensation`);
+  revalidatePath(`/performance-operations/trainers/${values.trainerId}/compensation`);
   return { message: "Compensation assignment created." };
 }
 
@@ -621,5 +621,5 @@ export async function endTrainerCompensationAssignment(
     action: "trainer_compensation_assignment_ended",
     metadata: { trainer_id: assignment.trainer_id, purpose: assignment.purpose },
   });
-  revalidatePath(`/trainers/${assignment.trainer_id}/compensation`);
+  revalidatePath(`/performance-operations/trainers/${assignment.trainer_id}/compensation`);
 }

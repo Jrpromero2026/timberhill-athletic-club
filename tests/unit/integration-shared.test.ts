@@ -247,7 +247,7 @@ describe("email delivery abstraction", () => {
       to: "user@example.com",
       subject: "s",
       bodyText: "b",
-      linkPath: "/reports",
+      linkPath: "/performance-operations/reports",
       attachment: null,
     });
     expect(ok.accepted).toBe(true);

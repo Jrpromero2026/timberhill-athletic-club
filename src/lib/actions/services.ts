@@ -13,7 +13,7 @@ import {
   type ActionState,
 } from "./shared";
 
-const SERVICES_PATH = "/configuration/services";
+const SERVICES_PATH = "/performance-operations/configuration/services";
 
 function parseServiceForm(formData: FormData) {
   const flags = Object.fromEntries(

@@ -65,7 +65,7 @@ export function TrainerTable({ rows }: { rows: TrainerListRow[] }) {
         header: "Trainer",
         cell: (info) => (
           <Link
-            href={`/trainers/${info.row.original.id}`}
+            href={`/performance-operations/trainers/${info.row.original.id}`}
             className="font-medium text-ink hover:text-accent"
           >
             {info.getValue()}

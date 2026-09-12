@@ -47,7 +47,7 @@ async function selectPeriod(page: Page): Promise<void> {
 }
 
 test("1. import and post synthetic sessions", async ({ page }) => {
-  await page.goto("/imports/new");
+  await page.goto("/performance-operations/imports/new");
   await page.getByLabel("Source system").selectOption("setmore");
   await page.getByLabel(/CSV file/).setInputFiles({
     name: FILE_NAME,
@@ -133,11 +133,11 @@ test("1. import and post synthetic sessions", async ({ page }) => {
 });
 
 test("2. reports require a reporting period, then render engine metrics", async ({ page }) => {
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   await expect(page.getByText("Select a reporting period")).toBeVisible({ timeout: 15_000 });
 
   await selectPeriod(page);
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   await page.getByTestId("report-org-metrics").waitFor({ timeout: 20_000 });
 
   // Organization appointment + revenue metrics computed by the engine.
@@ -150,9 +150,9 @@ test("2. reports require a reporting period, then render engine metrics", async 
 });
 
 test("3. payroll metrics show honest waiting state, not fake zeros", async ({ page }) => {
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   await selectPeriod(page);
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   await page.getByTestId("report-payroll").waitFor({ timeout: 20_000 });
   const grossCard = page.locator('[data-metric="payroll_gross_cents"]');
   await expect(grossCard).toHaveAttribute("data-health", /waiting_for_payroll|healthy/);
@@ -164,9 +164,9 @@ test("3. payroll metrics show honest waiting state, not fake zeros", async ({ pa
 });
 
 test("4. trainer breakdown, readiness, and executive summary render", async ({ page }) => {
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   await selectPeriod(page);
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   await page.getByTestId("report-trainers").waitFor({ timeout: 20_000 });
 
   const trainers = page.getByTestId("report-trainers");
@@ -187,16 +187,16 @@ test("4. trainer breakdown, readiness, and executive summary render", async ({ p
 });
 
 test("5. workspace switching rescopes reports", async ({ page }) => {
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   await selectPeriod(page);
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   await page.getByTestId("report-org-metrics").waitFor({ timeout: 20_000 });
 
   // Switch to G3 — a different organization with its own (empty) periods.
   await page.waitForLoadState("networkidle");
   await page.getByLabel("Workspace").selectOption({ label: "G3 Sports & Fitness" });
   await page.waitForTimeout(2000);
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   // No Timberhill metrics may leak: either the period prompt or G3's own
   // (import-waiting) metrics appear — never $164.00.
   await expect(page.getByText("$164.00")).toHaveCount(0);
@@ -222,9 +222,9 @@ test("6. reverse the batch (cleanup) and metrics react", async ({ page }) => {
   });
 
   // The engine reads only ACTIVE ledger rows — reversed data disappears.
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   await selectPeriod(page);
-  await page.goto("/reports");
+  await page.goto("/performance-operations/reports");
   await page.getByTestId("report-org-metrics").waitFor({ timeout: 20_000 });
   await expect(page.locator('[data-metric="revenue_listed_cents"]')).not.toContainText(
     "$164.00",

@@ -205,7 +205,7 @@ export async function renderDashboardWidget(
     case "text_note":
       return { kind: "text", text: config.text ?? "" };
     case "report_link":
-      return { kind: "link", label: config.label ?? "Report", path: config.path ?? "/reports" };
+      return { kind: "link", label: config.label ?? "Report", path: config.path ?? "/performance-operations/reports" };
     case "scorecard":
     case "cohort_table":
     case "cohort_heatmap":
@@ -221,10 +221,10 @@ export async function renderDashboardWidget(
               : "Open the executive overview",
         path:
           widget.widget_type === "scorecard"
-            ? "/analytics/scorecards"
+            ? "/performance-operations/analytics/scorecards"
             : widget.widget_type.startsWith("cohort")
-              ? "/analytics/cohorts"
-              : "/overview",
+              ? "/performance-operations/analytics/cohorts"
+              : "/performance-operations/overview",
       };
     default:
       return { kind: "unavailable", reason: `Unknown widget type ${widget.widget_type}.` };

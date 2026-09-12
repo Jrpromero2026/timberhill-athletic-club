@@ -100,7 +100,7 @@ export async function proxy(request: NextRequest) {
     dest.pathname =
       nextParam && nextParam.startsWith("/") && !nextParam.startsWith("//")
         ? nextParam
-        : "/overview";
+        : "/performance-operations/overview";
     dest.search = "";
     return NextResponse.redirect(dest);
   }

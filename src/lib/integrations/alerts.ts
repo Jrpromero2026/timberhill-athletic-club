@@ -39,7 +39,7 @@ export function deriveIntegrationAlerts(
         severity: "critical",
         title: "Connection validation failed",
         detail: connection.name,
-        link: `/configuration/integrations/${connection.id}`,
+        link: `/performance-operations/configuration/integrations/${connection.id}`,
       });
     }
     if (connection.status === "revoked") {
@@ -49,7 +49,7 @@ export function deriveIntegrationAlerts(
         severity: "critical",
         title: "Credentials revoked",
         detail: `${connection.name} fails closed until new credentials are stored.`,
-        link: `/configuration/integrations/${connection.id}`,
+        link: `/performance-operations/configuration/integrations/${connection.id}`,
       });
     }
     if (connection.status === "degraded") {
@@ -65,7 +65,7 @@ export function deriveIntegrationAlerts(
             ? "Schema drift detected"
             : "Provider degraded",
         detail: connection.name,
-        link: `/configuration/integrations/${connection.id}/health`,
+        link: `/performance-operations/configuration/integrations/${connection.id}/health`,
       });
     }
   }
@@ -78,7 +78,7 @@ export function deriveIntegrationAlerts(
         severity: run.failureCode === "rate_limited" ? "warning" : "critical",
         title: run.failureCode === "rate_limited" ? "Provider rate limited" : "Sync failed",
         detail: `${run.connectionName} · ${run.failureCode ?? "failure"}`,
-        link: `/integrations/runs/${run.id}`,
+        link: `/performance-operations/integrations/runs/${run.id}`,
       });
     }
   }
@@ -91,7 +91,7 @@ export function deriveIntegrationAlerts(
       severity: "critical",
       title: "Dead-letter job",
       detail: `${job.jobType} after ${job.attemptCount} attempt(s)`,
-      link: "/integrations/jobs",
+      link: "/performance-operations/integrations/jobs",
     });
   }
   const exhausted = inputs.jobs.filter(
@@ -110,7 +110,7 @@ export function deriveIntegrationAlerts(
           ? "Job permanently failed"
           : "Job retrying repeatedly",
       detail: `${job.jobType} (attempt ${job.attemptCount})`,
-      link: "/integrations/jobs",
+      link: "/performance-operations/integrations/jobs",
     });
   }
 
@@ -122,7 +122,7 @@ export function deriveIntegrationAlerts(
         severity: "warning",
         title: "Report delivery failed",
         detail: `${delivery.recipientMasked} · ${delivery.status}`,
-        link: "/integrations/deliveries",
+        link: "/performance-operations/integrations/deliveries",
       });
     }
   }
@@ -134,7 +134,7 @@ export function deriveIntegrationAlerts(
       severity: "info",
       title: "Integration import awaits review",
       detail: batch.filename,
-      link: `/imports/${batch.id}`,
+      link: `/performance-operations/imports/${batch.id}`,
     });
   }
 

@@ -53,7 +53,7 @@ export async function createDashboardAction(
     action: "dashboard_created",
     metadata: { name },
   });
-  revalidatePath("/analytics/dashboards");
+  revalidatePath("/performance-operations/analytics/dashboards");
   return { message: "Dashboard created.", data: { dashboardId: created.id } };
 }
 
@@ -84,7 +84,7 @@ export async function renameDashboardAction(
     action: "dashboard_updated",
     metadata: { name },
   });
-  revalidatePath(`/analytics/dashboards/${dashboardId}`);
+  revalidatePath(`/performance-operations/analytics/dashboards/${dashboardId}`);
   return { message: "Dashboard updated." };
 }
 
@@ -134,7 +134,7 @@ export async function shareDashboardAction(
     action: "dashboard_shared",
     metadata: { from_scope: dashboard.shared_scope, to_scope: scope },
   });
-  revalidatePath(`/analytics/dashboards/${dashboardId}`);
+  revalidatePath(`/performance-operations/analytics/dashboards/${dashboardId}`);
   return { message: `Sharing set to ${scope}.` };
 }
 
@@ -163,7 +163,7 @@ export async function archiveDashboardAction(
     entityId: dashboardId,
     action: restore ? "dashboard_restored" : "dashboard_archived",
   });
-  revalidatePath("/analytics/dashboards");
+  revalidatePath("/performance-operations/analytics/dashboards");
   return { message: restore ? "Dashboard restored." : "Dashboard archived (its history is preserved)." };
 }
 
@@ -228,7 +228,7 @@ export async function duplicateDashboardAction(
     action: "dashboard_duplicated",
     metadata: { source_dashboard_id: dashboardId },
   });
-  revalidatePath("/analytics/dashboards");
+  revalidatePath("/performance-operations/analytics/dashboards");
   return { message: "Dashboard duplicated as a personal copy.", data: { dashboardId: copy.id } };
 }
 
@@ -295,7 +295,7 @@ export async function addWidgetAction(
     config: config as never,
   });
   if (error) return { error: `Could not add the widget (${error.message.slice(0, 120)}).` };
-  revalidatePath(`/analytics/dashboards/${dashboardId}`);
+  revalidatePath(`/performance-operations/analytics/dashboards/${dashboardId}`);
   return { message: "Widget added." };
 }
 
@@ -317,7 +317,7 @@ export async function removeWidgetAction(
     .delete()
     .eq("id", widgetId);
   if (error) return { error: `Could not remove the widget (${error.message.slice(0, 120)}).` };
-  revalidatePath(`/analytics/dashboards/${widget.dashboard_id}`);
+  revalidatePath(`/performance-operations/analytics/dashboards/${widget.dashboard_id}`);
   return { message: "Widget removed." };
 }
 
@@ -353,7 +353,7 @@ export async function moveWidgetAction(
     .from("analytics_dashboard_widgets")
     .update({ position: widget.position })
     .eq("id", swapWith.id);
-  revalidatePath(`/analytics/dashboards/${widget.dashboard_id}`);
+  revalidatePath(`/performance-operations/analytics/dashboards/${widget.dashboard_id}`);
   return { message: "Widget moved." };
 }
 
@@ -377,7 +377,7 @@ export async function resizeWidgetAction(
     .update({ width })
     .eq("id", widgetId);
   if (error) return { error: `Could not resize (${error.message.slice(0, 120)}).` };
-  revalidatePath(`/analytics/dashboards/${widget.dashboard_id}`);
+  revalidatePath(`/performance-operations/analytics/dashboards/${widget.dashboard_id}`);
   return { message: "Widget resized." };
 }
 
@@ -422,6 +422,6 @@ export async function setDefaultDashboardAction(
     action: "dashboard_default_set",
     metadata: { scope },
   });
-  revalidatePath("/analytics/dashboards");
+  revalidatePath("/performance-operations/analytics/dashboards");
   return { message: scope === "personal" ? "Set as your default dashboard." : "Set as the organization default." };
 }

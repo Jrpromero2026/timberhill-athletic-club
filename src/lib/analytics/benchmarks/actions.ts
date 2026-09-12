@@ -172,7 +172,7 @@ export async function createBenchmarkAction(
     action: "benchmark_created",
     metadata: { metric_id: metricId, source_type: sourceType },
   });
-  revalidatePath("/analytics/benchmarks");
+  revalidatePath("/performance-operations/analytics/benchmarks");
   return { message: "Benchmark created as a draft — it participates in comparisons once approved." };
 }
 
@@ -210,7 +210,7 @@ async function transitionBenchmark(
     action: auditAction,
     metadata: { from_status: benchmark.status, to_status: toStatus },
   });
-  revalidatePath("/analytics/benchmarks");
+  revalidatePath("/performance-operations/analytics/benchmarks");
   return { message: `Benchmark ${toStatus}.` };
 }
 

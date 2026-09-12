@@ -69,7 +69,7 @@ async function runWorker(page: Page, limit = 5) {
 test("1. provider catalog shows blocked Setmore/Acuity; create draft connection", async ({
   page,
 }) => {
-  await page.goto("/configuration/integrations");
+  await page.goto("/performance-operations/configuration/integrations");
   await page.getByTestId("provider-catalog").waitFor({ timeout: 20_000 });
   await expect(page.locator('[data-provider="setmore_api"]')).toHaveAttribute(
     "data-provider-status",
@@ -84,7 +84,7 @@ test("1. provider catalog shows blocked Setmore/Acuity; create draft connection"
     "available",
   );
 
-  await page.goto("/configuration/integrations/new");
+  await page.goto("/performance-operations/configuration/integrations/new");
   await page.locator("#conn-provider").selectOption("test_provider");
   await page.locator("#conn-name").fill(CONN_NAME);
   await page.getByRole("button", { name: "Create draft connection" }).click();
@@ -94,7 +94,7 @@ test("1. provider catalog shows blocked Setmore/Acuity; create draft connection"
 });
 
 test("2. submit credentials securely, validate, activate", async ({ page }) => {
-  await page.goto(`/configuration/integrations/${connectionId}`);
+  await page.goto(`/performance-operations/configuration/integrations/${connectionId}`);
   await page.locator("#cred-secret").fill(`test_e2e_${RUN}`);
   await page.getByTestId("submit-credential").click();
   // Fingerprint only — the secret value is never echoed back.
@@ -112,7 +112,7 @@ test("2. submit credentials securely, validate, activate", async ({ page }) => {
 
 test("3. create sync definition and run the first sync", async ({ page }) => {
   test.setTimeout(120_000);
-  await page.goto(`/configuration/integrations/${connectionId}`);
+  await page.goto(`/performance-operations/configuration/integrations/${connectionId}`);
   await page.locator('select[name="window_strategy"]').selectOption("fixed_range");
   await page.locator('input[name="window_start"]').fill("2099-07-01");
   await page.locator('input[name="window_end"]').fill("2099-07-31");
@@ -128,7 +128,7 @@ test("3. create sync definition and run the first sync", async ({ page }) => {
 test("4. sync run recorded with cursor + stats; batch requires review", async ({ page }) => {
   // Navigate through the UI (also warms Turbopack's on-demand compile of
   // the nested route, which can transiently 404 on a cold first hit).
-  await page.goto(`/configuration/integrations/${connectionId}`);
+  await page.goto(`/performance-operations/configuration/integrations/${connectionId}`);
   await page.getByRole("link", { name: "History" }).click();
   await page.waitForURL(/\/history$/, { timeout: 20_000 });
   const row = page.locator('tr[data-run-status="succeeded"]').first();
@@ -155,12 +155,12 @@ test("4. sync run recorded with cursor + stats; batch requires review", async ({
   // (evidence preserved): pending e2e batches must never linger — they
   // would honestly block other org workflows (e.g. period-close
   // readiness) and any later spec failure would strand them.
-  await page.goto(`/integrations/runs/${syncRunId}`);
+  await page.goto(`/performance-operations/integrations/runs/${syncRunId}`);
   await page.getByTestId("discard-batch").click();
   await expect
     .poll(
       async () => {
-        await page.goto(`/imports/${batchId}`);
+        await page.goto(`/performance-operations/imports/${batchId}`);
         return page.getByText(/discarded by an operator/i).count();
       },
       { timeout: 60_000 },
@@ -170,7 +170,7 @@ test("4. sync run recorded with cursor + stats; batch requires review", async ({
 
 test("5. re-running the sync is idempotent (no duplicate batch)", async ({ page }) => {
   test.setTimeout(90_000);
-  await page.goto(`/configuration/integrations/${connectionId}`);
+  await page.goto(`/performance-operations/configuration/integrations/${connectionId}`);
   await page.getByTestId("run-sync-now").click();
   await expect(page.getByText(/No changes: 6 record\(s\) already on file/)).toBeVisible({
     timeout: 60_000,
@@ -180,7 +180,7 @@ test("5. re-running the sync is idempotent (no duplicate batch)", async ({ page 
 test("6. auth failure surfaces classified error, alert, and health entry", async ({ page }) => {
   test.setTimeout(120_000);
   // Rotate to the simulated-failure credential.
-  await page.goto(`/configuration/integrations/${connectionId}`);
+  await page.goto(`/performance-operations/configuration/integrations/${connectionId}`);
   await page.locator("#cred-secret").fill(`fail_auth_${RUN}`);
   await page.getByTestId("submit-credential").click();
   await expect(page.getByText(/fingerprint/)).toBeVisible({ timeout: 20_000 });
@@ -191,7 +191,7 @@ test("6. auth failure surfaces classified error, alert, and health entry", async
   });
 
   // Health page shows the classified failure with a recommended action.
-  await page.goto(`/configuration/integrations/${connectionId}`);
+  await page.goto(`/performance-operations/configuration/integrations/${connectionId}`);
   await page.getByRole("link", { name: "Health" }).click();
   await page.waitForURL(/\/health$/, { timeout: 20_000 });
   await expect(
@@ -200,7 +200,7 @@ test("6. auth failure surfaces classified error, alert, and health entry", async
   await expect(page.getByText(/Rotate the connection credentials/).first()).toBeVisible();
 
   // Automation dashboard alert deep-links to the failed run.
-  await page.goto("/integrations");
+  await page.goto("/performance-operations/integrations");
   const alert = page.locator('[data-alert-code="sync_failed"]').first();
   await expect(alert).toBeVisible({ timeout: 20_000 });
   await alert.getByRole("link").click();
@@ -210,7 +210,7 @@ test("6. auth failure surfaces classified error, alert, and health entry", async
 
 test("7. credential rotation restores sync; pause and resume work", async ({ page }) => {
   test.setTimeout(120_000);
-  await page.goto(`/configuration/integrations/${connectionId}`);
+  await page.goto(`/performance-operations/configuration/integrations/${connectionId}`);
   await page.locator("#cred-secret").fill(`test_e2e_again_${RUN}`);
   await page.getByTestId("submit-credential").click();
   await expect(page.getByText(/fingerprint/)).toBeVisible({ timeout: 20_000 });
@@ -228,7 +228,7 @@ test("7. credential rotation restores sync; pause and resume work", async ({ pag
 });
 
 test("8. delivery channel: test mode with default-off policies", async ({ page }) => {
-  await page.goto("/integrations/deliveries");
+  await page.goto("/performance-operations/integrations/deliveries");
   await page.getByTestId("delivery-channel").waitFor({ timeout: 20_000 });
   await page.locator('select[name="provider"]').selectOption("test");
   await page.getByRole("button", { name: "Save channel" }).click();
@@ -240,9 +240,9 @@ test("9. scheduled report: enable execution, run now, worker delivers via test c
 }) => {
   test.setTimeout(180_000);
   // Create a definition with the e2e admin as recipient (org member).
-  await page.goto("/reports?tab=scheduled");
+  await page.goto("/performance-operations/reports?tab=scheduled");
   await selectPeriod(page);
-  await page.goto("/reports?tab=scheduled");
+  await page.goto("/performance-operations/reports?tab=scheduled");
   await page.locator("#sched-type").waitFor({ timeout: 20_000 });
   await page.locator("#sched-type").selectOption("quick_report");
   await page.locator("#sched-frequency").selectOption("daily");
@@ -262,7 +262,7 @@ test("9. scheduled report: enable execution, run now, worker delivers via test c
   // idempotency-safe).
   let succeeded = 0;
   for (let attempt = 0; attempt < 2 && succeeded === 0; attempt++) {
-    await page.goto("/reports?tab=scheduled");
+    await page.goto("/performance-operations/reports?tab=scheduled");
     await page.getByTestId("run-report-now").first().waitFor({ timeout: 20_000 });
     await page.getByTestId("run-report-now").first().click();
     const deadline = Date.now() + 60_000;
@@ -283,7 +283,7 @@ test("9. scheduled report: enable execution, run now, worker delivers via test c
   const summary = await runWorker(page);
   expect(summary.claimed).toBeGreaterThan(0);
 
-  await page.goto("/integrations/deliveries");
+  await page.goto("/performance-operations/integrations/deliveries");
   await expect(
     page.locator('[data-delivery-status="accepted"]').first(),
   ).toBeVisible({ timeout: 20_000 });
@@ -297,9 +297,9 @@ test("10. delivery failure (channel unconfigured) then manual retry succeeds", a
   // is THIS scenario's; then queue a delivery and unconfigure the
   // channel BEFORE the worker runs.
   await drainWorker(page);
-  await page.goto("/reports?tab=scheduled");
+  await page.goto("/performance-operations/reports?tab=scheduled");
   await selectPeriod(page);
-  await page.goto("/reports?tab=scheduled");
+  await page.goto("/performance-operations/reports?tab=scheduled");
   await page.getByTestId("run-report-now").first().waitFor({ timeout: 20_000 });
   // The history list is capped, so detect the NEW run by the newest
   // row's content changing (list is ordered newest-first).
@@ -323,7 +323,7 @@ test("10. delivery failure (channel unconfigured) then manual retry succeeds", a
     )
     .not.toBe(firstRowBefore);
 
-  await page.goto("/integrations/deliveries");
+  await page.goto("/performance-operations/integrations/deliveries");
   await page.locator('select[name="provider"]').selectOption("none_configured");
   await page.getByRole("button", { name: "Save channel" }).click();
   await expect
@@ -386,7 +386,7 @@ test("11. job queue: dead-letter the failed job, requeue with reason, worker com
   page,
 }) => {
   test.setTimeout(180_000);
-  await page.goto("/integrations/jobs");
+  await page.goto("/performance-operations/integrations/jobs");
   await page.getByTestId("job-table").waitFor({ timeout: 20_000 });
   const failedRow = page.locator('tr[data-job-status="permanently_failed"]').first();
   await expect(failedRow).toBeVisible({ timeout: 20_000 });
@@ -419,12 +419,12 @@ test("12. sync-failure signal reaches operators (alert; notification to peers)",
   // notification row for the OTHER integration:read holder was verified
   // directly in the database (see PHASE_8_REPORT §28). What the acting
   // operator sees is the pipeline-state alert:
-  await page.goto("/integrations");
+  await page.goto("/performance-operations/integrations");
   await expect(page.locator('[data-alert-code="sync_failed"]').first()).toBeVisible({
     timeout: 20_000,
   });
   // And their notification center still functions (fixture present).
-  await page.goto("/notifications?tab=pinned");
+  await page.goto("/performance-operations/notifications?tab=pinned");
   await expect(page.getByText("E2E fixture notification").first()).toBeVisible({
     timeout: 20_000,
   });
@@ -433,29 +433,29 @@ test("12. sync-failure signal reaches operators (alert; notification to peers)",
 test("13. disable connection; responsive dashboard; cleanup leaves honest state", async ({
   page,
 }) => {
-  await page.goto(`/configuration/integrations/${connectionId}`);
+  await page.goto(`/performance-operations/configuration/integrations/${connectionId}`);
   await page.getByTestId("disable-connection").click();
   await expect(page.getByTestId("connection-status")).toHaveText("disabled", {
     timeout: 20_000,
   });
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/integrations");
+  await page.goto("/performance-operations/integrations");
   await expect(page.getByTestId("connection-health")).toBeVisible({ timeout: 20_000 });
   await expect(page.getByTestId("job-queue-summary")).toBeVisible();
 
   // The integration batch stayed in its discarded (failed) state — the
   // evidence is preserved and nothing was ever posted.
   await page.setViewportSize({ width: 1280, height: 800 });
-  await page.goto(`/imports/${batchId}`);
+  await page.goto(`/performance-operations/imports/${batchId}`);
   await expect(page.getByText(/discarded by an operator/i).first()).toBeVisible({
     timeout: 20_000,
   });
 
   // Stop this run's schedule from accumulating future worker jobs.
-  await page.goto("/reports?tab=scheduled");
+  await page.goto("/performance-operations/reports?tab=scheduled");
   await selectPeriod(page);
-  await page.goto("/reports?tab=scheduled");
+  await page.goto("/performance-operations/reports?tab=scheduled");
   await page.getByTestId("toggle-execution").first().waitFor({ timeout: 20_000 });
   await page.getByTestId("toggle-execution").first().click();
   await page.waitForTimeout(1500);

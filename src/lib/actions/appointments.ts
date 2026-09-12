@@ -99,7 +99,7 @@ export async function correctAppointmentStatus(
     },
   });
 
-  revalidatePath("/appointments");
-  revalidatePath(`/appointments/${appointment.id}`);
+  revalidatePath("/performance-operations/appointments");
+  revalidatePath(`/performance-operations/appointments/${appointment.id}`);
   return { message: "Status corrected; the change is recorded in correction history." };
 }

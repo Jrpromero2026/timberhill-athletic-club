@@ -75,7 +75,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
         title: "Payroll calculation failed",
         detail: `${run.name} is in a failed state.`,
         action: "Open the run, fix the underlying issue, and recalculate.",
-        link: `/payroll/${run.id}`,
+        link: `/performance-operations/payroll/${run.id}`,
         entityId: run.id,
       });
       continue;
@@ -88,7 +88,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
         title: "Payroll blocked",
         detail: `${run.name} has ${run.blockingIssueCount} open blocking issue(s).`,
         action: "Resolve the blocking issues in the review workspace.",
-        link: `/payroll/${run.id}/review`,
+        link: `/performance-operations/payroll/${run.id}/review`,
         entityId: run.id,
       });
     }
@@ -100,7 +100,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
         title: "Payroll awaiting approval",
         detail: `${run.name} is ready for approval.`,
         action: "Review and approve the run.",
-        link: `/payroll/${run.id}`,
+        link: `/performance-operations/payroll/${run.id}`,
         entityId: run.id,
       });
     } else if (run.status === "needs_review") {
@@ -111,7 +111,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
         title: "Payroll in review",
         detail: `${run.name} needs review before approval.`,
         action: "Complete trainer reviews and submit for approval.",
-        link: `/payroll/${run.id}/review`,
+        link: `/performance-operations/payroll/${run.id}/review`,
         entityId: run.id,
       });
     } else if (run.status === "reopened") {
@@ -122,7 +122,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
         title: "Payroll reopened",
         detail: `${run.name} was reopened and must be recalculated and re-posted.`,
         action: "Recalculate, re-review, and re-post the run.",
-        link: `/payroll/${run.id}`,
+        link: `/performance-operations/payroll/${run.id}`,
         entityId: run.id,
       });
     }
@@ -134,7 +134,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
         title: "Late-arriving appointments",
         detail: `${run.name}: ${run.openLateArrivals} appointment(s) imported after the cutoff are not included.`,
         action: "Recalculate with a refreshed cutoff or leave for a supplemental run.",
-        link: `/payroll/${run.id}/review`,
+        link: `/performance-operations/payroll/${run.id}/review`,
         entityId: run.id,
       });
     }
@@ -150,7 +150,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
         title: "Import failed",
         detail: `${batch.filename} failed processing.`,
         action: "Open the batch to inspect its failure code.",
-        link: `/imports/${batch.id}`,
+        link: `/performance-operations/imports/${batch.id}`,
         entityId: batch.id,
       });
     } else if (batch.status === "needs_review") {
@@ -161,7 +161,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
         title: "Import awaiting review",
         detail: `${batch.filename} has rows to resolve.`,
         action: "Work the review queues, then approve the batch.",
-        link: `/imports/${batch.id}/review`,
+        link: `/performance-operations/imports/${batch.id}/review`,
         entityId: batch.id,
       });
     } else if (batch.status === "ready_for_approval") {
@@ -172,7 +172,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
         title: "Import ready for approval",
         detail: `${batch.filename} is fully resolved and awaiting approval.`,
         action: "Approve and post the batch.",
-        link: `/imports/${batch.id}/approval`,
+        link: `/performance-operations/imports/${batch.id}/approval`,
         entityId: batch.id,
       });
     } else if (batch.status === "approved") {
@@ -183,7 +183,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
         title: "Import approved, not posted",
         detail: `${batch.filename} is approved and can be posted to the ledger.`,
         action: "Post the batch.",
-        link: `/imports/${batch.id}`,
+        link: `/performance-operations/imports/${batch.id}`,
         entityId: batch.id,
       });
     }
@@ -218,7 +218,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
     "compensation_missing",
     "Compensation missing",
     "Assign published compensation plans to the remaining trainers.",
-    "/configuration/compensation",
+    "/performance-operations/configuration/compensation",
     "warning",
   );
   readinessAlert(
@@ -226,7 +226,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
     "trainer_missing_assignment",
     "Trainer department assignments incomplete",
     "Assign the remaining trainers to departments.",
-    "/trainers",
+    "/performance-operations/trainers",
     "warning",
   );
   readinessAlert(
@@ -234,7 +234,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
     "service_alias_missing",
     "Service aliases missing",
     "Add import aliases so services auto-match during imports.",
-    "/configuration/services",
+    "/performance-operations/configuration/services",
     "info",
   );
   readinessAlert(
@@ -242,7 +242,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
     "reporting_period_gap",
     "Reporting period gap",
     "Create reporting periods covering the selected range.",
-    "/configuration/reporting-periods",
+    "/performance-operations/configuration/reporting-periods",
     "warning",
   );
 
@@ -254,7 +254,7 @@ export function deriveAlerts(inputs: AlertInputs): OperationalAlert[] {
       title: "No reporting period selected",
       detail: "Metrics and payroll views need a reporting period.",
       action: "Choose a reporting period in the header.",
-      link: "/overview",
+      link: "/performance-operations/overview",
       entityId: null,
     });
   }

@@ -31,7 +31,7 @@ async function voidCurrentRun(page: Page): Promise<void> {
 
 test("0. reset: no lingering close run holds the fixture window", async ({ page }) => {
   test.setTimeout(120_000);
-  await page.goto("/period-close");
+  await page.goto("/performance-operations/period-close");
   await page.waitForLoadState("networkidle");
 
   // A leftover CLOSED run means the period is closed — reopen it first.
@@ -45,7 +45,7 @@ test("0. reset: no lingering close run holds the fixture window", async ({ page 
     await page.getByLabel(/Reopen reason/).fill("e2e reset — clearing leftover close");
     await page.getByRole("button", { name: "Confirm reopen" }).click();
     await expect(page.getByText(/superseded by/)).toBeVisible({ timeout: 20_000 });
-    await page.goto("/period-close");
+    await page.goto("/performance-operations/period-close");
     await page.waitForLoadState("networkidle");
   }
 
@@ -61,7 +61,7 @@ test("0. reset: no lingering close run holds the fixture window", async ({ page 
 });
 
 test("1. start a close run for the fixture window", async ({ page }) => {
-  await page.goto("/period-close/new");
+  await page.goto("/performance-operations/period-close/new");
   await page.waitForLoadState("networkidle");
   const option = await page
     .locator("#close-period option", { hasText: PERIOD })
@@ -84,7 +84,7 @@ test("1. start a close run for the fixture window", async ({ page }) => {
 test("2. readiness reports honest blockers and the zero-activity warning", async ({
   page,
 }) => {
-  await page.goto(`/period-close/${runId}/readiness`);
+  await page.goto(`/performance-operations/period-close/${runId}/readiness`);
   await page.getByTestId("readiness-reporting").waitFor({ timeout: 30_000 });
 
   // Blocking until the executive package + required export exist. Package
@@ -117,7 +117,7 @@ test("2. readiness reports honest blockers and the zero-activity warning", async
 
 test("3. generate the executive report package", async ({ page }) => {
   test.setTimeout(90_000);
-  await page.goto(`/period-close/${runId}/reports`);
+  await page.goto(`/performance-operations/period-close/${runId}/reports`);
   await page.getByTestId("package-generators").waitFor({ timeout: 20_000 });
   await page.getByRole("button", { name: "Executive period package" }).click();
   await expect(
@@ -129,7 +129,7 @@ test("4. generate the required export; downloads verify their hash", async ({
   page,
 }) => {
   test.setTimeout(90_000);
-  await page.goto(`/period-close/${runId}/exports`);
+  await page.goto(`/performance-operations/period-close/${runId}/exports`);
   await page.getByTestId("export-generators").waitFor({ timeout: 20_000 });
 
   // Honest failure: no posted payroll → no register (error, never fake rows).
@@ -161,7 +161,7 @@ test("5. acknowledge every warning with a recorded note", async ({ page }) => {
   // data — e.g. failed import batches on record, unavailable paid amounts,
   // the permanent revenue-definition warning, the zero-activity warning).
   for (let round = 0; round < 15; round++) {
-    await page.goto(`/period-close/${runId}/readiness`);
+    await page.goto(`/performance-operations/period-close/${runId}/readiness`);
     await page.getByTestId("readiness-reporting").waitFor({ timeout: 30_000 });
     const openAck = page
       .locator('tr[data-status="fail"][data-resolution="open"]')
@@ -181,7 +181,7 @@ test("5. acknowledge every warning with a recorded note", async ({ page }) => {
       timeout: 20_000,
     });
   }
-  await page.goto(`/period-close/${runId}/readiness`);
+  await page.goto(`/performance-operations/period-close/${runId}/readiness`);
   await page.getByTestId("readiness-reporting").waitFor({ timeout: 30_000 });
   await expect(
     page
@@ -193,7 +193,7 @@ test("5. acknowledge every warning with a recorded note", async ({ page }) => {
 
 test("6. complete review, approve, and execute the atomic close", async ({ page }) => {
   test.setTimeout(180_000);
-  await page.goto(`/period-close/${runId}/approval`);
+  await page.goto(`/performance-operations/period-close/${runId}/approval`);
   await page.getByTestId("approval-actions").waitFor({ timeout: 30_000 });
 
   // Reviewer: re-verifies the full checklist server-side before advancing.
@@ -213,7 +213,7 @@ test("6. complete review, approve, and execute the atomic close", async ({ page 
     timeout: 60_000,
   });
 
-  await page.goto(`/period-close/${runId}`);
+  await page.goto(`/performance-operations/period-close/${runId}`);
   await expect(page.getByTestId("close-status")).toHaveText("Closed", {
     timeout: 20_000,
   });
@@ -226,7 +226,7 @@ test("6. complete review, approve, and execute the atomic close", async ({ page 
 test("7. the frozen manifest records identity, approvals, and artifacts", async ({
   page,
 }) => {
-  await page.goto(`/period-close/${runId}/manifest`);
+  await page.goto(`/performance-operations/period-close/${runId}/manifest`);
   await page.getByTestId("manifest-identity").waitFor({ timeout: 20_000 });
   await expect(page.getByTestId("manifest-identity")).toContainText(/[0-9a-f]{64}/);
   await expect(page.getByTestId("manifest-approvals")).toBeVisible();
@@ -239,7 +239,7 @@ test("7. the frozen manifest records identity, approvals, and artifacts", async 
   await expect(page.getByTestId("manifest-readiness")).toBeVisible();
 
   // The dashboard now shows the period closed and the run completed.
-  await page.goto("/period-close");
+  await page.goto("/performance-operations/period-close");
   await expect(
     page.getByTestId("close-completed-runs").getByRole("link", {
       name: new RegExp(PERIOD),
@@ -251,7 +251,7 @@ test("8. reopen creates a versioned cycle; void leaves the window open", async (
   page,
 }) => {
   test.setTimeout(120_000);
-  await page.goto(`/period-close/${runId}`);
+  await page.goto(`/performance-operations/period-close/${runId}`);
   await page.getByRole("button", { name: /Reopen period/ }).click();
   await page
     .getByLabel(/Reopen reason/)
@@ -271,7 +271,7 @@ test("8. reopen creates a versioned cycle; void leaves the window open", async (
 
   // Self-cleaning: void the replacement so no active run holds the window.
   await voidCurrentRun(page);
-  await page.goto("/period-close");
+  await page.goto("/performance-operations/period-close");
   await expect(
     page
       .getByTestId("close-active-runs")

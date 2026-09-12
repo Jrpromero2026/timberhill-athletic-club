@@ -130,7 +130,7 @@ export async function composeScorecard(
         previousPeriod: previousPeriod ?? null,
         priorYear: priorYear ?? null,
         goal,
-        deepLink: `/analytics/executive?metric=${item.metricId}${scope.departmentId ? `&departmentId=${scope.departmentId}` : ""}${scope.trainerId ? `&trainerId=${scope.trainerId}` : ""}`,
+        deepLink: `/performance-operations/analytics/executive?metric=${item.metricId}${scope.departmentId ? `&departmentId=${scope.departmentId}` : ""}${scope.trainerId ? `&trainerId=${scope.trainerId}` : ""}`,
       });
     }
     sections.push({ title: section.title, rows });

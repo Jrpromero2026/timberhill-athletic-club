@@ -7,7 +7,7 @@ import { expect, test } from "@playwright/test";
  */
 
 test("workspace switch rescopes the overview", async ({ page }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await expect(
     page.getByRole("heading", { name: "Timberhill Athletic Club" })
   ).toBeVisible();
@@ -31,7 +31,7 @@ test("workspace switch rescopes the overview", async ({ page }) => {
 test("selection persists across navigation and browser refresh", async ({
   page,
 }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await page
     .getByLabel("Workspace")
     .selectOption({ label: "G3 Sports & Fitness" });
@@ -40,9 +40,9 @@ test("selection persists across navigation and browser refresh", async ({
   ).toBeVisible();
 
   // Navigate away and back.
-  await page.goto("/payroll");
+  await page.goto("/performance-operations/payroll");
   await expect(page.getByLabel("Workspace")).toContainText("G3 Sports & Fitness");
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await expect(
     page.getByRole("heading", { name: "G3 Sports & Fitness" })
   ).toBeVisible();
@@ -55,7 +55,7 @@ test("selection persists across navigation and browser refresh", async ({
 });
 
 test("All Workspaces aggregates both organizations", async ({ page }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await page.getByLabel("Workspace").selectOption({ label: "All Workspaces" });
 
   await expect(
@@ -83,7 +83,7 @@ test("a tampered workspace cookie falls back to an accessible workspace", async 
       url: "http://localhost:3100",
     },
   ]);
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   // Server-side validation ignores the forged value and falls back.
   await expect(
     page.getByRole("heading", { name: "Timberhill Athletic Club" })

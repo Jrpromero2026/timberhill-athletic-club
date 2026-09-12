@@ -47,8 +47,10 @@ test.describe("public marketing routes, signed out", () => {
   test("the application itself still requires a session", async ({ page }) => {
     // The counterpart assertion: opening the marketing routes must not have
     // widened access to anything else.
-    await page.goto("/payroll");
-    await page.waitForURL("**/login?next=%2Fpayroll");
+    await page.goto("/performance-operations/payroll");
+    await page.waitForURL(
+      "**/login?next=%2Fperformance-operations%2Fpayroll",
+    );
     await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
   });
 
@@ -56,5 +58,13 @@ test.describe("public marketing routes, signed out", () => {
     // The allow-list matches whole segments, so this must still be protected.
     await page.goto("/personal-training-internal");
     await page.waitForURL("**/login**");
+  });
+
+  test("an old top-level platform path redirects into the namespace", async ({
+    page,
+  }) => {
+    // Staff bookmarks and pre-move notification links still point at /payroll.
+    await page.goto("/payroll");
+    await page.waitForURL("**/login?next=%2Fperformance-operations%2Fpayroll");
   });
 });

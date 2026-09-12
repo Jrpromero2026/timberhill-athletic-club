@@ -44,7 +44,7 @@ function buildCsv(): string {
 let batchUrl = "";
 
 test("1. upload a Setmore CSV and reach the review state", async ({ page }) => {
-  await page.goto("/imports/new");
+  await page.goto("/performance-operations/imports/new");
   await page.getByLabel("Source system").selectOption("setmore");
   await page.getByLabel(/CSV file/).setInputFiles({
     name: FILE_NAME,
@@ -177,7 +177,7 @@ test("7. post the batch transactionally", async ({ page }) => {
 });
 
 test("8. posted appointments appear in the ledger with source evidence", async ({ page }) => {
-  await page.goto(`/appointments?from=${YEAR}-${DATE_FILTER_MONTH}-01&to=${YEAR}-${DATE_FILTER_MONTH}-28`);
+  await page.goto(`/performance-operations/appointments?from=${YEAR}-${DATE_FILTER_MONTH}-01&to=${YEAR}-${DATE_FILTER_MONTH}-28`);
   await expect(page.getByText("E2E Signature 60").first()).toBeVisible();
   await expect(page.getByRole("cell", { name: /E2E.*A/ }).first()).toBeVisible({ timeout: 10_000 }).catch(() => {});
   // open a detail page
@@ -205,8 +205,8 @@ test("10. reverse the posted batch with a reason; history preserved", async ({ p
   });
 
   // reversed records remain visible in the reversed view — never deleted
-  await page.goto(`/appointments?from=${YEAR}-${DATE_FILTER_MONTH}-01&to=${YEAR}-${DATE_FILTER_MONTH}-28&state=reversed`);
+  await page.goto(`/performance-operations/appointments?from=${YEAR}-${DATE_FILTER_MONTH}-01&to=${YEAR}-${DATE_FILTER_MONTH}-28&state=reversed`);
   await expect(page.getByText("E2E Signature 60").first()).toBeVisible();
-  await page.goto(`/appointments?from=${YEAR}-${DATE_FILTER_MONTH}-01&to=${YEAR}-${DATE_FILTER_MONTH}-28&state=active`);
+  await page.goto(`/performance-operations/appointments?from=${YEAR}-${DATE_FILTER_MONTH}-01&to=${YEAR}-${DATE_FILTER_MONTH}-28&state=active`);
   await expect(page.getByText("No posted appointments match")).toBeVisible();
 });

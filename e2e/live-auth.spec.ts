@@ -15,7 +15,7 @@ test.describe("anonymous flows", () => {
   test("unauthenticated users are redirected to login with destination preserved", async ({
     page,
   }) => {
-    await page.goto("/payroll");
+    await page.goto("/performance-operations/payroll");
     await page.waitForURL("**/login?next=%2Fpayroll");
     await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
   });
@@ -31,7 +31,7 @@ test.describe("anonymous flows", () => {
   test("sign in honors the preserved destination, then sign out works", async ({
     page,
   }) => {
-    await page.goto("/configuration");
+    await page.goto("/performance-operations/configuration");
     await page.waitForURL("**/login?next=%2Fconfiguration");
     await page.getByLabel("Email").fill(ADMIN_EMAIL);
     await page.getByLabel("Password").fill(ADMIN_PASSWORD);
@@ -44,7 +44,7 @@ test.describe("anonymous flows", () => {
     await page.getByRole("button", { name: "User menu" }).click();
     await page.getByRole("menuitem", { name: "Sign out" }).click();
     await page.waitForURL("**/login");
-    await page.goto("/overview");
+    await page.goto("/performance-operations/overview");
     await page.waitForURL("**/login**");
   });
 
@@ -73,7 +73,7 @@ test("authenticated users are bounced away from /login", async ({ page }) => {
 test("overview renders the operations center with honest data states", async ({
   page,
 }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await expect(
     page.getByRole("heading", { name: "Timberhill Athletic Club" })
   ).toBeVisible();
@@ -84,7 +84,7 @@ test("overview renders the operations center with honest data states", async ({
 });
 
 test("workspace switching rescopes live data and persists", async ({ page }) => {
-  await page.goto("/overview");
+  await page.goto("/performance-operations/overview");
   await page.getByLabel("Workspace").selectOption({ label: "G3 Sports & Fitness" });
   await expect(page.getByRole("heading", { name: "G3 Sports & Fitness" })).toBeVisible();
   await page.reload();
@@ -95,7 +95,7 @@ test("admin can create and revoke an invitation (net-zero mutation)", async ({
   page,
 }) => {
   const email = `e2e-invite-${Date.now()}@perfops.local`;
-  await page.goto("/configuration/users");
+  await page.goto("/performance-operations/configuration/users");
   await expect(page.getByRole("heading", { name: "Users & Access" })).toBeVisible();
 
   await page.getByLabel("Email").fill(email);
@@ -112,13 +112,13 @@ test("admin can create and revoke an invitation (net-zero mutation)", async ({
 test("configuration hub shows readiness without claiming payroll-ready", async ({
   page,
 }) => {
-  await page.goto("/configuration");
+  await page.goto("/performance-operations/configuration");
   await expect(page.getByText("Setup readiness by organization")).toBeVisible();
   await expect(page.getByText("Not payroll-ready", { exact: false }).first()).toBeVisible();
 });
 
 test("audit viewer lists events with filters", async ({ page }) => {
-  await page.goto("/audit");
+  await page.goto("/performance-operations/audit");
   await expect(page.getByRole("heading", { name: "Audit", exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Filter" })).toBeVisible();
 });

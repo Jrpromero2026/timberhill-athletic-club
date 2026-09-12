@@ -157,7 +157,7 @@ export async function createGoalAction(
     action: "goal_created",
     metadata: { metric_id: metricId, goal_type: goalType, scope_level: scopeLevel },
   });
-  revalidatePath("/analytics/goals");
+  revalidatePath("/performance-operations/analytics/goals");
   return { message: "Goal created as a draft — it takes effect when approved." };
 }
 
@@ -189,7 +189,7 @@ async function transitionGoal(
     action: auditAction,
     metadata: { from_status: goal.status, to_status: toStatus },
   });
-  revalidatePath("/analytics/goals");
+  revalidatePath("/performance-operations/analytics/goals");
   return { message: `Goal ${toStatus === "active" ? "approved" : toStatus}.` };
 }
 
@@ -288,6 +288,6 @@ export async function updateGoalTargetAction(
       to: goal.goal_type === "range" ? `${targetLow}–${targetHigh}` : String(targetValue),
     },
   });
-  revalidatePath("/analytics/goals");
+  revalidatePath("/performance-operations/analytics/goals");
   return { message: "Target updated." };
 }

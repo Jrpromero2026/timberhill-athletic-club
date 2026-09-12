@@ -34,7 +34,7 @@ import {
   type ActorContext,
 } from "./shared";
 
-const IMPORTS_PATH = "/imports";
+const IMPORTS_PATH = "/performance-operations/imports";
 const BUCKET = "performance-operations-imports";
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
 
@@ -1074,7 +1074,7 @@ export async function postBatch(
   });
   revalidatePath(IMPORTS_PATH);
   revalidatePath(`${IMPORTS_PATH}/${batch.id}`);
-  revalidatePath("/appointments");
+  revalidatePath("/performance-operations/appointments");
   return { message: `Posted ${posted} appointment${posted === 1 ? "" : "s"} to the ledger.` };
 }
 
@@ -1119,7 +1119,7 @@ export async function reverseBatch(
   });
   revalidatePath(IMPORTS_PATH);
   revalidatePath(`${IMPORTS_PATH}/${batch.id}`);
-  revalidatePath("/appointments");
+  revalidatePath("/performance-operations/appointments");
   return {
     message: `Reversed ${reversed} appointment${reversed === 1 ? "" : "s"}. History and evidence are preserved.`,
   };

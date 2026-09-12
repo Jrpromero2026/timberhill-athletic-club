@@ -12,7 +12,7 @@ import {
   type ActorContext,
 } from "./shared";
 
-const SNAPSHOTS_PATH = "/snapshots";
+const SNAPSHOTS_PATH = "/performance-operations/snapshots";
 
 /**
  * A snapshot is provenance FIRST and numbers second. Every field the

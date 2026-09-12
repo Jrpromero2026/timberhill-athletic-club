@@ -593,7 +593,7 @@ export async function generateTrainerStatementsPackage(
           trainer: summary.trainerName,
           final_gross_cents: summary.final_gross_compensation_cents,
           statement_sha256: sha256Hex(csv),
-          statement_path: `/payroll/${payroll.run.id}/statements/${summary.trainer_id}`,
+          statement_path: `/performance-operations/payroll/${payroll.run.id}/statements/${summary.trainer_id}`,
         });
       }
       return {

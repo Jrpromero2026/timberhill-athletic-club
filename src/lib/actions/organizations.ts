@@ -125,6 +125,6 @@ export async function createOrganization(
     },
   });
 
-  revalidatePath("/setup");
-  redirect(`/setup/${organization.id}`);
+  revalidatePath("/performance-operations/setup");
+  redirect(`/performance-operations/setup/${organization.id}`);
 }

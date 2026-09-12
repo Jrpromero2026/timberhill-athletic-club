@@ -6,12 +6,17 @@ operations platform, and the public website.
 
 | Path | What it is |
 |---|---|
-| `src/app/(app)/` + `src/lib/`, `supabase/`, `tests/`, `e2e/`, `docs/` | **Performance Operations** — payroll, revenue, KPI and department analytics. Private; every route requires a session. Documented below. |
-| `src/app/(marketing)/` | **Public website** — the Personal Training hub, trainers index, consultation page and trainer profiles for timberhillac.com. Open to the world. |
+| `src/app/performance-operations/` + `src/lib/`, `supabase/`, `tests/`, `e2e/`, `docs/` | **Performance Operations** — payroll, revenue, KPI and department analytics, served under `/performance-operations`. Private; every route requires a session. Documented below. |
+| `src/app/(marketing)/` | **Public website** — the Personal Training hub, trainers index, consultation page and trainer profiles, served under `/personal-training`. Open to the world, and `/` redirects here. |
 
 Both are served by the one Next.js application, from one deployment, on one
 domain. The seam between them is enforced in three places, and all three matter:
 
+- **URLs.** The public site owns `/` and `/personal-training`; the platform
+  owns `/performance-operations`. The platform's routes lived at the domain
+  root until the two were merged, so `next.config.ts` permanently redirects
+  every old top-level segment — `/payroll/:path*` and the rest — into the
+  namespace, keeping staff bookmarks and pre-move notification links alive.
 - **Access.** `src/proxy.ts` protects everything by default. The marketing
   prefixes are the single explicit exception, matched by whole segment, and
   answered before any Supabase work — those pages need no session and must not
@@ -28,8 +33,15 @@ domain. The seam between them is enforced in three places, and all three matter:
 
 **Adding a build-out:** a public page belongs in `src/app/(marketing)/`, with its
 route prefix added to `PUBLIC_MARKETING_PREFIXES` in `src/proxy.ts` and a case
-in `e2e/live-marketing.spec.ts`. Anything that is not a web page gets its own
-top-level directory. Either way, add a row to the table above.
+in `e2e/live-marketing.spec.ts`. A page for staff belongs under
+`src/app/performance-operations/`, where it is protected by default. Anything
+that is not a web page gets its own top-level directory. Either way, add a row
+to the table above.
+
+**A note on paths.** Application paths are not only in links — they are written
+into `notifications.link_path` in the database. Moving a route means migrating
+those rows; `supabase/migrations/20260912000001_namespace_notification_paths.sql`
+is the worked example.
 
 ---
 

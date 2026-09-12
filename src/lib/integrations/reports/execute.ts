@@ -360,7 +360,7 @@ export async function executeScheduledReport(
       category: "reporting",
       title: "Scheduled report executed",
       body: `${definition.report_type.replaceAll("_", " ")} for ${period.label}: ${deliveriesQueued} delivery job(s) queued.`,
-      linkPath: "/reports?tab=scheduled",
+      linkPath: "/performance-operations/reports?tab=scheduled",
       entityType: "scheduled_report_run",
       entityId: run.id,
     });
@@ -383,7 +383,7 @@ export async function executeScheduledReport(
       category: "reporting",
       title: "Scheduled report failed",
       body: classified.operatorMessage,
-      linkPath: "/reports?tab=scheduled",
+      linkPath: "/performance-operations/reports?tab=scheduled",
       entityType: "scheduled_report_run",
       entityId: run.id,
     });
@@ -454,7 +454,7 @@ export async function deliverQueuedEmail(
     bodyText:
       "A scheduled report artifact is ready. Open Performance Operations to view it. " +
       "(Artifacts are not attached in test mode; no financial amounts are included in email.)",
-    linkPath: "/reports?tab=scheduled",
+    linkPath: "/performance-operations/reports?tab=scheduled",
     attachment: null,
   });
 
