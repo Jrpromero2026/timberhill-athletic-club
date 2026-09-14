@@ -16,7 +16,7 @@
    rather than inheriting whatever the application happens to set.
 
    Derived from the standalone build this replaced. Two layers: the used
-   subset of the Industry design system (.btn, .tag, .blueprint / .corner),
+   subset of the Industry design system (.btn, .tag, .blueprint frame),
    then page and section styles. Brand values are from the build brief §14.
    ────────────────────────────────────────────────────────────────────────── */
 
@@ -155,42 +155,27 @@ on. One rule instead of a per-component exception each time. */
   position: absolute; width: 1px; height: 1px; overflow: hidden;
   clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
 }
-/* ═══ 1 · design system — blueprint frame ════════════════════════════════ */
+/* ═══ 1 · design system — frame ══════════════════════════════════════════
+The Industry system originally hung L-shaped registration marks off each of
+these boxes. They read as an unfinished technical drawing rather than a
+finished club page, so the frame is now the hairline alone: square corners
+kept, marks gone. `position: relative` stays — slot panels and badges inside
+these cards are positioned against it. */
 .tac-site .blueprint {
   position: relative;
   border: 1px solid var(--color-divider);
   border-radius: 0;
+  background-clip: padding-box;
 }
-.tac-site .blueprint > .corner {
-  position: absolute; width: 11px; height: 11px;
-  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+/* Cards lift very slightly off the page so the hairline is not doing all the
+work of separating them from the ground. */
+.tac-site .blueprint:not(.btn) {
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--color-neutral-900) 5%, transparent);
 }
-.tac-site .blueprint > .corner::before,
-.tac-site .blueprint > .corner::after {
-  content: ""; position: absolute; background: currentColor;
-}
-.tac-site .blueprint > .corner::before {
-  left: 5px; top: 0; width: 1px; height: 100%;
-}
-.tac-site .blueprint > .corner::after {
-  top: 5px; left: 0; width: 100%; height: 1px;
-}
-.tac-site .blueprint > .corner.tl {
-  top: -6px; left: -6px;
-}
-.tac-site .blueprint > .corner.tr {
-  top: -6px; right: -6px;
-}
-.tac-site .blueprint > .corner.bl {
-  bottom: -6px; left: -6px;
-}
-.tac-site .blueprint > .corner.br {
-  bottom: -6px; right: -6px;
-}
-/* On dark grounds and on the brand band the marks invert. */
-.tac-site .on-dark .blueprint > .corner,
-.tac-site .blueprint.on-dark > .corner {
-  color: rgba(255, 255, 255, 0.55);
+.tac-site .on-dark .blueprint,
+.tac-site .blueprint.on-dark {
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: none;
 }
 /* ═══ 1 · design system — buttons ════════════════════════════════════════ */
 .tac-site .btn {
@@ -313,22 +298,28 @@ string — see BUILD_BRIEF §2. */
 .tac-site .only-n {
   display: none;
 }
-/* Striped placeholder for an outstanding asset. Every slot in this build is
-sized and framed for the real file — dropping an <img> in replaces the
-.slot div and nothing reflows. No stock: BUILD_BRIEF §15. */
+/* Brand panel for an outstanding asset. A solid navy ground carrying the club
+monogram, not a striped mock with the file spec printed across it — the spec
+rides on `data-asset` for whoever drops the file in. Every panel is sized for
+the real file, so replacing the .slot div with an <img> reflows nothing. No
+stock imagery: BUILD_BRIEF §15. */
 .tac-site .slot {
-  background: repeating-linear-gradient(45deg, #e6eaf1 0 8px, #eef1f6 8px 16px);
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(130% 100% at 50% 0%, #1d4788 0%, transparent 62%),
+    var(--color-accent-900);
   display: flex; align-items: center; justify-content: center; text-align: center;
 }
-.tac-site .slot span {
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
-  text-transform: uppercase; color: #5d6b80; padding: 8px; line-height: 1.5;
+.tac-site .slot-mark {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(20px, 4vw, 30px); letter-spacing: 0.22em; text-indent: 0.22em;
+  color: rgba(255, 255, 255, 0.24); user-select: none;
 }
 .tac-site .slot--portrait {
-  aspect-ratio: 3 / 4; border-bottom: 1px solid var(--color-divider);
+  aspect-ratio: 3 / 4;
 }
 .tac-site .slot--landscape {
-  aspect-ratio: 4 / 3; border-bottom: 1px solid var(--color-divider);
+  aspect-ratio: 4 / 3;
 }
 /* ═══ 2 · section heads ═════════════════════════════════════════════════ */
 .tac-site .sec-head {
@@ -363,10 +354,6 @@ sized and framed for the real file — dropping an <img> in replaces the
 }
 .tac-site .lede--wide {
   max-width: none;
-}
-.tac-site .note-line {
-  font-family: var(--font-mono); font-size: 12px;
-  color: var(--color-accent-700); margin: 0 0 30px;
 }
 /* ═══ 2 · header and navigation ═════════════════════════════════════════ */
 .tac-site .site-header {
@@ -712,13 +699,14 @@ first-party review data. BUILD_BRIEF §8. */
 .tac-site .review-card {
   background: var(--color-bg); padding: 22px; display: flex; flex-direction: column; gap: 14px;
 }
-/* Holds review text exactly as the reviewer wrote it, or — while the text is
-still to be pasted from Setmore — says so. Never fabricated, never
-composited, not even as a placeholder. BUILD_BRIEF §7. */
+/* Holds review text exactly as the reviewer wrote it. Never fabricated, never
+composited, not even as a placeholder — a review whose text has not been
+pasted yet is not rendered at all (see `publishedReviews`). BUILD_BRIEF §7. */
 .tac-site .review-box {
-  border: 1px dashed var(--color-accent-300); background: var(--color-accent-100);
-  padding: 12px; font-family: var(--font-mono); font-size: 11.5px;
-  line-height: 1.6; color: var(--color-accent-700); flex: 1; text-wrap: pretty;
+  border-left: 2px solid var(--color-accent-300);
+  padding-left: 14px; font-size: 14.5px; line-height: 1.65;
+  color: color-mix(in srgb, var(--color-text) 88%, transparent);
+  flex: 1; text-wrap: pretty;
 }
 .tac-site .review-attrib {
   font-size: 13px;
@@ -990,9 +978,6 @@ proportions. BUILD_BRIEF §9. */
 }
 .tac-site .roster-count {
   font-family: var(--font-heading); font-weight: 600; font-size: 20px;
-}
-.tac-site .roster-note {
-  font-family: var(--font-mono); font-size: 11px; color: var(--color-accent-700);
 }
 .tac-site .trainer-card[hidden] {
   display: none;

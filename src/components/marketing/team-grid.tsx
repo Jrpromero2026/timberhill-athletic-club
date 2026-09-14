@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AssetSlot, Corners } from "@/components/marketing/primitives";
+import { AssetSlot } from "@/components/marketing/primitives";
 import type { Trainer } from "@/lib/marketing/personal-training";
 
 const HEADSHOT_SPEC = "headshot — identify from Trainer Pictures folder";
@@ -25,7 +25,6 @@ export function TeamGrid({ trainers }: { trainers: readonly Trainer[] }) {
         const panelId = `phil-${trainer.slug}`;
         return (
           <article className="blueprint trainer-card" key={trainer.slug}>
-            <Corners />
             <AssetSlot spec={HEADSHOT_SPEC} shape="portrait" />
             <div className="trainer-body">
               <div>

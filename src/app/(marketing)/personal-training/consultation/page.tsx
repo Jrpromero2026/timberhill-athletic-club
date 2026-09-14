@@ -4,7 +4,6 @@ import { CtaAnalytics } from "@/components/marketing/cta-analytics";
 import { Faq } from "@/components/marketing/faq";
 import {
   AssetSlot,
-  Corners,
   JsonLd,
   PrimaryCta,
 } from "@/components/marketing/primitives";
@@ -135,7 +134,6 @@ export default function ConsultationPage() {
 
               <div>
                 <div className="blueprint nots-card">
-                  <Corners />
                   <h2 className="nots-title">What it is not</h2>
                   <ul className="nots">
                     {CONSULTATION_IS_NOT.map((line) => (
@@ -168,7 +166,6 @@ export default function ConsultationPage() {
             <div className="g3">
               {CONSULTATION_PREP.map((item) => (
                 <div className="blueprint prep-card" key={item.title}>
-                  <Corners />
                   <h3 className="prep-t">{item.title}</h3>
                   <p className="prep-d">{item.body}</p>
                 </div>

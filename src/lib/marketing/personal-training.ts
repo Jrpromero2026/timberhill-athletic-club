@@ -462,13 +462,16 @@ export const COMPARISON = [
 export type FaqItem = {
   question: string;
   answer: string;
-  /** True where the answer is a `[CONFIRM]` placeholder awaiting the PT
-   *  Director. §8: only settled answers enter the FAQPage markup — marking a
-   *  placeholder as an answer would be worse than omitting the question. */
+  /** True where the answer is still awaiting the PT Director. Such an item is
+   *  neither rendered nor marked up: §8 keeps unsettled answers out of the
+   *  FAQPage, and showing the visitor a placeholder where an answer belongs is
+   *  worse than omitting the question. Supply the answer and clear this flag
+   *  and the question returns to the page. */
   unconfirmed?: boolean;
 };
 
-/** §4 section 11. Twelve items, all collapsed. */
+/** §4 section 11. Twelve items, all collapsed; the unconfirmed ones are held
+ *  back until their answers are settled. */
 export const HUB_FAQS: readonly FaqItem[] = [
   {
     question: "Is the consultation really free?",
@@ -598,6 +601,24 @@ export const REVIEWS: readonly Testimonial[] = [
   { reviewer: "Judy Saslow", trainer: "Emma Ciechanowski", pending: true },
 ];
 
+/**
+ * Only the reviews whose verbatim text has actually been pasted from Setmore.
+ *
+ * §7 forbids inventing or compositing review copy, so a review still waiting
+ * for its text cannot be shown with stand-in words — and a card announcing
+ * that it is waiting reads, to a visitor, as an unfinished page. It is held
+ * back entirely until the text lands. The approved attributions stay in the
+ * data below so nobody has to reconstruct the list.
+ */
+export function publishedReviews(
+  items: readonly Testimonial[],
+): readonly (Testimonial & { quote: string })[] {
+  return items.filter(
+    (item): item is Testimonial & { quote: string } =>
+      typeof item.quote === "string" && item.quote.length > 0,
+  );
+}
+
 export const PROFILE_REVIEWS: Record<string, readonly Testimonial[]> = {
   "jr-romero": [
     {
@@ -605,7 +626,6 @@ export const PROFILE_REVIEWS: Record<string, readonly Testimonial[]> = {
       quote:
         "Working with JR has helped me safely continue progressing long after formal physical therapy ended, giving me the guidance, accountability, and confidence to keep getting stronger.",
     },
-    { reviewer: "[REVIEWER NAME]", pending: true },
   ],
 };
 
@@ -645,7 +665,7 @@ export const CONSULTATION_IS_NOT = [
   "A sales appointment. Nothing is signed in the room.",
   "A workout. You will not leave sweating.",
   "A commitment to a package, a trainer or a number of sessions.",
-  "Members only. Anyone can book one. [CONFIRM]",
+  "A workout plan sold on the spot. You leave with a direction, not an invoice.",
 ] as const;
 
 export const CONSULTATION_PREP = [

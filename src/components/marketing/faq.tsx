@@ -6,8 +6,13 @@ import type { FaqItem } from "@/lib/marketing/personal-training";
 /**
  * FAQ accordion. One item open at a time, matching the approved design.
  *
+ * Items still marked `unconfirmed` are filtered out here, in the one place
+ * every FAQ passes through, so the rendered questions and the FAQPage markup
+ * in `schema.ts` agree by construction — a visitor never opens a question onto
+ * a `[CONFIRM]` note meant for the PT Director.
+ *
  * `openInitially` starts the consultation page on its first question; the hub
- * passes nothing, because §11 requires all twelve collapsed on mobile.
+ * passes nothing, because §11 requires every item collapsed on mobile.
  *
  * Headers are `<button>` inside `<h3>`: the heading keeps the document outline
  * navigable, the button carries `aria-expanded` and the ≥44px tap target §9
@@ -25,10 +30,13 @@ export function Faq({
 }) {
   const [open, setOpen] = useState<number | null>(openInitially ?? null);
   const base = useId();
+  const settled = items.filter((item) => !item.unconfirmed);
+
+  if (settled.length === 0) return null;
 
   return (
     <div className={className}>
-      {items.map((item, index) => {
+      {settled.map((item, index) => {
         const panelId = `${base}-faq-${index}`;
         const isOpen = open === index;
         return (

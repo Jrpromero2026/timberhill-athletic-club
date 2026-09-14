@@ -3,7 +3,6 @@ import { CtaAnalytics } from "@/components/marketing/cta-analytics";
 import { Faq } from "@/components/marketing/faq";
 import {
   AssetSlot,
-  Corners,
   JsonLd,
   PrimaryCta,
   SectionHead,
@@ -22,6 +21,7 @@ import {
   PILLARS,
   RECOGNITION,
   REVIEW_STATS,
+  publishedReviews,
   REVIEWS,
   SERVICE_FAMILIES,
   SETMORE,
@@ -64,6 +64,7 @@ export const metadata: Metadata = {
 
 export default function PersonalTrainingHub() {
   const faqSchema = faqPage(HUB_FAQS);
+  const reviews = publishedReviews(REVIEWS);
 
   return (
     <div className="pg">
@@ -93,11 +94,12 @@ export default function PersonalTrainingHub() {
             rather than pushing the button down (§4, §9). */}
         <section className="hero" data-hero aria-labelledby="hero-h1">
           {/* Hero photograph outstanding: ≥2400×1350, a Timberhill trainer
-              coaching a Timberhill member on the Timberhill floor, under this
-              navy 55% overlay. It is the LCP element — preload it and serve a
-              mobile crop. No stock: brand navy with no photograph is more
-              credible than stock models in a gym that is not this one (§15). */}
-          <div className="hero-media slot" aria-hidden="true" />
+              coaching a Timberhill member on the Timberhill floor, dropped in
+              as an <img> here and sitting under the navy 55% overlay. It is
+              the LCP element — preload it and serve a mobile crop. Until then
+              this is solid brand navy: no stock, and nothing that advertises
+              the absence (§15). */}
+          <div className="hero-media" aria-hidden="true" />
           <div className="hero-overlay" aria-hidden="true" />
 
           <div className="wrap hero-inner">
@@ -148,7 +150,6 @@ export default function PersonalTrainingHub() {
             <ul className="g3" style={{ listStyle: "none", margin: 0, padding: 0 }}>
               {RECOGNITION.map((situation, index) => (
                 <li className="blueprint rec-card" key={situation}>
-                  <Corners />
                   <span className="rec-n" aria-hidden="true">
                     {String(index + 1).padStart(2, "0")}
                   </span>
@@ -216,10 +217,6 @@ export default function PersonalTrainingHub() {
                 this person understand me? You do not have to pick one — the
                 consultation does the matching.
               </p>
-              <p className="note-line">
-                {TRAINERS.length} of {CLUB.trainerCount} published · bios and
-                credentials from Drive · headshots awaiting name mapping
-              </p>
             </SectionHead>
             <TeamGrid trainers={TRAINERS} />
             <div className="cta-row">
@@ -261,7 +258,6 @@ export default function PersonalTrainingHub() {
             </SectionHead>
 
             <figure className="blueprint quote-card">
-              <Corners />
               <div className="g2 quote-grid">
                 <div>
                   <Stars className="quote-stars" />
@@ -281,21 +277,22 @@ export default function PersonalTrainingHub() {
               </div>
             </figure>
 
-            <div className="g4">
-              {REVIEWS.map((review) => (
-                <div className="blueprint review-card" key={review.reviewer}>
-                  <Corners />
-                  <Stars />
-                  <div className="review-box">
-                    {review.quote ?? "[VERBATIM — paste from Setmore]"}
+            {reviews.length > 0 ? (
+              <div className="g4">
+                {reviews.map((review) => (
+                  <div className="blueprint review-card" key={review.reviewer}>
+                    <Stars />
+                    <div className="review-box">“{review.quote}”</div>
+                    <div className="review-attrib">
+                      <strong>{review.reviewer}</strong>
+                      {review.trainer ? (
+                        <span> · on {review.trainer}</span>
+                      ) : null}
+                    </div>
                   </div>
-                  <div className="review-attrib">
-                    <strong>{review.reviewer}</strong>
-                    {review.trainer ? <span> · on {review.trainer}</span> : null}
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : null}
 
             {/* §7: read the count from the live figure or review it monthly. */}
             <a
@@ -325,7 +322,6 @@ export default function PersonalTrainingHub() {
             <div className="g3">
               {SERVICE_FAMILIES.map((family) => (
                 <article className="blueprint family-card" key={family.name}>
-                  <Corners />
                   <AssetSlot spec="service image · 800×600" shape="landscape" />
                   <div className="family-body">
                     <h3 className="f-name">{family.name}</h3>
@@ -359,7 +355,6 @@ export default function PersonalTrainingHub() {
             />
             <div className="g2 compare">
               <div className="blueprint compare-card">
-                <Corners />
                 <h3 className="cmp-title">Equipment Orientation</h3>
                 <div className="cmp-kicker">INCLUDED WITH MEMBERSHIP</div>
                 {COMPARISON.map((row) => (
@@ -370,7 +365,6 @@ export default function PersonalTrainingHub() {
                 ))}
               </div>
               <div className="blueprint compare-card compare-card--pt on-dark">
-                <Corners />
                 <h3 className="cmp-title">Personal Training</h3>
                 <div className="cmp-kicker">
                   AN ONGOING COACHING RELATIONSHIP
@@ -387,10 +381,11 @@ export default function PersonalTrainingHub() {
         </section>
 
         {/* ═══ 11 · FAQ ═══════════════════════════════════════════════════
-            Twelve items, all collapsed. Only the settled answers appear in
-            the FAQPage markup above — hidden FAQ markup is a guideline
-            violation, and so is marking a [CONFIRM] placeholder as an
-            answer (§8). */}
+            All collapsed. Only settled answers are rendered, and the same set
+            appears in the FAQPage markup above — hidden FAQ markup is a
+            guideline violation, and so is marking a placeholder as an answer
+            (§8). Four questions are written and waiting on the PT Director;
+            they return to the page with their answers. */}
         <section className="sec" aria-labelledby="faq-h">
           <div className="wrap">
             <SectionHead number="11" id="faq-h" title="Questions" />

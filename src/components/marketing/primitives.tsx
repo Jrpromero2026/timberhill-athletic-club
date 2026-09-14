@@ -6,22 +6,6 @@ import {
 } from "@/lib/marketing/personal-training";
 
 /**
- * Registration marks. The Industry design system draws them just outside the
- * box, which is why `.blueprint` is `position: relative` and the marks sit at
- * -6px — they are meant to overhang, and the layout accounts for it.
- */
-export function Corners() {
-  return (
-    <>
-      <i className="corner tl" />
-      <i className="corner tr" />
-      <i className="corner bl" />
-      <i className="corner br" />
-    </>
-  );
-}
-
-/**
  * The primary CTA. One string, one destination, six placements (§2).
  *
  * `data-cta-section` is what the analytics handler reads, and
@@ -45,7 +29,6 @@ export function PrimaryCta({
     "btn",
     tone === "invert" ? "btn-invert" : "btn-primary",
     size === "lg" ? "btn-cta-lg" : "btn-cta",
-    "blueprint",
     className,
   ]
     .filter(Boolean)
@@ -58,7 +41,6 @@ export function PrimaryCta({
       data-primary-cta=""
       data-cta-section={section}
     >
-      <Corners />
       {PRIMARY_CTA}
     </a>
   );
@@ -75,9 +57,14 @@ export function Stars({ className = "" }: { className?: string }) {
 }
 
 /**
- * A striped slot standing in for an outstanding photograph. Every slot is
- * sized and framed for the real file, so dropping an image in causes no
- * reflow. No stock imagery: §15.
+ * A brand panel standing in for an outstanding photograph.
+ *
+ * §15: a page on solid brand navy with no photograph is more credible than a
+ * page built on stock models in a gym that is not this one — and more credible
+ * than a striped mock with the file spec printed across it. The spec still
+ * travels with the panel, on `data-asset`, so whoever drops the real file in
+ * can read what it has to be. Every panel is sized and framed for that file,
+ * so the swap causes no reflow.
  */
 export function AssetSlot({
   spec,
@@ -88,7 +75,7 @@ export function AssetSlot({
   spec: string;
   shape: "portrait" | "landscape";
   className?: string;
-  /** Adds the blueprint frame and marks, for standalone slots. */
+  /** Adds the hairline frame, for panels that stand alone. */
   framed?: boolean;
 }) {
   const classes = [
@@ -101,9 +88,8 @@ export function AssetSlot({
     .join(" ");
 
   return (
-    <div className={classes}>
-      <span>{spec}</span>
-      {framed ? <Corners /> : null}
+    <div className={classes} data-asset={spec} aria-hidden="true">
+      <span className="slot-mark">TAC</span>
     </div>
   );
 }
