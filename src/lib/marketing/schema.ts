@@ -145,7 +145,10 @@ export function breadcrumbs(trail: readonly { name: string; path: string }[]) {
       "@type": "ListItem",
       position: index + 1,
       name: entry.name,
-      item: canonicalUrl(entry.path),
+      // "Home" is the club's own homepage, which is where the VISIBLE crumb
+      // links. Resolving it against this host instead pointed the markup at a
+      // different page than the one on screen, and at a redirect besides.
+      item: entry.path === "/" ? `${CLUB.origin}/` : canonicalUrl(entry.path),
     })),
   };
 }

@@ -11,6 +11,7 @@ import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { StickyCta } from "@/components/marketing/sticky-cta";
 import {
+  canonicalPath,
   CLUB,
   OG_IMAGE_META,
   CONSULTATION_AGENDA,
@@ -41,13 +42,13 @@ export const metadata: Metadata = {
   title: "Free Fitness Consultation in Corvallis, OR",
   description:
     "A free 30-minute fitness consultation with a trainer at Timberhill Athletic Club in Corvallis, OR. No charge, no membership needed, nothing sold.",
-  alternates: { canonical: "/personal-training/consultation/" },
+  alternates: { canonical: canonicalPath("/personal-training/consultation") },
   openGraph: {
     type: "website",
     title: `Free Fitness Consultation in Corvallis, OR | ${CLUB.name}`,
     description:
       "Thirty minutes with a Timberhill trainer. Completely free, no membership needed, nothing sold at the end of it.",
-    url: "/personal-training/consultation/",
+    url: canonicalPath("/personal-training/consultation"),
     images: [...OG_IMAGE_META],
   },
 };

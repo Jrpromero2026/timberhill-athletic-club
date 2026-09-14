@@ -38,6 +38,24 @@ test.describe("canonical URLs", () => {
       // index in favour of a URL that may not exist.
       expect(href).toBe(`${SITE_ORIGIN}${canonicalPath(route)}`);
     });
+
+    test(`${route} canonical resolves without redirecting`, async ({
+      request,
+      page,
+    }) => {
+      await page.goto(route);
+      const href = await page
+        .locator('link[rel="canonical"]')
+        .getAttribute("href");
+
+      // The assertion above compares the page against the same helper that
+      // built it, so it passes no matter what shape that helper produces —
+      // it cannot see a canonical that points at a redirect. This one asks
+      // the server. A canonical has to name the URL that returns the page.
+      const path = new URL(href!).pathname;
+      const response = await request.get(path, { maxRedirects: 0 });
+      expect(response.status()).toBe(200);
+    });
   }
 
   test("the trainer profile agrees with its own Person node", async ({
@@ -89,11 +107,29 @@ test.describe("crawl directives", () => {
     expect(locs).toHaveLength(3 + published);
     // A sitemap that disagrees with the canonical on the page it points at is
     // worse than no sitemap, so assert the exact strings.
-    expect(locs).toContain(`${SITE_ORIGIN}/personal-training/`);
-    expect(locs).toContain(`${SITE_ORIGIN}/personal-training/trainers/`);
-    expect(locs).toContain(`${SITE_ORIGIN}/personal-training/consultation/`);
+    expect(locs).toContain(`${SITE_ORIGIN}/personal-training`);
+    expect(locs).toContain(`${SITE_ORIGIN}/personal-training/trainers`);
+    expect(locs).toContain(`${SITE_ORIGIN}/personal-training/consultation`);
     // The staff application must never appear.
     expect(body).not.toContain("performance-operations");
+  });
+
+  test("every sitemap URL serves a page rather than a redirect", async ({
+    request,
+  }) => {
+    // Search Console reports a redirecting sitemap entry as "Page with
+    // redirect" and indexes nothing from it, so a sitemap of redirects is the
+    // same as no sitemap. Every entry is fetched.
+    const body = await (await request.get("/sitemap.xml")).text();
+    const paths = [...body.matchAll(/<loc>(.*?)<\/loc>/g)].map(
+      (match) => new URL(match[1]).pathname,
+    );
+
+    expect(paths.length).toBeGreaterThan(0);
+    for (const path of paths) {
+      const response = await request.get(path, { maxRedirects: 0 });
+      expect(response.status(), `${path} should serve directly`).toBe(200);
+    }
   });
 
   test("the front door redirects permanently", async ({ request }) => {
@@ -172,6 +208,27 @@ test.describe("answer-engine surface", () => {
     await expect(table.locator("thead th")).toHaveCount(3);
     await expect(table.locator('tbody th[scope="row"]')).toHaveCount(5);
     await expect(table.locator("caption")).toHaveCount(1);
+  });
+
+  test("the breadcrumb markup points where the visible crumb points", async ({
+    page,
+  }) => {
+    await page.goto("/personal-training/trainers");
+
+    const visibleHome = await page
+      .locator('nav[aria-label="Breadcrumb"] a')
+      .first()
+      .getAttribute("href");
+    const blocks = await page
+      .locator('script[type="application/ld+json"]')
+      .allInnerTexts();
+    const crumbs = blocks
+      .map((block) => JSON.parse(block))
+      .find((data) => data["@type"] === "BreadcrumbList");
+
+    // These disagreed: the visible "Home" linked to the club site, the markup
+    // resolved it against this host — a different page, and a redirect too.
+    expect(crumbs.itemListElement[0].item).toBe(visibleHome);
   });
 
   test("the roster declares the people on it", async ({ page }) => {

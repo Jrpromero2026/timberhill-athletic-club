@@ -57,17 +57,25 @@ export const SITE_ORIGIN = (
 ).replace(/\/$/, "");
 
 /**
- * Canonical path shape. The four routes are published WITH a trailing slash,
- * so every canonical, sitemap entry and schema `url` has to agree — the
- * trainer profile previously disagreed with its own Person node, which is two
- * URLs for one page.
+ * Canonical path shape: NO trailing slash, because that is what this
+ * deployment actually serves.
  *
- * Internal `<Link href>` values stay slash-less, because `trailingSlash` is at
- * its Next default and those are the paths the router actually serves.
+ * `trailingSlash` is at its Next default, so `/personal-training/` answers 308
+ * and `/personal-training` answers 200. A canonical has to name the URL that
+ * returns the page, not one that redirects to it — a canonical pointing at a
+ * redirect is a contradictory signal, and a sitemap full of them is reported
+ * as "Page with redirect" and indexed from nothing.
+ *
+ * The trailing-slash shape this used to produce was inherited from the build
+ * brief, where it was correct: the canonical host was WordPress, and trailing
+ * slashes are the WordPress convention. It stopped being correct the moment
+ * this deployment became the published home, and nothing caught it, because
+ * the test compared the rendered canonical against this same helper rather
+ * than against what the server does with it. It now fetches them.
  */
 export function canonicalPath(path: string): string {
   const clean = `/${path.replace(/^\/+|\/+$/g, "")}`;
-  return clean === "/" ? "/" : `${clean}/`;
+  return clean;
 }
 
 export function canonicalUrl(path: string): string {

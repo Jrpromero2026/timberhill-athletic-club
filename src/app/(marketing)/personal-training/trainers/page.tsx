@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { StickyCta } from "@/components/marketing/sticky-cta";
 import {
+  canonicalPath,
   CLUB,
   OG_IMAGE_META,
   TRAINERS,
@@ -26,13 +27,13 @@ export const metadata: Metadata = {
   // previous 218-character version lost it to the ellipsis.
   description:
     "Meet the personal trainers at Timberhill Athletic Club in Corvallis, OR. Filter the roster by specialty and book a free 30-minute consultation.",
-  alternates: { canonical: "/personal-training/trainers/" },
+  alternates: { canonical: canonicalPath("/personal-training/trainers") },
   openGraph: {
     type: "website",
     title: `Personal Trainers in Corvallis, OR | ${CLUB.name}`,
     description:
       "Twelve trainers, each with their own specialty. Filter the roster and book a free 30-minute consultation.",
-    url: "/personal-training/trainers/",
+    url: canonicalPath("/personal-training/trainers"),
     images: [...OG_IMAGE_META],
   },
 };
