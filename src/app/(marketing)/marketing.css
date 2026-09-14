@@ -504,6 +504,39 @@ the subnav's left edge lines up with the brand above it. */
 .tac-site .subnav a[aria-current="page"] {
   color: var(--color-accent); font-weight: 600;
 }
+/* ═══ 2 · staff entry point ═════════════════════════════════════════════
+Visible only to a signed-in staff member (see staff-link.tsx) and styled to
+read as a utility, not as a club page — it sits apart from the Personal
+Training links it shares the strip with. */
+.tac-site .subnav .staff-link {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: 2px;
+  padding: 3px 9px; min-height: 24px;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 7%, transparent);
+  color: var(--color-accent); font-weight: 600;
+  white-space: nowrap;
+}
+.tac-site .subnav .staff-link:hover {
+  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  color: var(--color-accent-700);
+}
+/* In the mobile menu it is a row like any other, but set apart by a rule. The
+row is not rendered at all when signed out, so there is no empty divider and
+no dependence on :has(). */
+.tac-site .mobile-menu .mobile-staff {
+  border-top: 1px solid var(--color-divider); margin-top: 6px; padding-top: 6px;
+}
+.tac-site .mobile-menu .staff-link {
+  color: var(--color-accent); font-weight: 600;
+}
+/* Footer: quiet, permanent, and the only one a signed-out visitor can see. */
+.tac-site .f-staff {
+  color: var(--color-neutral-500); text-decoration: none;
+}
+.tac-site .f-staff:hover {
+  color: #fff;
+}
 /* ═══ 2 · 01 hero ═══════════════════════════════════════════════════════ */
 .tac-site .hero {
   position: relative; background: var(--color-accent-800); overflow: hidden;

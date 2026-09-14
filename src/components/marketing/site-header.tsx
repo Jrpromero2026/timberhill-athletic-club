@@ -2,6 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import {
+  StaffLink,
+  useStaffSession,
+} from "@/components/marketing/staff-link";
 import { CLUB, SETMORE } from "@/lib/marketing/personal-training";
 
 type Route = "hub" | "trainers" | "consultation" | null;
@@ -43,6 +47,8 @@ export function SiteHeader({ current }: { current: Route }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropOpen, setDropOpen] = useState(false);
   const pinned = useRef(false);
+  // Drives the mobile row; the desktop strip asks StaffLink directly.
+  const staffSignedIn = useStaffSession();
   const host = useRef<HTMLLIElement>(null);
 
   const canHover =
@@ -219,6 +225,11 @@ export function SiteHeader({ current }: { current: Route }) {
               </li>
             ),
           )}
+          {staffSignedIn ? (
+            <li className="mobile-staff">
+              <StaffLink />
+            </li>
+          ) : null}
         </ul>
       </nav>
 
@@ -234,6 +245,8 @@ export function SiteHeader({ current }: { current: Route }) {
               {child.label}
             </Link>
           ))}
+          {/* Renders nothing for the public. See staff-link.tsx. */}
+          <StaffLink />
         </div>
       </div>
     </header>
