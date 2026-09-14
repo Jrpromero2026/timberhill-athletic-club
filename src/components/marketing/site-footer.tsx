@@ -80,6 +80,13 @@ export function SiteFooter() {
           <span>
             facebook.com/TimberhillAthleticClub · instagram.com/timberhill_ac
           </span>
+          {/* The permanent staff entry point. Deliberately here and not in the
+              club navigation: a payroll tool does not belong beside "Join" on
+              a page selling personal training. Once signed in, the header
+              carries a real tab — see staff-link.tsx. */}
+          <Link className="f-staff" href="/performance-operations">
+            Staff sign-in
+          </Link>
         </div>
       </div>
     </footer>

@@ -46,6 +46,20 @@ export function Sidebar({ initialCollapsed }: { initialCollapsed: boolean }) {
       <div className="flex-1 overflow-y-auto py-4">
         <NavLinks collapsed={collapsed} />
       </div>
+      {/* The other half of the round trip. Staff reach this app from a tab on
+          the public site; without this they had no way back but the URL bar. */}
+      <div className={`border-t border-nav-border py-2 ${collapsed ? "px-2" : "px-5"}`}>
+        <a
+          className={`flex items-center gap-2 rounded py-2 text-[12px] text-nav-muted hover:text-nav-fg ${
+            collapsed ? "justify-center px-0" : "px-0"
+          }`}
+          href="/personal-training"
+          title="View the public site"
+        >
+          <span aria-hidden="true">←</span>
+          {!collapsed && <span>View public site</span>}
+        </a>
+      </div>
       <div className={`border-t border-nav-border py-3 ${collapsed ? "px-2" : "px-5"}`}>
         <button
           type="button"
