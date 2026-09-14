@@ -104,7 +104,10 @@ test.describe("hub", () => {
     await page.goto("/personal-training");
 
     const answers = page.locator(".faq-a");
-    await expect(answers).toHaveCount(12);
+    // Eight of the twelve written questions have settled answers; the rest are
+    // held back until the PT Director supplies theirs, so neither a visitor
+    // nor the FAQPage markup ever meets a placeholder.
+    await expect(answers).toHaveCount(8);
     await expect(page.locator(".faq-a:visible")).toHaveCount(0);
 
     const questions = page.locator(".faq-q");
@@ -237,7 +240,7 @@ test.describe("trainers index", () => {
     );
     await expect(page.locator(".trainer-card")).toHaveCount(8);
     await expect(page.locator(".roster-count")).toHaveText(
-      "8 trainers published",
+      "8 trainers",
     );
 
     await page.getByRole("button", { name: "Pre and Postnatal" }).click();
@@ -352,8 +355,8 @@ test.describe("structured data", () => {
       (data) => data["@type"] === "FAQPage",
     );
     expect(faq).toBeDefined();
-    // Twelve questions are visible; four are [CONFIRM] placeholders and must
-    // not be marked up as answers.
+    // Four of the twelve written questions are still awaiting answers from
+    // the PT Director. They are neither rendered nor marked up.
     expect(faq.mainEntity).toHaveLength(8);
     expect(JSON.stringify(faq)).not.toContain("[CONFIRM");
   });

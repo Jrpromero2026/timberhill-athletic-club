@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { AssetSlot, Corners } from "@/components/marketing/primitives";
+import { AssetSlot } from "@/components/marketing/primitives";
 import {
   SPECIALTIES,
   type Specialty,
@@ -37,7 +37,7 @@ export function Roster({ trainers }: { trainers: readonly Trainer[] }) {
 
   const countLine = filter
     ? `${shown.length} ${shown.length === 1 ? "trainer" : "trainers"} · ${filter}`
-    : `${trainers.length} trainers published`;
+    : `${trainers.length} trainers`;
 
   return (
     <>
@@ -76,9 +76,6 @@ export function Roster({ trainers }: { trainers: readonly Trainer[] }) {
             <div className="roster-count" aria-live="polite">
               {countLine}
             </div>
-            <div className="roster-note">
-              {trainers.length} of 12 published · Amanda Knight coming soon
-            </div>
           </div>
 
           {shown.length > 0 ? (
@@ -88,7 +85,6 @@ export function Roster({ trainers }: { trainers: readonly Trainer[] }) {
                   className="blueprint trainer-card"
                   key={trainer.slug}
                 >
-                  <Corners />
                   <AssetSlot spec={HEADSHOT_SPEC} shape="portrait" />
                   <div className="trainer-body">
                     <div className="roster-head-row">
@@ -134,14 +130,12 @@ export function Roster({ trainers }: { trainers: readonly Trainer[] }) {
             </div>
           ) : (
             <div className="blueprint empty-card">
-              <Corners />
               <div className="empty-title">
                 No trainer currently lists {filter}
               </div>
               <div className="empty-body">
-                Specialties are a fixed vocabulary on the trainer record. The
-                remaining four of the twelve are content blockers, not build
-                work — their specialties join the filter when their bios land.
+                Clear the filter to see the whole team, or book a consultation
+                and we will match you ourselves — that is what it is for.
               </div>
             </div>
           )}

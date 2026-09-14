@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { CtaAnalytics } from "@/components/marketing/cta-analytics";
 import {
   AssetSlot,
-  Corners,
   JsonLd,
   PrimaryCta,
   Stars,
@@ -15,6 +14,7 @@ import { StickyCta } from "@/components/marketing/sticky-cta";
 import {
   CLUB,
   PROFILE_REVIEWS,
+  publishedReviews,
   TRAINERS,
   trainerBySlug,
 } from "@/lib/marketing/personal-training";
@@ -73,7 +73,7 @@ export default async function TrainerProfile({
   const trainer = trainerBySlug(slug);
   if (!trainer?.profile) notFound();
 
-  const reviews = PROFILE_REVIEWS[trainer.slug] ?? [];
+  const reviews = publishedReviews(PROFILE_REVIEWS[trainer.slug] ?? []);
   const others = TRAINERS.filter((other) => other.slug !== trainer.slug).slice(
     0,
     4,
@@ -188,20 +188,17 @@ export default async function TrainerProfile({
               >
                 What clients say
               </h2>
+              {/* Displayed, never marked up: AggregateRating is deliberately
+                  not implemented anywhere in this build (§8). */}
               <p style={{ fontSize: 14, opacity: 0.7, margin: "0 0 24px" }}>
-                Verbatim from the club&apos;s Setmore reviews. Displayed, not
-                marked up — AggregateRating is deliberately not implemented.
+                Written by clients under their own names on the club&apos;s
+                booking page. Quoted here word for word.
               </p>
               <div className="g2">
                 {reviews.map((review) => (
                   <div className="blueprint review-card" key={review.reviewer}>
-                    <Corners />
                     <Stars />
-                    <div className="review-box">
-                      {review.quote
-                        ? `“${review.quote}”`
-                        : "[VERBATIM — paste from Setmore]"}
-                    </div>
+                    <div className="review-box">“{review.quote}”</div>
                     <div className="review-attrib">
                       <strong>{review.reviewer}</strong>
                     </div>
@@ -224,7 +221,6 @@ export default async function TrainerProfile({
             <div className="g4">
               {others.map((other) => (
                 <article className="blueprint other-card" key={other.slug}>
-                  <Corners />
                   <AssetSlot spec="headshot 3:4" shape="portrait" />
                   <div className="other-body">
                     <h3 className="other-name">{other.name}</h3>
