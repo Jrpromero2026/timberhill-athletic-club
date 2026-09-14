@@ -738,47 +738,61 @@ consultation. BUILD_BRIEF §5. */
 .tac-site .f-link {
   min-height: 44px; padding: 0; font-size: 12.5px; font-weight: 600; justify-content: flex-start;
 }
-/* ═══ 2 · 10 orientation vs PT ══════════════════════════════════════════ */
-.tac-site .compare {
-  gap: 20px;
+/* ═══ 2 · 10 orientation vs PT ══════════════════════════════════════════
+A real table. The Personal Training column is the navy one, and it is styled
+by column rather than by wrapping card, so the row relationship survives — on
+a phone the table scrolls inside .cmp-scroll and the page body does not
+(BUILD_BRIEF §9). */
+.tac-site .cmp-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
-.tac-site .compare-card {
-  background: var(--color-bg); padding: 26px;
+.tac-site .cmp-table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 620px;
+  background: var(--color-bg);
+  text-align: left;
 }
-.tac-site .compare-card--pt {
-  background: var(--color-accent-900); color: #fff;
+.tac-site .cmp-table th,
+.tac-site .cmp-table td {
+  padding: 14px 18px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-divider);
 }
-.tac-site .cmp-title {
-  font-family: var(--font-heading); font-weight: 700; font-size: 20px; margin-bottom: 4px;
+.tac-site .cmp-table thead th {
+  font-family: var(--font-heading); font-weight: 700; font-size: 19px;
+  line-height: 1.25; border-bottom: 1px solid var(--color-text);
+  padding-top: 20px;
 }
-.tac-site .compare-card--pt .cmp-title {
-  color: #fff;
+.tac-site .cmp-table tbody tr:last-child th,
+.tac-site .cmp-table tbody tr:last-child td {
+  border-bottom: 0;
 }
 .tac-site .cmp-kicker {
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em;
-  color: var(--color-accent); margin-bottom: 18px;
+  display: block; margin-top: 6px;
+  font-family: var(--font-mono); font-weight: 400;
+  font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-accent);
 }
-.tac-site .compare-card--pt .cmp-kicker {
-  color: var(--color-accent-2);
-}
-.tac-site .cmp-row {
-  padding: 12px 0; border-top: 1px solid var(--color-divider);
-}
-.tac-site .compare-card--pt .cmp-row {
-  border-top-color: rgba(255, 255, 255, 0.2);
-}
-.tac-site .cmp-label {
+.tac-site .cmp-table tbody th {
   font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--color-neutral-700); margin-bottom: 4px;
+  font-weight: 600; color: var(--color-neutral-700);
+  white-space: nowrap; width: 1%;
 }
-.tac-site .compare-card--pt .cmp-label {
-  color: var(--color-accent-2);
-}
-.tac-site .cmp-val {
+.tac-site .cmp-table td {
   font-size: 14.5px; line-height: 1.55;
 }
-.tac-site .compare-card--pt .cmp-val {
-  color: #e6ecf6;
+/* The Personal Training column carries the brand ground across every row. */
+.tac-site .cmp-table .cmp-col--pt {
+  background: var(--color-accent-900); color: #fff;
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+.tac-site .cmp-table thead .cmp-col--pt {
+  border-bottom-color: rgba(255, 255, 255, 0.45);
+}
+.tac-site .cmp-table .cmp-col--pt .cmp-kicker {
+  color: var(--color-accent-2);
 }
 /* ═══ 2 · 11 FAQ ════════════════════════════════════════════════════════ */
 .tac-site .faq {
@@ -1134,7 +1148,6 @@ AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
 .tac-site .g4,
 .tac-site .pillars,
 .tac-site .diffs,
-.tac-site .compare,
 .tac-site .quote-grid,
 .tac-site .consult-grid,
 .tac-site .profile-grid {
@@ -1171,10 +1184,45 @@ AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
   .tac-site .site-footer {
     padding-bottom: 92px;
   }
-  /* The comparison stacks into two labelled blocks. No horizontal scroll.
-  BUILD_BRIEF §9. */
-  .tac-site .compare-card {
-    padding: 22px;
+  /* Three columns do not fit 390px, and a table that scrolls sideways with no
+  affordance hides half the comparison. So at phone width each ROW becomes the
+  unit: its label sits above, and the two options sit beside each other under
+  it. The markup is untouched — still a table, still <th scope> on both axes —
+  so what an answer engine reads is identical; only the visual arrangement
+  changes, and the page itself never scrolls sideways (§9). */
+  .tac-site .cmp-table {
+    min-width: 0;
+  }
+  .tac-site .cmp-table thead {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+  }
+  .tac-site .cmp-table tbody tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--color-divider);
+  }
+  .tac-site .cmp-table tbody tr:last-child {
+    border-bottom: 0;
+  }
+  .tac-site .cmp-table tbody th {
+    grid-column: 1 / -1;
+    width: auto; white-space: normal;
+    padding: 14px 16px 6px; border-bottom: 0;
+  }
+  .tac-site .cmp-table tbody td {
+    padding: 8px 16px 16px; border-bottom: 0;
+    font-size: 13.5px;
+  }
+  /* The column name travels with the cell, because the header row is hidden. */
+  .tac-site .cmp-table tbody td::before {
+    content: attr(data-col);
+    display: block; margin-bottom: 5px;
+    font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--color-accent);
+  }
+  .tac-site .cmp-table tbody td.cmp-col--pt::before {
+    color: var(--color-accent-2);
   }
   .tac-site .step {
     gap: 10px;

@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
 /**
  * The front door.
@@ -11,7 +11,12 @@ import { redirect } from "next/navigation";
  *
  * Staff reach the operations platform at `/performance-operations/overview`, which is where `/login`
  * delivers them after signing in, and where their bookmarks point.
+ *
+ * PERMANENT, not temporary. A 307 tells a crawler the arrangement may change,
+ * so it keeps the root in the index and passes nothing through to the target.
+ * This arrangement is not going to change: the root of this deployment belongs
+ * to Personal Training.
  */
 export default function RootPage() {
-  redirect("/personal-training");
+  permanentRedirect("/personal-training");
 }

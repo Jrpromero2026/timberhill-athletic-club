@@ -12,13 +12,20 @@ import { SiteHeader } from "@/components/marketing/site-header";
 import { StickyCta } from "@/components/marketing/sticky-cta";
 import {
   CLUB,
+  OG_IMAGE_META,
   CONSULTATION_AGENDA,
   CONSULTATION_FACTS,
   CONSULTATION_FAQS,
+  settledFaqs,
   CONSULTATION_IS_NOT,
   CONSULTATION_PREP,
 } from "@/lib/marketing/personal-training";
-import { breadcrumbs, faqPage } from "@/lib/marketing/schema";
+import {
+  breadcrumbs,
+  consultationService,
+  faqPage,
+  webPage,
+} from "@/lib/marketing/schema";
 
 /**
  * `/personal-training/consultation/`.
@@ -33,7 +40,7 @@ import { breadcrumbs, faqPage } from "@/lib/marketing/schema";
 export const metadata: Metadata = {
   title: "Free Fitness Consultation in Corvallis, OR",
   description:
-    "A free 30-minute fitness consultation with a Timberhill trainer in Corvallis. No charge, no commitment, and you do not need to be a member. Nothing is sold in the room.",
+    "A free 30-minute fitness consultation with a trainer at Timberhill Athletic Club in Corvallis, OR. No charge, no membership needed, nothing sold.",
   alternates: { canonical: "/personal-training/consultation/" },
   openGraph: {
     type: "website",
@@ -41,6 +48,7 @@ export const metadata: Metadata = {
     description:
       "Thirty minutes with a Timberhill trainer. Completely free, no membership needed, nothing sold at the end of it.",
     url: "/personal-training/consultation/",
+    images: [...OG_IMAGE_META],
   },
 };
 
@@ -60,6 +68,16 @@ export default function ConsultationPage() {
           },
         ])}
       />
+      <JsonLd
+        data={webPage({
+          path: "/personal-training/consultation",
+          name: "Free Fitness Consultation in Corvallis, OR",
+          description:
+            "What the free 30-minute fitness consultation at Timberhill Athletic Club covers, what it is not, and how to book it.",
+          authorSlug: "jr-romero",
+        })}
+      />
+      <JsonLd data={consultationService()} />
       {faqSchema ? <JsonLd data={faqSchema} /> : null}
 
       <a className="visually-hidden" href="#main">
@@ -115,7 +133,7 @@ export default function ConsultationPage() {
                   className="sec-title sec-title--sm"
                   style={{ marginBottom: 18 }}
                 >
-                  What happens in the thirty minutes
+                  What happens in the free consultation?
                 </h2>
                 <div className="agenda">
                   {CONSULTATION_AGENDA.map((item, index) => (
@@ -161,7 +179,7 @@ export default function ConsultationPage() {
               id="prep-h"
               style={{ marginBottom: 24 }}
             >
-              Before you come
+              What should you bring?
             </h2>
             <div className="g3">
               {CONSULTATION_PREP.map((item) => (
@@ -181,9 +199,9 @@ export default function ConsultationPage() {
               id="cfaq-h"
               style={{ marginBottom: 18 }}
             >
-              Questions about the consultation
+              Common questions about the consultation
             </h2>
-            <Faq items={CONSULTATION_FAQS} openInitially={0} className="" />
+            <Faq items={settledFaqs(CONSULTATION_FAQS)} openInitially={0} className="" />
           </div>
         </section>
 

@@ -6,10 +6,12 @@ import type { FaqItem } from "@/lib/marketing/personal-training";
 /**
  * FAQ accordion. One item open at a time, matching the approved design.
  *
- * Items still marked `unconfirmed` are filtered out here, in the one place
- * every FAQ passes through, so the rendered questions and the FAQPage markup
- * in `schema.ts` agree by construction — a visitor never opens a question onto
- * a `[CONFIRM]` note meant for the PT Director.
+ * Items still marked `unconfirmed` are filtered out again here. The call sites
+ * already apply `settledFaqs()` — they have to, because this is a client
+ * component and anything handed to it is serialised into the document whether
+ * it renders or not — so this pass is a guard, not the mechanism: a future
+ * call site that forgets still cannot paint a `[CONFIRM]` note meant for the
+ * PT Director, it just ships it in the payload.
  *
  * `openInitially` starts the consultation page on its first question; the hub
  * passes nothing, because §11 requires every item collapsed on mobile.

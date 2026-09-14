@@ -6,8 +6,12 @@ import { Roster } from "@/components/marketing/roster";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { StickyCta } from "@/components/marketing/sticky-cta";
-import { CLUB, TRAINERS } from "@/lib/marketing/personal-training";
-import { breadcrumbs } from "@/lib/marketing/schema";
+import {
+  CLUB,
+  OG_IMAGE_META,
+  TRAINERS,
+} from "@/lib/marketing/personal-training";
+import { breadcrumbs, trainerList, webPage } from "@/lib/marketing/schema";
 
 /**
  * `/personal-training/trainers/` — the roster index.
@@ -18,8 +22,10 @@ import { breadcrumbs } from "@/lib/marketing/schema";
  */
 export const metadata: Metadata = {
   title: "Personal Trainers in Corvallis, OR",
+  // Under 160 characters so the closing ask survives the snippet — the
+  // previous 218-character version lost it to the ellipsis.
   description:
-    "Meet the personal trainers at Timberhill Athletic Club in Corvallis. Filter by specialty — strength, healthy aging, pre and postnatal, athletic performance, corrective exercise — and book a free 30-minute consultation.",
+    "Meet the personal trainers at Timberhill Athletic Club in Corvallis, OR. Filter the roster by specialty and book a free 30-minute consultation.",
   alternates: { canonical: "/personal-training/trainers/" },
   openGraph: {
     type: "website",
@@ -27,6 +33,7 @@ export const metadata: Metadata = {
     description:
       "Twelve trainers, each with their own specialty. Filter the roster and book a free 30-minute consultation.",
     url: "/personal-training/trainers/",
+    images: [...OG_IMAGE_META],
   },
 };
 
@@ -34,6 +41,19 @@ export default function TrainersIndex() {
   return (
     <div className="pg">
       <CtaAnalytics />
+      <JsonLd
+        data={webPage({
+          path: "/personal-training/trainers",
+          name: "Personal Trainers in Corvallis, OR",
+          description:
+            "The personal training roster at Timberhill Athletic Club, filterable by specialty.",
+          authorSlug: "jr-romero",
+        })}
+      />
+      {/* The densest page of named entities on the site. Declaring the roster
+          is what lets an answer engine list the trainers rather than infer
+          them from prose. */}
+      <JsonLd data={trainerList(TRAINERS)} />
       <JsonLd
         data={breadcrumbs([
           { name: "Home", path: "/" },
@@ -63,10 +83,17 @@ export default function TrainersIndex() {
               </ol>
             </nav>
             <h1 className="page-h1">Our Trainers</h1>
+            {/* §8 AEO: a standalone answer to "who are the personal trainers
+                in Corvallis" — it names the club and the city rather than
+                relying on the H1 above it for its subject, so it still reads
+                correctly quoted on its own. */}
             <p className="page-lede">
-              Twelve trainers, each with their own specialty. You do not have to
-              pick one — but if someone here looks like the right fit, say so in
-              your consultation.
+              Timberhill Athletic Club has twelve certified personal trainers on
+              staff in Corvallis, Oregon, each with their own specialty — from
+              strength and athletic performance to pre and postnatal, healthy
+              aging and corrective exercise. You do not have to pick one, but if
+              someone here looks like the right fit, say so in your
+              consultation.
             </p>
           </div>
         </section>

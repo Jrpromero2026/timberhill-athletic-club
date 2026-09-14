@@ -14,6 +14,7 @@ import { StickyCta } from "@/components/marketing/sticky-cta";
 import { TeamGrid } from "@/components/marketing/team-grid";
 import {
   CLUB,
+  OG_IMAGE_META,
   COMPARISON,
   DIFFERENTIATORS,
   FEATURED_TESTIMONIAL,
@@ -24,6 +25,7 @@ import {
   publishedReviews,
   REVIEWS,
   SERVICE_FAMILIES,
+  settledFaqs,
   SETMORE,
   STEPS,
   TRAINERS,
@@ -33,7 +35,9 @@ import {
   breadcrumbs,
   faqPage,
   healthClub,
+  serviceAnchor,
   serviceGraph,
+  webPage,
 } from "@/lib/marketing/schema";
 
 /**
@@ -51,14 +55,15 @@ import {
 export const metadata: Metadata = {
   title: "Personal Training in Corvallis, OR",
   description:
-    "Certified personal trainers in Corvallis. One-to-one, small group and hybrid coaching built around your goals. Book a complimentary 30-minute consultation — free, no commitment.",
+    "Certified personal trainers in Corvallis, OR. One-to-one, small group and hybrid coaching built around your goals. Book a free 30-minute consultation.",
   alternates: { canonical: "/personal-training/" },
   openGraph: {
     type: "website",
     title: `Personal Training in Corvallis, OR | ${CLUB.name}`,
     description:
-      "Certified personal trainers in Corvallis. One-to-one, small group and hybrid coaching built around your goals. Book a complimentary 30-minute consultation — free, no commitment.",
+      "Certified personal trainers in Corvallis, OR. One-to-one, small group and hybrid coaching built around your goals. Book a free 30-minute consultation.",
     url: "/personal-training/",
+    images: [...OG_IMAGE_META],
   },
 };
 
@@ -69,7 +74,19 @@ export default function PersonalTrainingHub() {
   return (
     <div className="pg">
       <CtaAnalytics />
-      <JsonLd data={healthClub()} />
+      {/* The roster travels with the organization as `employee`, so the club
+          and the twelve people who work there resolve as one entity graph
+          rather than a business and a disconnected list of names. */}
+      <JsonLd data={healthClub(TRAINERS)} />
+      <JsonLd
+        data={webPage({
+          path: "/personal-training",
+          name: "Personal Training in Corvallis, OR",
+          description:
+            "What personal training at Timberhill Athletic Club is, how it works, who coaches it, and what it costs to find out.",
+          authorSlug: "jr-romero",
+        })}
+      />
       <JsonLd data={serviceGraph()} />
       <JsonLd
         data={breadcrumbs([
@@ -163,11 +180,25 @@ export default function PersonalTrainingHub() {
         {/* ═══ 04 · what personal training is ═════════════════════════════ */}
         <section className="sec sec--navy on-dark" aria-labelledby="pillars-h">
           <div className="wrap">
+            {/* §8 AEO: the heading is the question somebody types, and the
+                lede below it is a standalone answer — it names the club and
+                the service rather than leaning on the heading for its subject,
+                so it survives being quoted on its own. */}
             <SectionHead
               number="04"
               id="pillars-h"
-              title="What personal training actually is"
-            />
+              title="What is personal training at Timberhill?"
+              tight
+            >
+              <p className="lede lede--wide">
+                Personal training at Timberhill Athletic Club is one-to-one
+                coaching with a certified trainer who builds your program,
+                teaches you the movements and adjusts the plan as you progress.
+                It is a coaching relationship rather than a set of workouts
+                handed over, and it starts with a free thirty-minute
+                consultation.
+              </p>
+            </SectionHead>
             <div className="pillars">
               {PILLARS.map((pillar) => (
                 <div className="pillar" key={pillar.key}>
@@ -182,7 +213,20 @@ export default function PersonalTrainingHub() {
         {/* ═══ 05 · how it works ══════════════════════════════════════════ */}
         <section className="sec" aria-labelledby="how-h">
           <div className="wrap">
-            <SectionHead number="05" id="how-h" title="How it works" />
+            <SectionHead
+              number="05"
+              id="how-h"
+              title="How does personal training work here?"
+              tight
+            >
+              <p className="lede">
+                Training at Timberhill starts with a free thirty-minute
+                consultation, then a first session where a trainer assesses how
+                you move and writes the first version of your program. Most
+                people train once or twice a week, and the program is reviewed
+                and adjusted as they progress.
+              </p>
+            </SectionHead>
             <ol className="steps" style={{ listStyle: "none", margin: 0, padding: 0 }}>
               {STEPS.map((step, index) => (
                 <li className="step" key={step.title}>
@@ -228,7 +272,20 @@ export default function PersonalTrainingHub() {
         {/* ═══ 07 · why Timberhill ════════════════════════════════════════ */}
         <section className="sec" aria-labelledby="why-h">
           <div className="wrap">
-            <SectionHead number="07" id="why-h" title="Why Timberhill" />
+            <SectionHead
+              number="07"
+              id="why-h"
+              title="Why train at Timberhill?"
+              tight
+            >
+              <p className="lede lede--wide">
+                Timberhill Athletic Club has been locally owned in Corvallis
+                since 1980. Personal training here is a department with twelve
+                certified trainers and five program formats across sixty-five
+                thousand square feet — not a service the front desk arranges on
+                the side.
+              </p>
+            </SectionHead>
             <div className="diffs">
               {DIFFERENTIATORS.map((diff) => (
                 <div className="diff" key={diff.title}>
@@ -313,15 +370,27 @@ export default function PersonalTrainingHub() {
             Performance Lab (§4, §5). */}
         <section className="sec" aria-labelledby="options-h">
           <div className="wrap">
-            <SectionHead number="09" id="options-h" title="Training options" tight>
+            <SectionHead
+              number="09"
+              id="options-h"
+              title="What kinds of personal training can you book?"
+              tight
+            >
               <p className="lede">
-                Five ways to train with us. Every one of them starts the same
-                way, so you do not have to choose from this page.
+                Timberhill offers five personal training formats: one-to-one
+                coaching, partner and small group, hybrid coaching, Performance
+                Lab, and seasonal and focused programs. Every one of them starts
+                with the same free consultation, so you do not have to choose
+                from this page.
               </p>
             </SectionHead>
             <div className="g3">
               {SERVICE_FAMILIES.map((family) => (
-                <article className="blueprint family-card" key={family.name}>
+                <article
+                  className="blueprint family-card"
+                  id={serviceAnchor(family.name)}
+                  key={family.name}
+                >
                   <AssetSlot spec="service image · 800×600" shape="landscape" />
                   <div className="family-body">
                     <h3 className="f-name">{family.name}</h3>
@@ -344,38 +413,73 @@ export default function PersonalTrainingHub() {
         </section>
 
         {/* ═══ 10 · orientation vs personal training ══════════════════════
-            Two columns on desktop, two labelled blocks stacked on mobile with
-            no horizontal scroll (§9). */}
+            A real <table>, not a grid of divs.
+
+            Five attributes compared across two options is the shape an answer
+            engine lifts wholesale, and it settles the question that separates
+            a paying client from a browsing member. As divs it was a wall of
+            text with the relationship between label, column and value carried
+            only by CSS. With <th scope> on both axes that relationship is in
+            the markup, and the mobile treatment falls out of the table rather
+            than needing a second stacked copy (§9: no horizontal scroll). */}
         <section className="sec sec--surface" aria-labelledby="cmp-h">
           <div className="wrap">
             <SectionHead
               number="10"
               id="cmp-h"
-              title="Equipment orientation vs personal training"
-            />
-            <div className="g2 compare">
-              <div className="blueprint compare-card">
-                <h3 className="cmp-title">Equipment Orientation</h3>
-                <div className="cmp-kicker">INCLUDED WITH MEMBERSHIP</div>
-                {COMPARISON.map((row) => (
-                  <div className="cmp-row" key={row.label}>
-                    <div className="cmp-label">{row.label}</div>
-                    <div className="cmp-val">{row.orientation}</div>
-                  </div>
-                ))}
-              </div>
-              <div className="blueprint compare-card compare-card--pt on-dark">
-                <h3 className="cmp-title">Personal Training</h3>
-                <div className="cmp-kicker">
-                  AN ONGOING COACHING RELATIONSHIP
-                </div>
-                {COMPARISON.map((row) => (
-                  <div className="cmp-row" key={row.label}>
-                    <div className="cmp-label">{row.label}</div>
-                    <div className="cmp-val">{row.training}</div>
-                  </div>
-                ))}
-              </div>
+              title="How is personal training different from the free equipment orientation?"
+              tight
+            >
+              <p className="lede lede--wide">
+                The equipment orientation is a single appointment included with
+                a Timberhill membership that shows you how to use the machines
+                safely. Personal training is an ongoing relationship with a
+                coach who builds a program for your goal and progresses it —
+                the orientation ends when you leave the floor, the program does
+                not.
+              </p>
+            </SectionHead>
+
+            <div className="cmp-scroll">
+              <table className="cmp-table">
+                <caption className="visually-hidden">
+                  Equipment orientation compared with personal training, across
+                  five attributes
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <span className="visually-hidden">Attribute</span>
+                    </th>
+                    <th scope="col">
+                      Equipment Orientation
+                      <span className="cmp-kicker">
+                        Included with membership
+                      </span>
+                    </th>
+                    <th scope="col" className="cmp-col--pt">
+                      Personal Training
+                      <span className="cmp-kicker">
+                        An ongoing coaching relationship
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {COMPARISON.map((row) => (
+                    <tr key={row.label}>
+                      <th scope="row">{row.label}</th>
+                      {/* `data-col` is what labels each cell once the columns
+                          stack at phone width — the header row is off-screen
+                          there, so without it a value has no column. */}
+                      <td data-col="Equipment Orientation">{row.orientation}</td>
+                      <td className="cmp-col--pt" data-col="Personal Training">
+                        {row.training}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </section>
@@ -388,8 +492,12 @@ export default function PersonalTrainingHub() {
             they return to the page with their answers. */}
         <section className="sec" aria-labelledby="faq-h">
           <div className="wrap">
-            <SectionHead number="11" id="faq-h" title="Questions" />
-            <Faq items={HUB_FAQS} />
+            <SectionHead
+              number="11"
+              id="faq-h"
+              title="Common questions about personal training"
+            />
+            <Faq items={settledFaqs(HUB_FAQS)} />
           </div>
         </section>
 

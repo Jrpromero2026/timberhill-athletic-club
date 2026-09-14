@@ -12,13 +12,15 @@ import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { StickyCta } from "@/components/marketing/sticky-cta";
 import {
+  canonicalPath,
   CLUB,
+  OG_IMAGE_META,
   PROFILE_REVIEWS,
   publishedReviews,
   TRAINERS,
   trainerBySlug,
 } from "@/lib/marketing/personal-training";
-import { breadcrumbs, person } from "@/lib/marketing/schema";
+import { breadcrumbs, person, webPage } from "@/lib/marketing/schema";
 
 /**
  * `/personal-training/trainers/[slug]/` — PHASE 3, built after the hub has
@@ -49,17 +51,24 @@ export async function generateMetadata({
 
   const suffix = trainer.credentials.split(" · ")[0];
   const headline = `${trainer.name}, ${suffix} — Personal Trainer in Corvallis`;
-  const description = `${trainer.name} at ${CLUB.name} in Corvallis. ${trainer.worksBestWith} Book a free 30-minute consultation.`;
+  // The page description has to fit a snippet (~160 chars); the schema one
+  // does not, so the full works-best-with sentence lives there instead.
+  const description = `${trainer.name} at ${CLUB.name} in Corvallis, OR. ${trainer.specialties.slice(0, 3).join(", ")}. Book a free 30-minute consultation.`;
 
   return {
     title: headline,
     description,
-    alternates: { canonical: `/personal-training/trainers/${trainer.slug}` },
+    // Trailing slash, matching the other three routes AND this page's own
+    // Person node — they disagreed before, which is two URLs for one page.
+    alternates: {
+      canonical: canonicalPath(`/personal-training/trainers/${trainer.slug}`),
+    },
     openGraph: {
       type: "profile",
       title: `${headline} | ${CLUB.name}`,
       description,
-      url: `/personal-training/trainers/${trainer.slug}`,
+      url: canonicalPath(`/personal-training/trainers/${trainer.slug}`),
+      images: [...OG_IMAGE_META],
     },
   };
 }
@@ -83,6 +92,14 @@ export default async function TrainerProfile({
     <div className="pg">
       <CtaAnalytics />
       <JsonLd data={person(trainer)} />
+      <JsonLd
+        data={webPage({
+          path: `/personal-training/trainers/${trainer.slug}`,
+          name: `${trainer.name} — Personal Trainer in Corvallis`,
+          description: trainer.worksBestWith,
+          authorSlug: trainer.slug,
+        })}
+      />
       <JsonLd
         data={breadcrumbs([
           { name: "Home", path: "/" },
