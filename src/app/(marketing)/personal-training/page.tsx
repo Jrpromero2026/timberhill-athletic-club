@@ -13,6 +13,7 @@ import { SiteHeader } from "@/components/marketing/site-header";
 import { StickyCta } from "@/components/marketing/sticky-cta";
 import { TeamGrid } from "@/components/marketing/team-grid";
 import {
+  canonicalPath,
   CLUB,
   OG_IMAGE_META,
   COMPARISON,
@@ -56,13 +57,13 @@ export const metadata: Metadata = {
   title: "Personal Training in Corvallis, OR",
   description:
     "Certified personal trainers in Corvallis, OR. One-to-one, small group and hybrid coaching built around your goals. Book a free 30-minute consultation.",
-  alternates: { canonical: "/personal-training/" },
+  alternates: { canonical: canonicalPath("/personal-training") },
   openGraph: {
     type: "website",
     title: `Personal Training in Corvallis, OR | ${CLUB.name}`,
     description:
       "Certified personal trainers in Corvallis, OR. One-to-one, small group and hybrid coaching built around your goals. Book a free 30-minute consultation.",
-    url: "/personal-training/",
+    url: canonicalPath("/personal-training"),
     images: [...OG_IMAGE_META],
   },
 };
