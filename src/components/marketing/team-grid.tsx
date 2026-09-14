@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { AssetSlot } from "@/components/marketing/primitives";
 import type { Trainer } from "@/lib/marketing/personal-training";
@@ -14,6 +15,11 @@ const HEADSHOT_SPEC = "headshot — identify from Trainer Pictures folder";
  * card carries credentials, specialties and works-best-with, and the
  * philosophy is capped at two or three sentences behind a disclosure. Full
  * biographies live on the Phase 3 profile page, not here.
+ *
+ * A card links to that profile where one exists. It previously did not, which
+ * left every profile reachable only from the roster — three clicks from the
+ * hub, and nothing on the busiest page of the site pointing at the deepest
+ * content on it. A trainer with no profile gets no link rather than a dead one.
  */
 export function TeamGrid({ trainers }: { trainers: readonly Trainer[] }) {
   const [open, setOpen] = useState<string | null>(null);
@@ -42,6 +48,14 @@ export function TeamGrid({ trainers }: { trainers: readonly Trainer[] }) {
               <p className="t-phil" id={panelId} hidden={!isOpen}>
                 {trainer.philosophy}
               </p>
+              {trainer.profile ? (
+                <Link
+                  className="btn btn-ghost f-link"
+                  href={`/personal-training/trainers/${trainer.slug}`}
+                >
+                  Full profile ›
+                </Link>
+              ) : null}
               <button
                 className="btn btn-ghost t-toggle"
                 type="button"

@@ -38,6 +38,10 @@ export function PrimaryCta({
     <a
       className={classes}
       href={SETMORE.consultation}
+      // Setmore is a third-party booking domain. `noopener` on every
+      // placement, set here rather than at each call site so none can forget
+      // it (§2: one string, one destination, six placements).
+      rel="noopener"
       data-primary-cta=""
       data-cta-section={section}
     >

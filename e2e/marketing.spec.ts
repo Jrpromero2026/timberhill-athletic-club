@@ -1,4 +1,8 @@
 import { expect, test, type Page } from "@playwright/test";
+import { HUB_FAQS } from "../src/lib/marketing/personal-training";
+
+/** Questions whose answers are settled — the only ones that reach a page. */
+const SETTLED_HUB_FAQS = HUB_FAQS.filter((item) => !item.unconfirmed).length;
 
 /**
  * Public Personal Training routes. Runs in the offline suite because these
@@ -104,10 +108,11 @@ test.describe("hub", () => {
     await page.goto("/personal-training");
 
     const answers = page.locator(".faq-a");
-    // Eight of the twelve written questions have settled answers; the rest are
-    // held back until the PT Director supplies theirs, so neither a visitor
-    // nor the FAQPage markup ever meets a placeholder.
-    await expect(answers).toHaveCount(8);
+    // Derived, not hard-coded: questions still awaiting an answer are held
+    // back, so neither a visitor nor the FAQPage markup ever meets a
+    // placeholder. Counting the settled items keeps this honest as the FAQ
+    // grows without turning every content edit into a test edit.
+    await expect(answers).toHaveCount(SETTLED_HUB_FAQS);
     await expect(page.locator(".faq-a:visible")).toHaveCount(0);
 
     const questions = page.locator(".faq-q");
@@ -355,9 +360,9 @@ test.describe("structured data", () => {
       (data) => data["@type"] === "FAQPage",
     );
     expect(faq).toBeDefined();
-    // Four of the twelve written questions are still awaiting answers from
-    // the PT Director. They are neither rendered nor marked up.
-    expect(faq.mainEntity).toHaveLength(8);
+    // The rendered accordion and the FAQPage markup are filtered by the same
+    // rule, so they must agree exactly.
+    expect(faq.mainEntity).toHaveLength(SETTLED_HUB_FAQS);
     expect(JSON.stringify(faq)).not.toContain("[CONFIRM");
   });
 });
