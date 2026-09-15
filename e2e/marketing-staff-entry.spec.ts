@@ -3,41 +3,52 @@ import { expect, test } from "@playwright/test";
 /**
  * The staff entry point into Performance Operations.
  *
- * The rule this guards is a privacy one, not a security one — `src/proxy.ts`
- * is what actually protects the application. The rule here is that the club's
- * public navigation does not advertise an internal payroll and KPI tool to a
- * prospective member reading about personal training.
+ * It is permanent and public by decision of the PT Director — the tab used to
+ * appear only for a visitor carrying a session cookie. These tests pin the two
+ * things that keep a public link to an internal application harmless: it
+ * reaches every marketing page, and it stays out of the search index.
  */
 
-/** The shape `@supabase/ssr` writes; the value is irrelevant, only presence. */
-const SESSION_COOKIE = {
-  name: "sb-testprojectref-auth-token",
-  value: "not-a-real-token",
-  domain: "localhost",
-  path: "/",
-};
+const ROUTES = [
+  "/personal-training",
+  "/personal-training/trainers",
+  "/personal-training/consultation",
+  "/personal-training/trainers/jr-romero",
+] as const;
 
-test.describe("signed out", () => {
+/** 760px is the breakpoint in marketing.css where the utility strip gives way
+ *  to the hamburger menu, and the tab moves with it. */
+async function staffTab(page: import("@playwright/test").Page) {
+  const mobile = (page.viewportSize()?.width ?? 0) <= 760;
+  if (!mobile) return page.locator(".subnav .staff-link");
+
+  await page.locator(".hamburger").click();
+  return page.locator(".mobile-menu .staff-link");
+}
+
+test.describe("the tab", () => {
   test.use({ storageState: { cookies: [], origins: [] } });
 
-  test("the public navigation does not mention the application", async ({
-    page,
-  }) => {
-    await page.goto("/personal-training");
-    await expect(page.locator(".subnav .staff-link")).toHaveCount(0);
-  });
+  for (const route of ROUTES) {
+    test(`${route} carries it, signed out`, async ({ page }) => {
+      await page.goto(route);
 
-  test("it is absent from the prerendered HTML, not merely hidden", async ({
-    request,
-  }) => {
-    // The pages are statically prerendered and served from a shared cache, so
-    // the markup has to be identical for every visitor. A link hidden with CSS
-    // would still sit in the document for anyone who reads the source.
+      const tab = await staffTab(page);
+      await expect(tab).toBeVisible();
+      await expect(tab).toHaveAttribute("href", "/performance-operations");
+    });
+  }
+
+  test("it is server-rendered, not drawn by script", async ({ request }) => {
+    // These pages are statically prerendered and served from a shared cache.
+    // A link that only appears after hydration would be missing for anyone
+    // with JavaScript off, and missing from the cached document entirely.
     const html = await (await request.get("/personal-training")).text();
-    expect(html).not.toContain("staff-link");
+    expect(html).toContain("staff-link");
+    expect(html).toContain('href="/performance-operations"');
   });
 
-  test("the footer still offers a way in", async ({ page }) => {
+  test("the footer keeps its own way in", async ({ page }) => {
     await page.goto("/personal-training");
     const link = page.locator(".f-staff");
     await expect(link).toBeVisible();
@@ -45,44 +56,30 @@ test.describe("signed out", () => {
   });
 });
 
-test.describe("with a session cookie", () => {
-  test.use({ storageState: { cookies: [SESSION_COOKIE], origins: [] } });
-
-  /**
-   * The invariant is "a signed-in staff member can reach the application from
-   * the site chrome", which is one thing in two places: the utility strip on
-   * desktop, and the hamburger menu on a phone, where that strip is hidden by
-   * design and its links move into the menu. Asserting the desktop markup on
-   * both viewports tests the layout, not the behaviour.
-   */
-  async function staffTab(page: import("@playwright/test").Page) {
-    // Branch on the viewport, not on whether the link is on screen yet: it is
-    // rendered after hydration, so probing visibility races the client and
-    // falls through to a hamburger that does not exist on desktop. 760px is
-    // the breakpoint in marketing.css where the strip gives way to the menu.
-    const mobile = (page.viewportSize()?.width ?? 0) <= 760;
-    if (!mobile) return page.locator(".subnav .staff-link");
-
-    await page.locator(".hamburger").click();
-    return page.locator(".mobile-menu .staff-link");
-  }
-
-  test("the tab appears in the site navigation", async ({ page }) => {
+test.describe("kept out of the index", () => {
+  test("the link is nofollow", async ({ page }) => {
     await page.goto("/personal-training");
-
-    const tab = await staffTab(page);
-    await expect(tab).toBeVisible();
-    await expect(tab).toHaveAttribute("href", "/performance-operations");
+    await expect(page.locator(".subnav .staff-link").first()).toHaveAttribute(
+      "rel",
+      "nofollow",
+    );
   });
 
-  test("the tab is on every public route", async ({ page }) => {
-    for (const route of [
-      "/personal-training/trainers",
-      "/personal-training/consultation",
-      "/personal-training/trainers/jr-romero",
-    ]) {
-      await page.goto(route);
-      await expect(await staffTab(page)).toBeVisible();
-    }
+  test("robots.txt disallows the destination, slash or no slash", async ({
+    request,
+  }) => {
+    const body = await (await request.get("/robots.txt")).text();
+
+    // `Disallow: /performance-operations/` is a prefix match, so it does NOT
+    // cover `/performance-operations` — which is exactly the URL this tab
+    // links to. The gap only mattered once the link became public.
+    expect(body).toContain("Disallow: /performance-operations");
+    const rules = body.match(/Disallow: \/performance-operations\S*/g) ?? [];
+    expect(rules.some((rule) => !rule.endsWith("/"))).toBe(true);
+  });
+
+  test("the destination is not in the sitemap", async ({ request }) => {
+    const body = await (await request.get("/sitemap.xml")).text();
+    expect(body).not.toContain("performance-operations");
   });
 });
