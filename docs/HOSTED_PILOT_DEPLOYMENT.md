@@ -68,8 +68,11 @@ re-execution is safe). Parity with the development project is now exact:
 Only structure and identity — no financial data, no trainers, no
 services, no compensation plans, no reporting periods:
 
-- `timberhill-pilot` — "Timberhill Athletic Club (Pilot)", 3 departments
-- `g3-performance-pilot` — "G3 Performance (Pilot)", 6 departments
+- `timberhill-athletic-club` — "Timberhill Athletic Club", 3 departments
+- `g3-performance` — "G3 Performance", 6 departments
+
+(Both renamed 15 Sep 2026 from `…-pilot`. References further down this file
+use the original names because they describe what was done at the time.)
 - 11 service-category headings per organization
 - JR Romero (`jrpromero16@gmail.com`) with `platform_admin` membership in
   both organizations

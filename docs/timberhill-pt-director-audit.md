@@ -91,7 +91,7 @@ requirement — already built, and reusable by an agent for free.
 
 **Model B — one organization inside a genuinely multi-org application.**
 
-- Canonical tenant id: `organizations.id`. Timberhill = `cc0f5b54-3e44-4902-94cf-b25ea6446d3a` (`timberhill-pilot`).
+- Canonical tenant id: `organizations.id`. Timberhill = `cc0f5b54-3e44-4902-94cf-b25ea6446d3a` (`timberhill-athletic-club`, renamed from `timberhill-pilot` 15 Sep 2026).
 - Every org-scoped table carries `organization_id` with FK + index; RLS restricts rows to organizations where the user holds an active membership.
 - Timberhill and G3 **coexist in this database by design** (both pilot orgs) — isolation is by RLS + membership, verified by `tests/rls/` live checks.
 - Built For Her is in a **separate Supabase project** and cannot mix.
@@ -561,7 +561,7 @@ Steps 1–2 are the long poles and are **owner-dependent**, not code.
 ## 35. FINAL READINESS
 
 - **TIMBERHILL SYSTEM AUDITED: YES**
-- **TIMBERHILL TENANCY UNDERSTOOD: YES** — organization-scoped multi-tenancy, `timberhill-pilot` = `cc0f5b54-3e44-4902-94cf-b25ea6446d3a`, RLS-enforced, co-resident with G3 pilot by design.
+- **TIMBERHILL TENANCY UNDERSTOOD: YES** — organization-scoped multi-tenancy, `timberhill-athletic-club` = `cc0f5b54-3e44-4902-94cf-b25ea6446d3a`, RLS-enforced, co-resident with G3 pilot by design.
 - **TIMBERHILL READ AUTHORIZATION SAFE: YES, with one exception** — the permission/RLS architecture is sound and per-metric gated; **P1-1** (no stored trainer↔client assignment) must be closed before trainer-scoped client tools ship.
 - **TIMBERHILL DATA SOURCES AUTHORITATIVE: NO** — the platform is the intended source of truth but holds no operational data; the authoritative Timberhill record is currently Setmore exports and payroll-tracker PDFs held locally. Both integrations are recorded as blocked for lack of credentials.
 - **TIMBERHILL FINANCIAL READ SECURITY SAFE: YES** — `analytics:read`, department scoping, and per-metric permissions gate revenue; **P1-4** requires variant labelling for honesty, not for security.
