@@ -264,6 +264,15 @@ test.describe("answer-engine surface", () => {
     const club = graph.find((data) => data["@type"] === "HealthClub");
 
     expect(club.employee).toHaveLength(TRAINERS.length);
+    // The pin. Asserted as a range rather than an exact pair so a corrected
+    // survey does not fail the test, but a transposed sign or a swapped
+    // lat/long — the failure modes that actually happen — does. Corvallis is
+    // ~44.6°N, ~123.3°W; a positive longitude would put the club in China.
+    expect(club.geo.latitude).toBeGreaterThan(44.4);
+    expect(club.geo.latitude).toBeLessThan(44.8);
+    expect(club.geo.longitude).toBeGreaterThan(-123.5);
+    expect(club.geo.longitude).toBeLessThan(-123.1);
+    expect(club.hasMap).toContain(String(club.geo.latitude));
     expect(club.image).toBe(`${SITE_ORIGIN}/personal-training/og`);
     expect(club.areaServed.length).toBeGreaterThan(0);
     // §8: no price claim anywhere, and priceRange is still a price claim.

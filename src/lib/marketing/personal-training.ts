@@ -124,6 +124,12 @@ export const CLUB = {
   city: "Corvallis",
   region: "OR",
   postalCode: "97330",
+  /** Surveyed by the PT Director from the club's own pin, 15 Sep 2026. These
+   *  were deliberately absent until then: a local-business record with the
+   *  wrong latitude puts the club on somebody else's street in a map pack,
+   *  and it is the kind of error nobody notices for a year. */
+  latitude: 44.5951,
+  longitude: -123.2938,
   phone: "541-757-8559",
   phoneHref: "tel:5417578559",
   phoneE164: "+1-541-757-8559",

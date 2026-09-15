@@ -18,10 +18,6 @@
  * Every node is addressed by a stable `@id` on the publishing host, so the
  * organization, its trainers and its services resolve to one entity graph
  * across all four routes rather than four disconnected islands.
- *
- * Two fields a local-business record normally carries are absent on purpose:
- * `geo` and `hasMap` need surveyed coordinates for 2855 NW 29th Street, and a
- * wrong latitude is worse than a missing one. Supply them and add them here.
  */
 import {
   canonicalUrl,
@@ -77,6 +73,15 @@ export function healthClub(trainers: readonly Trainer[] = []) {
       postalCode: CLUB.postalCode,
       addressCountry: "US",
     },
+    // What ties the business to a point rather than to a string of address
+    // text. Both are derived from CLUB, so there is one place to correct if
+    // the pin ever moves.
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: CLUB.latitude,
+      longitude: CLUB.longitude,
+    },
+    hasMap: `https://www.google.com/maps/search/?api=1&query=${CLUB.latitude},${CLUB.longitude}`,
     areaServed: [
       { "@type": "City", name: "Corvallis", containedInPlace: { "@type": "State", name: "Oregon" } },
       { "@type": "City", name: "Philomath" },
