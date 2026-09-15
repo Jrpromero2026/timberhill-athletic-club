@@ -2,7 +2,15 @@
 -- PILOT SEED — creates the two clean pilot organizations (Option 2 in
 -- docs/PILOT_CONFIGURATION_INVENTORY.md).
 --
--- RUN ONLY AFTER JR CONFIRMS THE NAMES. Not a migration: this is
+-- ALREADY RUN. The two organizations exist and hold live data — Timberhill
+-- alone carries several thousand appointments. The "(Pilot)" suffix and the
+-- "-pilot" slugs were dropped on 15 Sep 2026 once the pilot became the real
+-- thing; the values below match the database as it now stands, so the
+-- `on conflict (slug) do nothing` guard still works and a re-run is still a
+-- no-op. Editing the slugs here without also renaming them in the database
+-- would make a re-run create DUPLICATE organizations.
+--
+-- Not a migration: this is
 -- owner-triggered configuration seeding, executed once against
 -- performance-operations-dev (MCP execute_sql or psql). Idempotent —
 -- safe to re-run; it never touches the existing sandbox organizations.
@@ -17,8 +25,8 @@ begin;
 
 insert into public.organizations (slug, name, status)
 values
-  ('timberhill-pilot', 'Timberhill Athletic Club (Pilot)', 'active'),
-  ('g3-performance-pilot', 'G3 Performance (Pilot)', 'active')
+  ('timberhill-athletic-club', 'Timberhill Athletic Club', 'active'),
+  ('g3-performance', 'G3 Performance', 'active')
 on conflict (slug) do nothing;
 
 -- Department structures mirror the intended real structures already
@@ -27,15 +35,15 @@ insert into public.departments (organization_id, name)
 select o.id, d.name
 from public.organizations o
 join (values
-  ('timberhill-pilot', 'Personal Training'),
-  ('timberhill-pilot', 'PACK Training'),
-  ('timberhill-pilot', 'Nutrition Coaching'),
-  ('g3-performance-pilot', 'Athlete Performance'),
-  ('g3-performance-pilot', 'Adult Human Performance'),
-  ('g3-performance-pilot', 'Team Performance'),
-  ('g3-performance-pilot', 'Performance Evaluations'),
-  ('g3-performance-pilot', 'Tactical Performance'),
-  ('g3-performance-pilot', 'G3 Volleyball')
+  ('timberhill-athletic-club', 'Personal Training'),
+  ('timberhill-athletic-club', 'PACK Training'),
+  ('timberhill-athletic-club', 'Nutrition Coaching'),
+  ('g3-performance', 'Athlete Performance'),
+  ('g3-performance', 'Adult Human Performance'),
+  ('g3-performance', 'Team Performance'),
+  ('g3-performance', 'Performance Evaluations'),
+  ('g3-performance', 'Tactical Performance'),
+  ('g3-performance', 'G3 Volleyball')
 ) as d(slug, name) on d.slug = o.slug
 where not exists (
   select 1 from public.departments existing
@@ -48,7 +56,7 @@ insert into public.organization_memberships (profile_id, organization_id, role_i
 select p.id, o.id, r.id
 from public.profiles p
 join public.roles r on r.key = 'platform_admin'
-join public.organizations o on o.slug in ('timberhill-pilot', 'g3-performance-pilot')
+join public.organizations o on o.slug in ('timberhill-athletic-club', 'g3-performance')
 where p.email = 'jrpromero16@gmail.com'
   and not exists (
     select 1 from public.organization_memberships m
@@ -63,5 +71,5 @@ select o.slug, o.name,
   (select count(*) from public.organization_memberships m
     where m.organization_id = o.id and m.effective_to is null) as members
 from public.organizations o
-where o.slug in ('timberhill-pilot', 'g3-performance-pilot')
+where o.slug in ('timberhill-athletic-club', 'g3-performance')
 order by o.slug;

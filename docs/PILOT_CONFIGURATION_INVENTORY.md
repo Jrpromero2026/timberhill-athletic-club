@@ -93,8 +93,12 @@ platform-admin membership — no services, trainers, plans, or periods
 [PILOT_INPUTS_REQUIRED.md](PILOT_INPUTS_REQUIRED.md)). Proposed names,
 pending JR's confirmation:
 
-- **"Timberhill Athletic Club (Pilot)"** — slug `timberhill-pilot`
-- **"G3 Performance (Pilot)"** — slug `g3-performance-pilot`
+- **"Timberhill Athletic Club"** — slug `timberhill-athletic-club`
+- **"G3 Performance"** — slug `g3-performance`
+
+> Renamed 15 Sep 2026. Both were created as `… (Pilot)` on the slugs
+> `timberhill-pilot` and `g3-performance-pilot`; the suffix was dropped once
+> the pilot became the live system. Ids are unchanged.
 
 The "(Pilot)" suffix guarantees nobody mistakes sandbox for pilot (and
 vice versa) until production launch renames them. Existing orgs remain
