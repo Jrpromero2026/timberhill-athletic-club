@@ -17,7 +17,10 @@ import { canonicalUrl, SITE_ORIGIN } from "@/lib/marketing/personal-training";
  */
 export default function robots(): MetadataRoute.Robots {
   const disallow = [
-    "/performance-operations/",
+    // No trailing slash: a Disallow is a prefix match, so the slashed form
+    // alone would leave `/performance-operations` itself crawlable — and that
+    // is precisely the URL the public staff tab links to.
+    "/performance-operations",
     "/login",
     "/auth/",
     "/api/",

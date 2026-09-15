@@ -85,7 +85,10 @@ test.describe("crawl directives", () => {
     expect(response.status()).toBe(200);
 
     const body = await response.text();
-    expect(body).toContain("Disallow: /performance-operations/");
+    // No trailing slash — a Disallow is a prefix match, and the slashed form
+    // alone leaves `/performance-operations` itself crawlable. That is the URL
+    // the public staff tab links to, so the looser rule is the correct one.
+    expect(body).toContain("Disallow: /performance-operations");
     expect(body).toContain("Disallow: /login");
     expect(body).toContain(`Sitemap: ${SITE_ORIGIN}/sitemap.xml`);
     // The answer engines are named explicitly so a future tightening of the
