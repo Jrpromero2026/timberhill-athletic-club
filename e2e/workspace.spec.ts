@@ -19,6 +19,13 @@ test("workspace switch rescopes the overview", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "G3 Sports & Fitness" })
   ).toBeVisible();
+  // The selector itself must name the new workspace WITHOUT a navigation. It
+  // lives in the layout, which a server action's response does not re-render,
+  // so a value driven straight off the server selection snapped back here
+  // while the page beneath it had already rescoped.
+  await expect(page.getByLabel("Workspace")).toHaveValue(
+    "bootstrap-g3-sports-fitness"
+  );
   // Department list rescopes to the selected organization.
   await expect(
     page.getByRole("cell", { name: "Athlete Performance" })
@@ -61,6 +68,7 @@ test("All Workspaces aggregates both organizations", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "All Workspaces" })
   ).toBeVisible();
+  await expect(page.getByLabel("Workspace")).toHaveValue("all");
   await expect(page.getByText("Cross-organization view")).toBeVisible();
   // Departments from BOTH organizations are visible.
   await expect(
