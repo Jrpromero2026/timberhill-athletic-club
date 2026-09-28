@@ -19,9 +19,26 @@
 
 /* ── constants ─────────────────────────────────────────────────────────── */
 
-/** §1. These URLs embed Setmore product and staff IDs. If a service is
- *  rebuilt in Setmore the ID changes and every CTA breaks silently — so they
- *  are defined once, here, and nowhere else. */
+/**
+ * §1. These URLs embed Setmore product and staff IDs. If a service is rebuilt
+ * in Setmore the ID changes and every CTA breaks silently — so they are
+ * defined once, here, and nowhere else.
+ *
+ * ONLY `consultation` may be used by a call to action. `freeTrial` and
+ * `performanceLab` are recorded so the IDs are not lost, and are deliberately
+ * not linked from any page: sending a prospect to a specific service asks them
+ * to diagnose which product they need, which is the job the consultation
+ * exists to do.
+ *
+ * `consultation` is a DEEP LINK, not the booking menu. `step=time-slot` with a
+ * product and a pre-selected staff member should land the visitor straight on
+ * the calendar for the Personal Training consultation, with nothing to choose
+ * first. If either GUID stops resolving — the service rebuilt, or that trainer
+ * unassigned from it — Setmore does not error. It falls back to the full
+ * service menu, which is indistinguishable from the link having been wrong all
+ * along, and puts every unrelated service back in front of the prospect. If
+ * anyone reports landing on a list of services, check these two IDs first.
+ */
 export const SETMORE = {
   consultation:
     "https://timberhill-personal-training.setmore.com/book?step=time-slot&products=8aff2d32-3927-4531-a6ba-f12c9e5ab214&type=service&staff=91f71610-48fd-4e00-bd4e-2017f4f4a65b&staffSelected=true",
@@ -36,6 +53,16 @@ export const SETMORE = {
 /** §2. Exact, no variants. Not "Get Started", not "Book Now", not
  *  "Free Consult" — recognition is the mechanism. */
 export const PRIMARY_CTA = "BOOK A COMPLIMENTARY CONSULTATION";
+
+/**
+ * The sticky mobile bar, and only the sticky mobile bar.
+ *
+ * The full string is 33 characters and wraps to two lines inside a phone-width
+ * bar, which makes the one persistent control on the page look broken. This is
+ * the same action with the same destination, shortened to fit. It is the ONLY
+ * sanctioned variant — every other placement uses PRIMARY_CTA verbatim.
+ */
+export const STICKY_CTA = "BOOK A CONSULTATION";
 
 /**
  * Where these pages are actually published — the host that owns them in the
@@ -410,23 +437,52 @@ export const RECOGNITION = [
 export const PILLARS = [
   {
     key: "THE GOAL",
-    body: "The specific thing you want to be able to do, in your words, written down. Not \u201cget in shape\u201d — a target with an edge on it, so there is something to aim at and a way to know you hit it.",
+    body: "A clear destination, in your words and written down. Not \u201cget in shape\u201d \u2014 a target with an edge on it, so there is something to aim at and a way to know you reached it.",
   },
   {
     key: "THE ODDS",
-    body: "A certified trainer, a written program, and numbers reviewed with you rather than guessed at. Twelve trainers on staff, and a 5.0 average across 160 client reviews.",
+    body: "A qualified coach, a structured plan and a professional environment all raise the odds that this works. Twelve certified trainers, and progress measured rather than guessed at.",
   },
   {
     key: "THE TIMELINE",
-    body: "You train to a plan from the first session. No four-week onboarding, no getting fit enough first — the free consultation and the first block can happen in the same week.",
+    body: "The consultation and the trainer match get you started without a long runway. No onboarding course, no getting fit enough first \u2014 the first session can follow in the same week.",
   },
   {
     key: "THE EFFORT",
-    body: "You do not design the program, pick the exercises or decide when to add weight. That is the trainer\u2019s job. Yours is to turn up on the days you said you would.",
+    body: "You do not design the program, troubleshoot it, decide when to progress, or rethink it every few weeks. That is the trainer\u2019s job. Yours is to turn up on the days you said you would.",
   },
 ] as const;
 
-/** §4 section 05. */
+/**
+ * §4 section 05a. The five stages of the Timberhill Personal Training System.
+ *
+ * This is the method, stated once. STEPS below is the client's journey through
+ * it — what happens to you, in order, from booking to training. The two are
+ * deliberately different: a prospect needs to know both that there is a system
+ * and what their own first month looks like, and collapsing them into one list
+ * loses whichever half it drops.
+ *
+ * Kept to a single short line each. This renders as a five-across rail, and a
+ * paragraph in that space reads as noise rather than method.
+ */
+export const PT_SYSTEM = [
+  { key: "ASSESS", body: "Movement, history, schedule and the goal in your words." },
+  { key: "PLAN", body: "A written program built for that assessment, not a template." },
+  { key: "COACH", body: "Sessions on the floor with someone watching every rep." },
+  { key: "MEASURE", body: "Progress recorded and reviewed on a set cadence." },
+  { key: "PROGRESS", body: "Load and difficulty advance as the measurements allow." },
+] as const;
+
+/**
+ * Truthful availability. Trainer schedules genuinely do vary by time of day,
+ * and new-client openings genuinely move week to week \u2014 so this says exactly
+ * that and no more. It is not a countdown, a seat count or a deadline, and it
+ * must never become one.
+ */
+export const AVAILABILITY_NOTE =
+  "Trainer schedules and new-client openings change through the week. The consultation is where you find out what is actually open.";
+
+/** §4 section 05b. */
 export const STEPS = [
   {
     title: "Book a complimentary consultation",
@@ -465,8 +521,8 @@ export const TRUST_POINTS = [
 export const DIFFERENTIATORS = [
   {
     title: "A department, not an amenity",
-    body: "Twelve trainers, five program families and a director who owns the standard. Personal training is not something the front desk arranges on the side.",
-    evidence: "12 TRAINERS · 5 PROGRAM FAMILIES",
+    body: "A director who owns the standard, twelve certified trainers, five program formats, and one consultation that decides which of them you need. Programming, progression and accountability are defined \u2014 not left to whoever is free. Personal training here is not something the front desk arranges on the side.",
+    evidence: "DIRECTOR-LED · 12 TRAINERS · 5 FORMATS",
   },
   {
     title: "Corvallis-owned since 1980",
@@ -562,7 +618,7 @@ export const HUB_FAQS: readonly FaqItem[] = [
   {
     question: "Is the consultation really free?",
     answer:
-      "Yes. It is completely free, it lasts thirty minutes, and there is nothing to buy at the end of it. You do not need to be a member to book one.",
+      "Yes. It is completely free, it lasts thirty minutes, and you do not need to be a member to book one. There is no obligation. We will learn what you are working toward, identify the training structure that fits, and explain our recommendation clearly \u2014 then you decide whether you want to move forward.",
   },
   {
     question: "Do I have to be a member of the club?",
@@ -646,7 +702,7 @@ export const CONSULTATION_FAQS: readonly FaqItem[] = [
   {
     question: "Is it really free?",
     answer:
-      "Yes. It is completely free and there is no obligation to book anything afterwards.",
+      "Yes, and there is no obligation. We will learn what you are working toward, identify the training structure that fits your needs, and explain our recommendation clearly. Whether you go ahead is your decision.",
   },
   {
     question: "Do I need to be a member?",

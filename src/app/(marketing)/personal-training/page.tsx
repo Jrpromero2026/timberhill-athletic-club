@@ -13,6 +13,7 @@ import { SiteHeader } from "@/components/marketing/site-header";
 import { StickyCta } from "@/components/marketing/sticky-cta";
 import { TeamGrid } from "@/components/marketing/team-grid";
 import {
+  AVAILABILITY_NOTE,
   canonicalPath,
   CLUB,
   OG_IMAGE_META,
@@ -21,6 +22,7 @@ import {
   FEATURED_TESTIMONIAL,
   HUB_FAQS,
   PILLARS,
+  PT_SYSTEM,
   RECOGNITION,
   REVIEW_STATS,
   publishedReviews,
@@ -157,12 +159,12 @@ export default function PersonalTrainingHub() {
             <SectionHead
               number="03"
               id="rec-h"
-              title="You do not need a reason we would recognise."
+              title="Personal training isn’t for one kind of person."
               tight
             >
               <p className="lede">
-                Most people who start training here arrive with something
-                ordinary. One of these is usually close enough.
+                People come to us for different reasons. If any of these sound
+                familiar, you are in the right place.
               </p>
             </SectionHead>
             <ul className="g3" style={{ listStyle: "none", margin: 0, padding: 0 }}>
@@ -217,17 +219,30 @@ export default function PersonalTrainingHub() {
             <SectionHead
               number="05"
               id="how-h"
-              title="How does personal training work here?"
+              title="How does the Timberhill Personal Training System work?"
               tight
             >
               <p className="lede">
-                Training at Timberhill starts with a free thirty-minute
-                consultation, then a first session where a trainer assesses how
-                you move and writes the first version of your program. Most
-                people train once or twice a week, and the program is reviewed
-                and adjusted as they progress.
+                The Timberhill Personal Training System is one process every
+                client goes through: assess, plan, coach, measure, progress. It
+                starts with a free thirty-minute consultation, then a first
+                session where a trainer assesses how you move and writes the
+                first version of your program. You are not buying an hour with
+                whoever is free — you are entering a defined system.
               </p>
             </SectionHead>
+            {/* The method, stated once, before the client's own journey
+                through it. Five stages read as a rail on desktop and a list on
+                a phone; the arrows are decorative and CSS-generated, so a
+                screen reader hears five headed items, not punctuation. */}
+            <ol className="system-rail" aria-label="The Timberhill Personal Training System">
+              {PT_SYSTEM.map((stage) => (
+                <li className="system-stage" key={stage.key}>
+                  <span className="system-k">{stage.key}</span>
+                  <span className="system-d">{stage.body}</span>
+                </li>
+              ))}
+            </ol>
             <ol className="steps" style={{ listStyle: "none", margin: 0, padding: 0 }}>
               {STEPS.map((step, index) => (
                 <li className="step" key={step.title}>
@@ -242,8 +257,9 @@ export default function PersonalTrainingHub() {
                 </li>
               ))}
             </ol>
-            <div className="cta-row">
+            <div className="cta-row cta-row--note">
               <PrimaryCta section="how-it-works" />
+              <p className="cta-note">{AVAILABILITY_NOTE}</p>
             </div>
           </div>
         </section>
@@ -254,19 +270,23 @@ export default function PersonalTrainingHub() {
             <SectionHead
               number="06"
               id="team-h"
-              title="Meet the training team"
+              title="Meet some of our training team"
               tight
             >
+              {/* The club has twelve trainers; this grid shows the ones with
+                  published profiles. Saying "twelve" above eight cards reads
+                  as a miscount, so the heading says "some" and the copy says
+                  how many are shown. */}
               <p className="lede lede--tight">
-                Twelve trainers on staff. A card answers one question: would
-                this person understand me? You do not have to pick one — the
-                consultation does the matching.
+                {TRAINERS.length} of our {CLUB.trainerCount} trainers, with
+                profiles published. A card answers one question: would this
+                person understand me? You do not have to choose one from a page
+                of photographs — matching you to the right trainer is part of
+                the consultation, based on your goal, your history, your
+                schedule and the kind of coaching that actually works for you.
               </p>
             </SectionHead>
             <TeamGrid trainers={TRAINERS} />
-            <div className="cta-row">
-              <PrimaryCta section="team" />
-            </div>
           </div>
         </section>
 
@@ -361,6 +381,11 @@ export default function PersonalTrainingHub() {
             >
               Read all {REVIEW_STATS.count} reviews ›
             </a>
+            {/* §12: the primary action after proof. Hero, system, proof,
+                close — four placements, each after a reason to act. */}
+            <div className="cta-row">
+              <PrimaryCta section="team" />
+            </div>
           </div>
         </section>
 
@@ -380,9 +405,12 @@ export default function PersonalTrainingHub() {
               <p className="lede">
                 Timberhill offers five personal training formats: one-to-one
                 coaching, partner and small group, hybrid coaching, Performance
-                Lab, and seasonal and focused programs. Every one of them starts
-                with the same free consultation, so you do not have to choose
-                from this page.
+                Lab, and seasonal and focused programs. Different goals need
+                different levels of coaching, and every format sits inside the
+                same department and starts with the same free consultation.
+                Read these to know what exists — you are not being asked to
+                diagnose which one you need. That is what the consultation is
+                for.
               </p>
             </SectionHead>
             <div className="g3">
@@ -396,13 +424,6 @@ export default function PersonalTrainingHub() {
                   <div className="family-body">
                     <h3 className="f-name">{family.name}</h3>
                     <p className="f-line">{family.body}</p>
-                    <a
-                      className="btn btn-ghost f-link"
-                      href={SETMORE.consultation}
-                      data-cta-section="options"
-                    >
-                      Start with a consultation ›
-                    </a>
                   </div>
                 </article>
               ))}
@@ -506,11 +527,17 @@ export default function PersonalTrainingHub() {
             Navy band, one button, no secondary (§4). */}
         <section className="final" aria-labelledby="final-h">
           <div className="wrap">
-            <h2 id="final-h">Thirty minutes. No commitment.</h2>
+            <h2 id="final-h">Start with a conversation.</h2>
             <p>
-              Sit down with a trainer, talk about what you want, and leave with
-              a plan for a first session. If it is not for you, that is a fine
-              outcome too.
+              You do not need to know which trainer, format or program you need
+              before you get in touch. In thirty minutes we will cover what you
+              are working toward, what you have tried, what has been getting in
+              the way, what your week actually looks like, and the kind of
+              coaching support that would serve you best. Then we will explain
+              the best-fit option and what is currently open.
+            </p>
+            <p className="final-terms">
+              Thirty minutes. No workout. No obligation to continue.
             </p>
             <PrimaryCta section="final" size="lg" tone="invert" />
             <div className="final-tel">

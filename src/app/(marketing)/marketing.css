@@ -623,6 +623,52 @@ to be read. BUILD_BRIEF §9. */
   font-size: 14.5px; line-height: 1.6; color: #dbe4f0; text-wrap: pretty;
 }
 /* ═══ 2 · 05 how it works ═══════════════════════════════════════════════ */
+/* ═══ 2 · 05a the Timberhill Personal Training System ════════════════════
+The five stages as a rail: five across on desktop, a stacked list on a phone.
+The arrows are CSS-generated and decorative — the markup is an <ol>, so a
+screen reader hears five ordered items rather than five items and four
+arrow glyphs. */
+.tac-site .system-rail {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0; list-style: none; margin: 0 0 8px; padding: 0;
+  border-top: 1px solid var(--color-divider);
+  border-bottom: 1px solid var(--color-divider);
+}
+.tac-site .system-stage {
+  position: relative; padding: 22px 26px 22px 0;
+}
+.tac-site .system-stage + .system-stage {
+  padding-left: 26px; border-left: 1px solid var(--color-divider);
+}
+/* The arrow sits on the divider, centred, on the join between two stages. */
+.tac-site .system-stage + .system-stage::before {
+  content: "→"; position: absolute; left: -0.55em; top: 22px;
+  color: var(--color-accent); font-size: 13px; line-height: 1.4;
+  background: var(--color-surface); padding: 0 2px;
+}
+.tac-site .system-k {
+  display: block; font-family: var(--font-heading); font-weight: 700;
+  font-size: 13px; letter-spacing: 0.16em; color: var(--color-accent);
+  margin-bottom: 8px;
+}
+.tac-site .system-d {
+  display: block; font-size: 14px; line-height: 1.55;
+  color: var(--color-neutral-700);
+}
+
+/* A consultation button with a line of truthful availability beneath it. */
+.tac-site .cta-row--note {
+  flex-direction: column; align-items: flex-start; gap: 12px;
+}
+.tac-site .cta-note {
+  margin: 0; font-size: 13px; line-height: 1.55;
+  color: var(--color-neutral-600); max-width: 52ch;
+}
+.tac-site .final-terms {
+  font-size: 15px !important; color: #b9c8de !important;
+  margin-bottom: 30px !important;
+}
+
 .tac-site .steps {
   display: flex; flex-direction: column;
 }
@@ -1193,6 +1239,20 @@ AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
   .tac-site .pillars,
 .tac-site .diffs {
     gap: 1px;
+  }
+  /* The rail becomes a plain list: a five-column grid at 390px would give
+     each stage about 70px, which is narrower than the word ASSESS. */
+  .tac-site .system-rail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tac-site .system-stage {
+    padding: 18px 0;
+  }
+  .tac-site .system-stage + .system-stage {
+    padding-left: 0; border-left: 0; border-top: 1px solid var(--color-divider);
+  }
+  .tac-site .system-stage + .system-stage::before {
+    content: none;
   }
   .tac-site .only-w {
     display: none;

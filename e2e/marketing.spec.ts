@@ -1,5 +1,9 @@
 import { expect, test, type Page } from "@playwright/test";
-import { HUB_FAQS } from "../src/lib/marketing/personal-training";
+import {
+  HUB_FAQS,
+  RECOGNITION,
+  SETMORE,
+} from "../src/lib/marketing/personal-training";
 
 /** Questions whose answers are settled — the only ones that reach a page. */
 const SETTLED_HUB_FAQS = HUB_FAQS.filter((item) => !item.unconfirmed).length;
@@ -81,11 +85,41 @@ test.describe("hub", () => {
     await expect(page.locator("body")).not.toContainText("PACK Training");
   });
 
-  test("recognition shows all thirteen cards with no carousel", async ({
+  test("every consultation CTA lands on the consultation, not a service menu", async ({
     page,
   }) => {
     await page.goto("/personal-training");
-    await expect(page.locator(".rec-card")).toHaveCount(13);
+    const booking = page.locator('a[href*="setmore.com/book"]');
+    const count = await booking.count();
+    expect(count).toBeGreaterThan(0);
+
+    // One destination for every call to action on the page. A CTA pointing at
+    // a specific service (free trial, Performance Lab) would drop the visitor
+    // into the booking menu and ask them to pick the product the consultation
+    // is supposed to choose for them.
+    const targets = new Set(
+      await booking.evaluateAll((links) => links.map((a) => a.getAttribute("href"))),
+    );
+    expect(targets.size).toBe(1);
+    expect([...targets][0]).toBe(SETMORE.consultation);
+
+    // And it must be the deep link, not the menu: a bare /book drops the
+    // visitor on the full service list.
+    expect([...targets][0]).toContain("step=time-slot");
+    expect([...targets][0]).toContain("type=service");
+  });
+
+  test("recognition shows every card with no carousel", async ({
+    page,
+  }) => {
+    await page.goto("/personal-training");
+    // Twelve, not a round number picked for its own sake: the grid is three
+    // across, so twelve closes on a full row. Assert against the content
+    // rather than a literal, or this test has to be edited every time the
+    // list is tuned — which is exactly how it came to assert thirteen after
+    // the list had already dropped to twelve.
+    await expect(page.locator(".rec-card")).toHaveCount(RECOGNITION.length);
+    expect(RECOGNITION.length % 3).toBe(0);
 
     if (isMobile(page)) {
       // §9: 1-up on mobile. A carousel would hide what the section exists

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useSyncExternalStore } from "react";
-import { PRIMARY_CTA, SETMORE } from "@/lib/marketing/personal-training";
+import { SETMORE, STICKY_CTA } from "@/lib/marketing/personal-training";
 
 /**
  * Mobile sticky CTA (§2, §9, section 13).
@@ -95,7 +95,7 @@ export function StickyCta({
         href={SETMORE.consultation}
         data-cta-section="sticky"
       >
-        {PRIMARY_CTA}
+        {STICKY_CTA}
       </a>
     </div>
   );
