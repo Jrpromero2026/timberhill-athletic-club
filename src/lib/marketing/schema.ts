@@ -209,7 +209,7 @@ export function consultationService() {
     provider: { "@id": ORG_ID },
     areaServed: { "@type": "City", name: "Corvallis, Oregon" },
     description:
-      "A free 30-minute appointment with a Timberhill trainer: what you want, where you are starting, how you move, and what a first block would look like. No membership required and nothing is sold in the room.",
+      "A free 30-minute appointment with a Timberhill trainer: what you want, where you are starting, and what a first block would look like. No membership required, and it is a conversation rather than a training session \u2014 nobody trains and no program is written until the first session.",
     offers: {
       "@type": "Offer",
       price: 0,

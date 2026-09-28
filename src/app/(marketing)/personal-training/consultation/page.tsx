@@ -106,8 +106,7 @@ export default function ConsultationPage() {
             </h1>
             <p className="page-lede page-lede--lg">
               Thirty minutes with a Timberhill trainer. It is completely free,
-              you do not need to be a member to book one, and nothing is sold at
-              the end of it.
+              and you do not need to be a member to book one.
             </p>
             <PrimaryCta section="hero" tone="invert" />
           </div>
