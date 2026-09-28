@@ -656,7 +656,7 @@ export const CONSULTATION_FAQS: readonly FaqItem[] = [
   {
     question: "Will I be asked to work out?",
     answer:
-      "No. Wear something comfortable, but the thirty minutes is a conversation and a look at how you move. Nothing strenuous.",
+      "No. The thirty minutes is a conversation — nobody trains, nothing is measured, and you do not need to change or warm up. Come straight from work if that is easiest.",
   },
   {
     question: "Will I be given prices?",
