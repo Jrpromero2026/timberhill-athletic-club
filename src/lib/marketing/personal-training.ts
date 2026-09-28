@@ -613,7 +613,7 @@ export const HUB_FAQS: readonly FaqItem[] = [
   {
     question: "What should I bring to the consultation?",
     answer:
-      "Training shoes, water, and anything you already track. You will not be asked to work out.",
+      "Nothing, beyond the questions you want answered. The consultation is a conversation rather than a training session, so there is no need for kit or a change of clothes. If a doctor or physical therapist has given you restrictions, bring those \u2014 they shape the program from day one.",
   },
   {
     question: "What if I need to cancel or reschedule?",
