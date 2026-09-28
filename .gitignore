@@ -47,3 +47,6 @@ next-env.d.ts
 
 # Business input files (real exports; may contain client PII) — never commit
 /business-inputs/
+
+# Claude Code local settings (machine-local permission grants; never shared)
+.claude/settings.local.json

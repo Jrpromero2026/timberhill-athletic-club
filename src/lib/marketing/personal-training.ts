@@ -384,7 +384,6 @@ export const RECOGNITION = [
   "You have not trained in years and the gym floor feels like someone else's territory.",
   "You train regularly and nothing has changed in six months.",
   "You are coming back from an injury and are not sure what is safe.",
-  "You want to get stronger and every program you read contradicts the last one.",
   "You have an event with a date on it and a distance you have never covered.",
   "You are in your sixties or seventies and want to stay independent.",
   "You are pregnant or postpartum and need a program built for that, not adjusted for it.",
@@ -396,31 +395,34 @@ export const RECOGNITION = [
   "You have lost weight before and would like it to be the last time.",
 ] as const;
 
-/** §4 section 04. */
+/**
+ * §4 section 04.
+ *
+ * Structured on the value equation: worth rises with the outcome you want and
+ * your odds of reaching it, and falls with how long it takes and how much it
+ * costs you to do. Four pillars, one per term, laid out 2×2 — the top row is
+ * what multiplies, the bottom row is what divides.
+ *
+ * The method itself (assess, plan, coach, progress, adapt, measure) is not
+ * lost: it is section 05, "How does personal training work here?", where it
+ * belongs. Stating it twice made section 04 answer a question nobody asked.
+ */
 export const PILLARS = [
   {
-    key: "ASSESS",
-    body: "Movement, training history, and what you actually want out of this — before anything is prescribed.",
+    key: "THE GOAL",
+    body: "The specific thing you want to be able to do, in your words, written down. Not \u201cget in shape\u201d — a target with an edge on it, so there is something to aim at and a way to know you hit it.",
   },
   {
-    key: "PLAN",
-    body: "A written program with a starting point and a direction, not a workout picked on the day.",
+    key: "THE ODDS",
+    body: "A certified trainer, a written program, and numbers reviewed with you rather than guessed at. Twelve trainers on staff, and a 5.0 average across 160 client reviews.",
   },
   {
-    key: "COACH",
-    body: "Sessions on the floor with someone watching the reps and correcting them.",
+    key: "THE TIMELINE",
+    body: "You train to a plan from the first session. No four-week onboarding, no getting fit enough first — the free consultation and the first block can happen in the same week.",
   },
   {
-    key: "PROGRESS",
-    body: "Load, volume and difficulty move on a schedule, so the work keeps asking something of you.",
-  },
-  {
-    key: "ADAPT",
-    body: "Travel, illness, a bad week. The plan changes. The direction does not.",
-  },
-  {
-    key: "MEASURE",
-    body: "Numbers you can see, reviewed with you, so progress is not a matter of opinion.",
+    key: "THE EFFORT",
+    body: "You do not design the program, pick the exercises or decide when to add weight. That is the trainer\u2019s job. Yours is to turn up on the days you said you would.",
   },
 ] as const;
 
@@ -754,26 +756,31 @@ export const CONSULTATION_AGENDA = [
     body: "Training history, injuries, anything a provider has told you, and how much time you realistically have in a week.",
   },
   {
-    title: "How you move",
-    body: "A short look at a few basic movements so the first program starts from something real.",
-  },
-  {
     title: "What happens next",
-    body: "Which trainer fits, what a first block would look like, and how to book it. Or nothing, if you would rather think about it.",
+    body: "Which trainer fits, what a first block would look like, and the options for getting started. Nothing has to be decided in the room.",
   },
 ] as const;
 
+/**
+ * What the consultation is NOT.
+ *
+ * These lines used to say no selling happens and no commitment is asked for.
+ * That was not true — a trainer, a package and a start date are discussed, and
+ * often agreed. Claiming otherwise set up the appointment to feel like a
+ * bait-and-switch the moment it went well. What is genuinely true is that it
+ * is a conversation, not training: nobody moves, nothing is programmed, and
+ * nothing is measured.
+ */
 export const CONSULTATION_IS_NOT = [
-  "A sales appointment. Nothing is signed in the room.",
-  "A workout. You will not leave sweating.",
-  "A commitment to a package, a trainer or a number of sessions.",
-  "A workout plan sold on the spot. You leave with a direction, not an invoice.",
+  "A workout. You will not train, and you will not leave sweating.",
+  "A workout plan. Nothing is written until a trainer has seen you move, and that is your first session.",
+  "A fitness test. Nothing is measured, scored or timed.",
 ] as const;
 
 export const CONSULTATION_PREP = [
   {
-    title: "Bring training shoes",
-    body: "You will be asked to move through a few basic patterns. Nothing you need to warm up for.",
+    title: "Bring the questions",
+    body: "This is a conversation, not a session. Whatever has stopped you before, or confused you, or not worked — bring it. There is no wrong one.",
   },
   {
     title: "Bring your restrictions",

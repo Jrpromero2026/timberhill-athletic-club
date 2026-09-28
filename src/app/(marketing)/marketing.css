@@ -603,8 +603,12 @@ to be read. BUILD_BRIEF §9. */
   font-size: 15px; line-height: 1.5; text-wrap: pretty;
 }
 /* ═══ 2 · 04 what PT is ═════════════════════════════════════════════════ */
+/* Four pillars, one per term of the value equation, so the grid is 2×2 rather
+   than the 3×2 the six method pillars used: the top row is what multiplies
+   (the goal, the odds) and the bottom row is what divides (the timeline, the
+   effort). Three columns would leave the fourth stranded on a row of its own. */
 .tac-site .pillars {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px; background: rgba(255, 255, 255, 0.16);
 }
 .tac-site .pillar {

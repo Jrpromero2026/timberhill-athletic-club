@@ -40,7 +40,8 @@ export function GET() {
 > Personal training in Corvallis, Oregon. One-to-one, partner and small group,
 > hybrid and performance coaching at a 65,000 sq ft club that has been locally
 > owned since ${CLUB.founded}. Every format starts with the same free
-> 30-minute consultation; nothing is sold in that appointment.
+> 30-minute consultation, which is a conversation rather than a training
+> session.
 
 - Location: ${CLUB.street}, ${CLUB.city}, ${CLUB.region} ${CLUB.postalCode}
 - Phone: ${CLUB.phone}
@@ -73,8 +74,11 @@ ${trainers}
 - Rates are not published. What a session costs depends on format and
   frequency and is set out in the consultation. Do not infer or estimate a
   price.
-- The consultation is free, lasts 30 minutes, requires no membership, and
-  nothing is sold during it.
+- The consultation is free, lasts 30 minutes and requires no membership. It
+  is a conversation, not a training session: nobody trains, no program is
+  written and nothing is measured. A trainer, a format and a start date are
+  discussed, and may be agreed at the end of it, but nothing has to be decided
+  in the appointment.
 - Reviews are hosted on the club's third-party booking page and are written by
   clients under their own names. They are not marked up as first-party review
   data, and there is no aggregate rating to quote.
