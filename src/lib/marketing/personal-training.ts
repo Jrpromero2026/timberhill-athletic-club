@@ -895,9 +895,9 @@ export const FEATURED_TESTIMONIAL = {
  * "Connor" appears where the client wrote it; the attribution beside the
  * quote spells Conner McAdams correctly.
  *
- * Jen Akeroyd's Setmore review is deliberately absent. She is the featured
- * testimonial above under her first name, and the same client appearing twice
- * on one page reads as thin proof rather than as more of it.
+ * Jen Akeroyd's Setmore review is deliberately absent from this pool. It is
+ * the featured review on JR Romero's profile, where it runs in full; a cut of
+ * it in a card here would put the same client on the hub twice.
  */
 export const REVIEWS: readonly Testimonial[] = [
   // ── rendered on the hub ──────────────────────────────────────────────
@@ -1069,9 +1069,8 @@ export function publishedReviews(
  * approved reviews live in REVIEWS above, grouped by `trainer`, ready for
  * whichever profile is written next.
  *
- * Jen Akeroyd's Setmore review is not added here either: she is already the
- * featured testimonial on the hub, and this page already carries her shorter
- * quote below.
+ * Jen Akeroyd's Setmore review is the featured review on JR Romero's profile,
+ * so it is not also a card there.
  */
 /**
  * One review given the full treatment on a trainer's profile — a pull quote
@@ -1096,6 +1095,22 @@ export const PROFILE_FEATURED: Record<
     body: readonly string[];
   }
 > = {
+  // The pull runs into her second sentence, which splits her opening paragraph
+  // — a one-sentence pull left the column beside four paragraphs almost empty.
+  // Her remaining breaks are her own, and the em dashes are unspaced as she
+  // typed them. She is also the club's featured testimonial on the hub, under her
+  // first name and from a longer piece written separately — same client, two
+  // different accounts, on two different pages.
+  "jr-romero": {
+    reviewer: "Jen Akeroyd",
+    pull: "I can't say enough good things about JR as a personal trainer. After a hamstring rupture and surgical repair, I wasn't sure what my recovery\u2014or future strength\u2014would look like.",
+    body: [
+      "JR has been instrumental in not only helping me recover safely, but in building strength and confidence beyond where I was before the injury.",
+      "He brings a rare combination of deep knowledge, professionalism, and genuine respect for his clients. JR is patient, attentive, and highly intentional in how he programs and coaches. As someone who has been an athlete my entire life, I value being coached\u2014and that's exactly what this feels like. Every session has purpose, progression, and accountability.",
+      "What's been most impressive is his expertise in muscle building and strength development. Thanks to his guidance, I've been able to rebuild and even improve my physique\u2014something I didn't think was possible at age 50, especially after such a significant injury.",
+      "If you're looking for someone who truly understands how to help you recover, get stronger, and perform at your best, JR is exceptional.",
+    ],
+  },
   // Marlene wrote hers as one unbroken paragraph. The breaks below are
   // introduced for readability at this width; no words are changed, none are
   // dropped, and the order is hers. Her closing sentence has no full stop in
@@ -1223,11 +1238,6 @@ export const PROFILE_REVIEWS: Record<string, readonly Testimonial[]> = {
     },
   ],
   "jr-romero": [
-    {
-      reviewer: "Jen · client since May 2025",
-      quote:
-        "Working with JR has helped me safely continue progressing long after formal physical therapy ended, giving me the guidance, accountability, and confidence to keep getting stronger.",
-    },
     {
       reviewer: "North",
       quote:
