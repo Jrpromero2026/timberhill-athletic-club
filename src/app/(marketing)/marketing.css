@@ -1240,6 +1240,14 @@ two-line award rather than floating to its optical centre. */
 }
 /* A ramp step, not opacity: at 0.6 this measured 3.99:1 on white and failed
 AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
+/* The second door on a profile: a free session with that trainer, under the
+   consultation rather than beside it. Side by side the two read as a choice
+   the visitor has to get right; stacked, the consultation is plainly the
+   default and this is the shortcut. */
+.tac-site .profile-alt {
+  margin-top: 18px; padding-top: 18px;
+  border-top: 1px solid var(--color-divider);
+}
 .tac-site .cta-note {
   font-size: 13px; color: var(--color-neutral-700); margin-top: 12px;
 }

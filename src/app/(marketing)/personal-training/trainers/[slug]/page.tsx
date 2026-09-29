@@ -202,14 +202,36 @@ export default async function TrainerProfile({
                   ))}
                 </div>
 
-                {/* §12: the CTA goes to the consultation, not to this
-                    trainer's calendar — starting must not require choosing a
-                    trainer. */}
+                {/* §12: the consultation is the primary action here as it is
+                    everywhere — starting must not require choosing a trainer.
+                    Where a trainer takes free sessions on their own calendar,
+                    that sits beneath it as a second door for a reader who has
+                    finished the page and already decided. */}
                 <PrimaryCta section="profile" />
-                <p className="cta-note">
-                  Booking goes to the consultation, not to this trainer&apos;s
-                  calendar.
-                </p>
+                {trainer.freeSession ? (
+                  <div className="profile-alt">
+                    <a
+                      className="btn btn-secondary btn-cta"
+                      href={trainer.freeSession}
+                      target="_blank"
+                      rel="noopener"
+                      data-cta-section="profile-free-session"
+                    >
+                      BOOK A FREE 45-MINUTE SESSION
+                    </a>
+                    <p className="cta-note">
+                      The consultation covers what you want and which trainer
+                      fits. This books a free session with{" "}
+                      {trainer.name.split(" ")[0]} directly — take it if you
+                      have already decided.
+                    </p>
+                  </div>
+                ) : (
+                  <p className="cta-note">
+                    Booking goes to the consultation, not to this trainer&apos;s
+                    calendar.
+                  </p>
+                )}
               </div>
             </div>
           </div>

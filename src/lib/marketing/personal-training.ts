@@ -253,6 +253,23 @@ export type Trainer = {
   /** Job title, for the profile page and its Person schema. */
   jobTitles?: readonly string[];
   /**
+   * This trainer's own Setmore link for a free 45-minute training session.
+   *
+   * The consultation is the front door and stays the primary call to action on
+   * every page including this one. This is the second door: a visitor who has
+   * read a profile and decided can book that trainer directly instead of being
+   * routed through a consultation with the director.
+   *
+   * Optional on purpose. A trainer without one gets no second button rather
+   * than a button that goes nowhere, so the links can arrive one at a time.
+   * JR Romero will not have one — consultations are his.
+   *
+   * Each URL carries that trainer's own Setmore staff id. Copy it from a real
+   * booking for that person; do not build one by editing somebody else's, or
+   * the session lands on the wrong calendar.
+   */
+  freeSession?: string;
+  /**
    * Degrees and certifications, most significant first, for the list under
    * the profile photograph.
    *
