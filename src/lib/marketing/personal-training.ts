@@ -1096,6 +1096,18 @@ export const PROFILE_FEATURED: Record<
     body: readonly string[];
   }
 > = {
+  // Marlene wrote hers as one unbroken paragraph. The breaks below are
+  // introduced for readability at this width; no words are changed, none are
+  // dropped, and the order is hers. Her closing sentence has no full stop in
+  // the original and does not get one here.
+  "josiah-iwamizu": {
+    reviewer: "Marlene G Hawk",
+    pull: "Jo Iwamizu's coaching is excellent. I'm 70+yrs old and had been pretty much inactive for going on 6 years when I decided to get back in the gym.",
+    body: [
+      "Jo paid close attention to my physical fitness goals, my physical limitations, and my personal beliefs that affect my well-being holistically. He developed a workout program for me, arranged for me to have a body analysis done, explained the results, developed a food guide based on those results, and always helps me stay on track with all of it.",
+      "I can trust that he wants me to succeed. He is knowledgeable in all areas of physical fitness that we have discussed. A top notch professional. I truly am grateful for him",
+    ],
+  },
   "becca-reeve": {
     reviewer: "Annie Todd",
     pull: "I came to Becca 6 months post partum and unable to hold my baby while standing for more than a few minutes due to back pain, which was devastating to me.",
@@ -1132,12 +1144,8 @@ export const PROFILE_REVIEWS: Record<string, readonly Testimonial[]> = {
         "I loved training with Mason. He gave me lots of new exercises to try and helped me add weight to the exercises and improve my form. I learned a lot in 8 sessions. Mason is a great guy and pleasant to work with. Highly recommend!",
     },
   ],
+  // Marlene G Hawk is the featured review above, not a card as well.
   "josiah-iwamizu": [
-    {
-      reviewer: "Marlene G Hawk",
-      quote:
-        "Jo Iwamizu's coaching is excellent. I'm 70+yrs old and had been pretty much inactive for going on 6 years when I decided to get back in the gym. Jo paid close attention to my physical fitness goals, my physical limitations, and my personal beliefs that affect my well-being holistically. He developed a workout program for me, arranged for me to have a body analysis done, explained the results, developed a food guide based on those results, and always helps me stay on track with all of it. I can trust that he wants me to succeed. He is knowledgeable in all areas of physical fitness that we have discussed. A top notch professional. I truly am grateful for him",
-    },
     {
       reviewer: "Catherine Williams",
       quote:
