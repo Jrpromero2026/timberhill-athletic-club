@@ -163,6 +163,16 @@ export const CLUB = {
   email: "jr@timberhillsports.com",
   founded: "1980",
   squareFeet: "65,000",
+  /**
+   * Staff count, shown in the stat band and in section 07.
+   *
+   * UNVERIFIED as of 2026-09-29. Twelve was the count when the roster was
+   * built: eight published plus the four in ROSTER_PENDING. Tais Vega was then
+   * reported on staff and appears in no earlier roster document, which makes
+   * this either 13, or 12 with one of the pending four gone. It is published
+   * as a fact on a public page, so it needs confirming rather than
+   * incrementing on an assumption.
+   */
   trainerCount: 12,
   facebook: "https://www.facebook.com/TimberhillAthleticClub",
   instagram: "https://www.instagram.com/timberhill_ac",
@@ -398,6 +408,10 @@ export const ROSTER_PENDING = [
   },
   { name: "Kyra Schulties", status: "Missing", blockedOn: "Bio, credentials, specialties." },
   { name: "Jayna Davis", status: "Missing", blockedOn: "Bio, credentials, specialties." },
+  // Reported on staff 2026-09-29 and absent from every prior roster document,
+  // so she has never been counted. Whether CLUB.trainerCount rises to 13 or
+  // one of the four above has left is unresolved — see the note on that field.
+  { name: "Tais Vega", status: "Missing", blockedOn: "Bio, credentials, specialties." },
 ] as const;
 
 export function trainerBySlug(slug: string): Trainer | undefined {
