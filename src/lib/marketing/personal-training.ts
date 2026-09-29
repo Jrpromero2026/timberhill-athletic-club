@@ -166,7 +166,7 @@ export const CLUB = {
   founded: "1980",
   squareFeet: "65,000",
   /**
-   * Staff count: the eight in TRAINERS plus the three in ROSTER_PENDING.
+   * Staff count: the nine in TRAINERS plus the two in ROSTER_PENDING.
    *
    * Confirmed 2026-09-29. It was twelve, built from a roster that carried two
    * people who have since left; adding Tais Vega and removing them lands on
@@ -540,6 +540,61 @@ export const TRAINERS: readonly Trainer[] = [
       { heading: "Approach", body: "The world of physical fitness has always been an interest of mine. What started as an interest has slowly turned into an obsession as I've delved deeper into learning the human body. Beginning the journey is always an excitingly scary process but every step taken is matched with realizations on just how powerful both your mind and body can be." },
     ],
   },
+  {
+    slug: "tais-vega",
+    offersFreeSession: true,
+    name: "Tais Vega",
+    // The degree leads because the profile H1 and the page title are built
+    // from the first segment of this line. "Exercise Physiologist" first
+    // published "Tais Vega, Exercise Physiologist" on Timberhill's own site,
+    // which reads as her title here; the role is at Oregon Physical Therapy,
+    // so it keeps its employer and follows the credential.
+    credentials:
+      "B.S. Health and Exercise Science · Exercise Physiologist, Oregon Physical Therapy",
+    // All four are named in her biography: progress after physical therapy,
+    // returning to exercise, athletic performance, and building strength.
+    specialties: [
+      "Injury and Rehabilitation",
+      "Returning to Fitness",
+      "Athletic Performance",
+      "Strength",
+    ],
+    worksBestWith:
+      "You are continuing your progress after physical therapy, returning to exercise, improving athletic performance, or working toward a healthier lifestyle.",
+    // Third person, unlike every other philosophy here. Her biography was
+    // supplied written about her rather than by her, and rewriting it into
+    // first person would be inventing a quotation.
+    philosophy:
+      "Tais brings the discipline, teamwork, and performance-focused mindset of a competitive athlete to every client interaction. Her education and athletic background have given her a strong understanding of human movement, exercise programming, and the physical demands required to achieve individual health and performance goals.",
+    // Not stated when her biography was supplied. False shows no badge and
+    // makes no claim either way, which is the honest default; flip it to true
+    // once confirmed.
+    acceptingClients: false,
+    photo: null,
+    // The degree is the one credential on record. "Exercise Physiologist" is
+    // the role she holds at Oregon Physical Therapy, not a credential with an
+    // issuing body, so it stays in the credentials line and the prose.
+    certifications: [
+      {
+        award: "B.S. Health and Exercise Science, cum laude",
+        issuer: "Southern Oregon University",
+      },
+    ],
+    profile: [
+      {
+        heading: "Background",
+        body: "Tais Vega is an exercise physiologist at Oregon Physical Therapy and a cum laude graduate of Southern Oregon University, where she earned her bachelor's degree in Health and Exercise Science. An accomplished collegiate athlete, Tais competed in volleyball at the national level and helped her team earn third place at the NAIA National Volleyball Tournament.",
+      },
+      {
+        heading: "Approach",
+        body: "Tais brings the discipline, teamwork, and performance-focused mindset of a competitive athlete to every client interaction. Her education and athletic background have given her a strong understanding of human movement, exercise programming, and the physical demands required to achieve individual health and performance goals.",
+      },
+      {
+        heading: "Who she works with",
+        body: "Whether you are continuing your progress after physical therapy, returning to exercise, improving athletic performance, or working toward a healthier lifestyle, Tais provides knowledgeable, personalized guidance to help you build strength, improve mobility, and enhance your overall wellness.",
+      },
+    ],
+  },
 ];
 
 /** §6 roster status. Not rendered as trainers — recorded so the gap is
@@ -556,7 +611,6 @@ export const TRAINERS: readonly Trainer[] = [
 export const ROSTER_PENDING = [
   { name: "Amanda Knight", status: "On staff", blockedOn: "Bio, credentials, specialties." },
   { name: "Steve Sackmann", status: "On staff", blockedOn: "Bio, credentials, specialties." },
-  { name: "Tais Vega", status: "On staff", blockedOn: "Bio, credentials, specialties." },
 ] as const;
 
 export function trainerBySlug(slug: string): Trainer | undefined {

@@ -3,11 +3,33 @@ import {
   HUB_FAQS,
   RECOGNITION,
   SETMORE,
+  SPECIALTIES,
   TRAINERS,
 } from "../src/lib/marketing/personal-training";
 
 /** Questions whose answers are settled — the only ones that reach a page. */
 const SETTLED_HUB_FAQS = HUB_FAQS.filter((item) => !item.unconfirmed).length;
+
+/**
+ * Filter fixtures, derived from the roster rather than named.
+ *
+ * Both of these used to be literals — "Pre and Postnatal" for the narrowing
+ * case and "Injury and Rehabilitation" for the empty one. Adding a trainer who
+ * claims rehabilitation turned the empty case into a matching case, so the
+ * test asserted the opposite of the truth. Read the roster instead: a
+ * specialty exactly one trainer claims narrows to that trainer, and one nobody
+ * claims shows the empty state.
+ */
+const SOLO_SPECIALTY = SPECIALTIES.find(
+  (specialty) =>
+    TRAINERS.filter((trainer) =>
+      trainer.specialties.includes(specialty),
+    ).length === 1,
+);
+const UNCLAIMED_SPECIALTY = SPECIALTIES.find(
+  (specialty) =>
+    !TRAINERS.some((trainer) => trainer.specialties.includes(specialty)),
+);
 
 /**
  * Public Personal Training routes. Runs in the offline suite because these
@@ -278,30 +300,37 @@ test.describe("trainers index", () => {
     await expect(page).toHaveTitle(
       "Personal Trainers in Corvallis, OR | Timberhill Athletic Club",
     );
-    await expect(page.locator(".trainer-card")).toHaveCount(8);
+    await expect(page.locator(".trainer-card")).toHaveCount(TRAINERS.length);
     await expect(page.locator(".roster-count")).toHaveText(
-      "8 trainers",
+      `${TRAINERS.length} trainers`,
     );
 
-    await page.getByRole("button", { name: "Pre and Postnatal" }).click();
+    // Narrowing: a specialty one trainer claims shows that trainer alone.
+    expect(SOLO_SPECIALTY).toBeDefined();
+    const soloTrainer = TRAINERS.find((trainer) =>
+      trainer.specialties.includes(SOLO_SPECIALTY!),
+    )!;
+    await page.getByRole("button", { name: SOLO_SPECIALTY! }).click();
     await expect(page.locator(".trainer-card")).toHaveCount(1);
-    await expect(page.locator(".t-name")).toHaveText("Becca Reeve");
+    await expect(page.locator(".t-name")).toHaveText(soloTrainer.name);
     await expect(page.locator(".roster-count")).toContainText(
-      "1 trainer · Pre and Postnatal",
+      `1 trainer · ${SOLO_SPECIALTY}`,
     );
 
-    // A specialty no published trainer claims yet shows the empty state
-    // rather than an empty grid.
-    await page
-      .getByRole("button", { name: "Injury and Rehabilitation" })
-      .click();
-    await expect(page.locator(".empty-card")).toBeVisible();
-    await expect(page.locator(".empty-title")).toContainText(
-      "Injury and Rehabilitation",
-    );
+    // A specialty no published trainer claims shows the empty state rather
+    // than an empty grid. Skipped once the roster covers every specialty:
+    // there is then no way to reach the empty state, and asserting it with a
+    // specialty somebody claims would assert a falsehood.
+    if (UNCLAIMED_SPECIALTY) {
+      await page.getByRole("button", { name: UNCLAIMED_SPECIALTY }).click();
+      await expect(page.locator(".empty-card")).toBeVisible();
+      await expect(page.locator(".empty-title")).toContainText(
+        UNCLAIMED_SPECIALTY,
+      );
+    }
 
     await page.getByRole("button", { name: "All trainers" }).click();
-    await expect(page.locator(".trainer-card")).toHaveCount(8);
+    await expect(page.locator(".trainer-card")).toHaveCount(TRAINERS.length);
     await expect(page.locator(".empty-card")).toHaveCount(0);
   });
 
