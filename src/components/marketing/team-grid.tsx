@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { AssetSlot } from "@/components/marketing/primitives";
+import { AssetSlot, SpecialtyList } from "@/components/marketing/primitives";
 import type { Trainer } from "@/lib/marketing/personal-training";
 
 const HEADSHOT_SPEC = "headshot — identify from Trainer Pictures folder";
@@ -37,13 +37,7 @@ export function TeamGrid({ trainers }: { trainers: readonly Trainer[] }) {
                 <h3 className="t-name">{trainer.name}</h3>
                 <div className="t-cred">{trainer.credentials}</div>
               </div>
-              <div className="taglist">
-                {trainer.specialties.map((specialty) => (
-                  <span className="tag tag-outline tag-sm" key={specialty}>
-                    {specialty}
-                  </span>
-                ))}
-              </div>
+              <SpecialtyList specialties={trainer.specialties} />
               <p className="t-best">{trainer.worksBestWith}</p>
               <p className="t-phil" id={panelId} hidden={!isOpen}>
                 {trainer.philosophy}

@@ -2,12 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CtaAnalytics } from "@/components/marketing/cta-analytics";
-import {
-  AssetSlot,
-  JsonLd,
-  PrimaryCta,
-  Stars,
-} from "@/components/marketing/primitives";
+import { AssetSlot, JsonLd, PrimaryCta, SpecialtyList, Stars } from "@/components/marketing/primitives";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { StickyCta } from "@/components/marketing/sticky-cta";
@@ -163,12 +158,8 @@ export default async function TrainerProfile({
                     {trainer.jobTitles.join(" · ").toUpperCase()}
                   </div>
                 ) : null}
-                <div className="taglist" style={{ marginBottom: 22 }}>
-                  {trainer.specialties.map((specialty) => (
-                    <span className="tag tag-outline" key={specialty}>
-                      {specialty}
-                    </span>
-                  ))}
+                <div style={{ marginBottom: 22 }}>
+                  <SpecialtyList specialties={trainer.specialties} size="lg" />
                 </div>
                 <p className="profile-best">{trainer.worksBestWith}</p>
 

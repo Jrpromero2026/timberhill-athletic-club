@@ -259,6 +259,30 @@ string — see BUILD_BRIEF §2. */
 .tac-site .taglist {
   display: flex; flex-wrap: wrap; gap: 6px;
 }
+/* ═══ 1 · design system — specialties ════════════════════════════════════
+Set inline rather than as outlined chips. Five bordered boxes per card read
+as generated filler and compete with the card's own border; the same words as
+one editorial line sit with the section numbering and the stat labels instead.
+
+`word-spacing: normal` is defensive: the tracking below is applied per
+character, and a host stylesheet that also sets word-spacing would pull the
+separators away from the terms they divide. */
+.tac-site .spec-inline {
+  list-style: none; margin: 0; padding: 0;
+  font-size: 12px; line-height: 1.7; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; word-spacing: normal;
+  color: var(--color-accent); text-wrap: pretty;
+}
+.tac-site .spec-inline li {
+  display: inline;
+}
+.tac-site .spec-inline li + li::before {
+  content: "·"; opacity: 0.45; margin: 0 7px; font-weight: 400;
+}
+/* The profile sets these under an H1, where the line can carry a little more. */
+.tac-site .spec-inline--lg {
+  font-size: 13px; letter-spacing: 0.07em;
+}
 /* ═══ 2 · layout ════════════════════════════════════════════════════════ */
 .tac-site .pg {
   background: var(--color-bg);
@@ -1239,6 +1263,15 @@ AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
   .tac-site .pillars,
 .tac-site .diffs {
     gap: 1px;
+  }
+  /* Uppercase at 0.06em costs real width at 390px, where a five-specialty
+     line would otherwise run to four. The terms stay uppercase; only the
+     tracking and the separator gutters give way. */
+  .tac-site .spec-inline {
+    letter-spacing: 0.04em;
+  }
+  .tac-site .spec-inline li + li::before {
+    margin: 0 5px;
   }
   /* The rail becomes a plain list: a five-column grid at 390px would give
      each stage about 70px, which is narrower than the word ASSESS. */

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { AssetSlot } from "@/components/marketing/primitives";
+import { AssetSlot, SpecialtyList } from "@/components/marketing/primitives";
 import {
   SPECIALTIES,
   type Specialty,
@@ -105,16 +105,7 @@ export function Roster({ trainers }: { trainers: readonly Trainer[] }) {
                       ) : null}
                     </div>
                     <div className="t-cred">{trainer.credentials}</div>
-                    <div className="taglist">
-                      {trainer.specialties.map((specialty) => (
-                        <span
-                          className="tag tag-outline tag-sm"
-                          key={specialty}
-                        >
-                          {specialty}
-                        </span>
-                      ))}
-                    </div>
+                    <SpecialtyList specialties={trainer.specialties} />
                     <p className="t-best">{trainer.worksBestWith}</p>
                     {trainer.profile ? (
                       <Link

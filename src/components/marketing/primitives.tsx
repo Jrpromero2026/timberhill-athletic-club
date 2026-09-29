@@ -6,6 +6,38 @@ import {
 } from "@/lib/marketing/personal-training";
 
 /**
+ * A trainer's specialties, set inline rather than as a row of outlined boxes.
+ *
+ * Five bordered chips per card read as generated filler and fight the card's
+ * own border; this is the same information as one editorial line.
+ *
+ * It is a real list, and the separators are drawn in CSS rather than placed in
+ * the markup. Written as sibling spans with hidden dots between them, the
+ * terms carry no whitespace in the DOM at all, and assistive technology runs
+ * them together — "Fat LossMuscle Building". List items cannot be run
+ * together, and a generated separator is not content a reader has to skip.
+ *
+ * Used on the hub cards, the roster and the full profile so the three never
+ * drift apart. `size="lg"` is the profile, where it sits under an H1 and can
+ * carry a little more weight.
+ */
+export function SpecialtyList({
+  specialties,
+  size = "sm",
+}: {
+  specialties: readonly string[];
+  size?: "sm" | "lg";
+}) {
+  return (
+    <ul className={size === "lg" ? "spec-inline spec-inline--lg" : "spec-inline"}>
+      {specialties.map((specialty) => (
+        <li key={specialty}>{specialty}</li>
+      ))}
+    </ul>
+  );
+}
+
+/**
  * The primary CTA. One string, one destination, six placements (§2).
  *
  * `data-cta-section` is what the analytics handler reads, and
