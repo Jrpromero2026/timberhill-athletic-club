@@ -811,9 +811,13 @@ export const FEATURED_TESTIMONIAL = {
  *
  * The hub renders the FIRST THREE. They are ordered for three different
  * trainers and three different reasons somebody starts — coming back from an
- * injury, starting from nothing, and wanting to feel stronger — rather than
- * three variations on "good trainer". To change what the page shows, move a
- * review into the first three; nothing else needs touching.
+ * injury, being unsure you can lift at all, and wanting a measurable result —
+ * rather than three variations on "good trainer". To change what the page
+ * shows, move a review into the first three; nothing else needs touching.
+ *
+ * Annie Todd's is the strongest review in this set and is deliberately not in
+ * the three: at 180 words it would force every card in the row to its height.
+ * It is the reason to write Becca Reeve a profile page, where it has room.
  *
  * Typos and trainer-name misspellings are the reviewers' own and are kept.
  * "Connor" appears where the client wrote it; the attribution beside the
@@ -838,10 +842,10 @@ export const REVIEWS: readonly Testimonial[] = [
       "Devin was remarkable. He made me feel comfortable and confident that I can do strength training successfully. He really took the time to understand my needs and give me a doable regime.",
   },
   {
-    reviewer: "Vicki Joines",
-    trainer: "Emma Ciechanowski",
+    reviewer: "Karen Emery",
+    trainer: "Becca Reeve",
     quote:
-      "One of the best things I've done for myself. Signed up to work with a personal trainer at Timberhill. I'm getting so much stronger and feel amazing. Emma is so easy to work with and so encouraging. Love it!",
+      "I've been training with Becca for 4 1/2 months and her program has increased my range of motion, strength and has added 40 yards to my golf swing.",
   },
   // ── also approved and public; promote any of these into the top three ─
   {
@@ -921,6 +925,26 @@ export const REVIEWS: readonly Testimonial[] = [
     trainer: "Jess Caze",
     quote:
       "Jess Caze was great- listened carefully to what I wanted and worked within the parameters I set. She is clearly very knowledgable. She was focused, professional, and very helpful. Highly recommended.",
+  },
+  {
+    reviewer: "Annie Todd",
+    trainer: "Becca Reeve",
+    quote:
+      "I came to Becca 6 months post partum and unable to hold my baby while standing for more than a few minutes due to back pain, which was devastating to me. I started going to Becca for this reason, which quickly resolved, but I've gotten so much more out of our sessions than I bargained for. She is able to pinpoint small weaknesses and teach you how to strengthen them. She is so incredibly smart and finds ways to help you connect to your body and feel comfortable and confident in your body. She is THE person to see postpartum, or better yet while pregnant to help prepare your body and gain strength.",
+  },
+  // The reviewer wrote her qualities as a vertical list. Run together here
+  // because a review card holds one string; no words are changed.
+  {
+    reviewer: "Karen Barker",
+    trainer: "Becca Reeve",
+    quote:
+      "I've worked with Timberhill Trainer Rebeca Reeve for 8 months. I feel better, look better, and I'm getting stronger every week. Rebecca is great partner on the fitness journey. Rebecca is: Smart. Knowledgeable. Inspirational. Great with the fit, or not so fit. Hears you when you need to be heard. Tough when you need toughness. Fun. I give Rebecca 150 points on a scale of 100.",
+  },
+  {
+    reviewer: "Vicki Joines",
+    trainer: "Emma Ciechanowski",
+    quote:
+      "One of the best things I've done for myself. Signed up to work with a personal trainer at Timberhill. I'm getting so much stronger and feel amazing. Emma is so easy to work with and so encouraging. Love it!",
   },
   // Steve Sackmann is on staff but has no published profile yet. Both of his
   // reviews are from the same client and both misspell his surname — "Sackman"
