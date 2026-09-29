@@ -1073,6 +1073,40 @@ export function publishedReviews(
  * featured testimonial on the hub, and this page already carries her shorter
  * quote below.
  */
+/**
+ * One review given the full treatment on a trainer's profile — a pull quote
+ * beside the review in full, the same shape the hub gives its featured
+ * testimonial.
+ *
+ * This exists because the review cards are a fixed three-across row, and a
+ * review worth reading in full cannot live in one: Annie Todd's ran 824
+ * characters against 148 in the card beside it and left that card empty. The
+ * card row carries short proof, this carries the one that earns the space.
+ *
+ * `pull` is the review's own opening sentence and `body` is the rest, split
+ * exactly where the client split it. Nothing is repeated between them and
+ * nothing is dropped, so the whole review is on the page once.
+ */
+export const PROFILE_FEATURED: Record<
+  string,
+  {
+    reviewer: string;
+    attribution?: string;
+    pull: string;
+    body: readonly string[];
+  }
+> = {
+  "becca-reeve": {
+    reviewer: "Annie Todd",
+    pull: "I came to Becca 6 months post partum and unable to hold my baby while standing for more than a few minutes due to back pain, which was devastating to me.",
+    body: [
+      "I started going to Becca for this reason, which quickly resolved, but I've gotten so much more out of our sessions than I bargained for. She is able to pinpoint small weaknesses and teach you how to strengthen them. Her workouts are unique and might look easy from the outside but are definitely challenging. She is so incredibly smart and finds ways to help you connect to your body and feel comfortable and confident in your body.",
+      "I started out with 8 classes, and I'm hooked now with no end in sight :)",
+      "She is THE person to see postpartum, or better yet while pregnant to help prepare your body and gain strength. She's also just an insanely kind and relatable human!",
+    ],
+  },
+};
+
 export const PROFILE_REVIEWS: Record<string, readonly Testimonial[]> = {
   "jess-caze": [
     {
@@ -1166,12 +1200,9 @@ export const PROFILE_REVIEWS: Record<string, readonly Testimonial[]> = {
         "Devin is simply a great trainer. I've worked with him most of the year and I am stronger than ever, and every session has been fun and rewarding. Highly recommend!",
     },
   ],
+  // Annie Todd is not here: she is the featured review above, and one
+  // client should not appear twice on one page.
   "becca-reeve": [
-    {
-      reviewer: "Annie Todd",
-      quote:
-        "I came to Becca 6 months post partum and unable to hold my baby while standing for more than a few minutes due to back pain, which was devastating to me. I started going to Becca for this reason, which quickly resolved, but I've gotten so much more out of our sessions than I bargained for. She is able to pinpoint small weaknesses and teach you how to strengthen them. She is so incredibly smart and finds ways to help you connect to your body and feel comfortable and confident in your body. She is THE person to see postpartum, or better yet while pregnant to help prepare your body and gain strength.",
-    },
     {
       reviewer: "Karen Barker",
       quote:

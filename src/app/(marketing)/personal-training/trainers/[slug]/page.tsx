@@ -10,6 +10,7 @@ import {
   canonicalPath,
   CLUB,
   OG_IMAGE_META,
+  PROFILE_FEATURED,
   PROFILE_REVIEWS,
   publishedReviews,
   TRAINERS,
@@ -78,6 +79,7 @@ export default async function TrainerProfile({
   if (!trainer?.profile) notFound();
 
   const reviews = publishedReviews(PROFILE_REVIEWS[trainer.slug] ?? []);
+  const featured = PROFILE_FEATURED[trainer.slug];
   const others = TRAINERS.filter((other) => other.slug !== trainer.slug).slice(
     0,
     4,
@@ -213,7 +215,7 @@ export default async function TrainerProfile({
           </div>
         </section>
 
-        {reviews.length > 0 ? (
+        {featured || reviews.length > 0 ? (
           <section className="sec sec--surface" aria-labelledby="says-h">
             <div className="wrap">
               <h2
@@ -229,10 +231,40 @@ export default async function TrainerProfile({
                 Written by clients under their own names on the club&apos;s
                 booking page. Quoted here word for word.
               </p>
+
+              {/* One review given the space to be read rather than scanned.
+                  The pull is its opening sentence and the body is the rest,
+                  split where the client split it — the whole review, once. */}
+              {featured ? (
+                <figure className="blueprint quote-card">
+                  <div className="g2 quote-grid">
+                    <div>
+                      <Stars className="quote-stars" />
+                      <blockquote className="quote">
+                        &ldquo;{featured.pull}&rdquo;
+                      </blockquote>
+                      <figcaption className="quote-attrib">
+                        <strong>{featured.reviewer}</strong>
+                        {featured.attribution ? (
+                          <span> · {featured.attribution}</span>
+                        ) : null}
+                      </figcaption>
+                    </div>
+                    <div className="quote-body">
+                      {featured.body.map((paragraph) => (
+                        <p key={paragraph.slice(0, 40)}>
+                          &ldquo;{paragraph}&rdquo;
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                </figure>
+              ) : null}
               {/* Three across in one row, matching the hub. Two columns left
                   a third review stranded on a row of its own and paired a long
                   quote with a short one, which reads as a layout fault rather
                   than as proof. Capped at three for the same reason. */}
+              {reviews.length > 0 ? (
               <div
                 className={`g3 review-row review-row--tight review-row--n${Math.min(
                   3,
@@ -251,6 +283,7 @@ export default async function TrainerProfile({
                   </figure>
                 ))}
               </div>
+              ) : null}
             </div>
           </section>
         ) : null}
