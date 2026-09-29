@@ -164,16 +164,19 @@ export const CLUB = {
   founded: "1980",
   squareFeet: "65,000",
   /**
-   * Staff count, shown in the stat band and in section 07.
+   * Staff count: the eight in TRAINERS plus the three in ROSTER_PENDING.
    *
-   * UNVERIFIED as of 2026-09-29. Twelve was the count when the roster was
-   * built: eight published plus the four in ROSTER_PENDING. Tais Vega was then
-   * reported on staff and appears in no earlier roster document, which makes
-   * this either 13, or 12 with one of the pending four gone. It is published
-   * as a fact on a public page, so it needs confirming rather than
-   * incrementing on an assumption.
+   * Confirmed 2026-09-29. It was twelve, built from a roster that carried two
+   * people who have since left; adding Tais Vega and removing them lands on
+   * eleven.
+   *
+   * `trainerCountWord` exists because this number appears in running copy as a
+   * word and in the stat band as a digit. It was written out in five places in
+   * three spellings, so when the count changed every one of them went stale
+   * independently. Interpolate these two; do not type the number.
    */
-  trainerCount: 12,
+  trainerCount: 11,
+  trainerCountWord: "eleven",
   facebook: "https://www.facebook.com/TimberhillAthleticClub",
   instagram: "https://www.instagram.com/timberhill_ac",
   /** Website hours. Setmore advertises Mon–Fri 5 AM–9 PM; §14 flags the
@@ -398,20 +401,19 @@ export const TRAINERS: readonly Trainer[] = [
 
 /** §6 roster status. Not rendered as trainers — recorded so the gap is
  *  visible in code review rather than only in a document. */
+/**
+ * On staff, but not on the public roster: no bio, no credentials, no
+ * specialties, and a profile cannot be written from a name. Confirmed with the
+ * PT Director 2026-09-29.
+ *
+ * Kyra Schulties and Jayna Davis were here and have left the club. Steve
+ * Sackmann was marked "off roster" on the assumption that a missing bio meant
+ * a departure; he is on staff, and it was the bio that was missing, not him.
+ */
 export const ROSTER_PENDING = [
-  { name: "Amanda Knight", status: "Coming soon", blockedOn: "Bio and credentials." },
-  {
-    name: "Steve Sackmann",
-    status: "Off roster",
-    blockedOn:
-      "Listed as published in the brief, but has no bio in the Drive Trainer Bios doc.",
-  },
-  { name: "Kyra Schulties", status: "Missing", blockedOn: "Bio, credentials, specialties." },
-  { name: "Jayna Davis", status: "Missing", blockedOn: "Bio, credentials, specialties." },
-  // Reported on staff 2026-09-29 and absent from every prior roster document,
-  // so she has never been counted. Whether CLUB.trainerCount rises to 13 or
-  // one of the four above has left is unresolved — see the note on that field.
-  { name: "Tais Vega", status: "Missing", blockedOn: "Bio, credentials, specialties." },
+  { name: "Amanda Knight", status: "On staff", blockedOn: "Bio, credentials, specialties." },
+  { name: "Steve Sackmann", status: "On staff", blockedOn: "Bio, credentials, specialties." },
+  { name: "Tais Vega", status: "On staff", blockedOn: "Bio, credentials, specialties." },
 ] as const;
 
 export function trainerBySlug(slug: string): Trainer | undefined {
@@ -455,7 +457,7 @@ export const PILLARS = [
   },
   {
     key: "THE ODDS",
-    body: "A qualified coach, a structured plan and a professional environment all raise the odds that this works. Twelve certified trainers, and progress measured rather than guessed at.",
+    body: `A qualified coach, a structured plan and a professional environment all raise the odds that this works. ${CLUB.trainerCountWord.replace(/^./, (c) => c.toUpperCase())} certified trainers, and progress measured rather than guessed at.`,
   },
   {
     key: "THE TIMELINE",
@@ -535,8 +537,8 @@ export const TRUST_POINTS = [
 export const DIFFERENTIATORS = [
   {
     title: "A department, not an amenity",
-    body: "A director who owns the standard, twelve certified trainers, five program formats, and one consultation that decides which of them you need. Programming, progression and accountability are defined \u2014 not left to whoever is free. Personal training here is not something the front desk arranges on the side.",
-    evidence: "DIRECTOR-LED · 12 TRAINERS · 5 FORMATS",
+    body: `A director who owns the standard, ${CLUB.trainerCountWord} certified trainers, five program formats, and one consultation that decides which of them you need. Programming, progression and accountability are defined \u2014 not left to whoever is free. Personal training here is not something the front desk arranges on the side.`,
+    evidence: `DIRECTOR-LED · ${CLUB.trainerCount} TRAINERS · 5 FORMATS`,
   },
   {
     title: "Corvallis-owned since 1980",

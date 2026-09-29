@@ -78,7 +78,7 @@ export default function PersonalTrainingHub() {
     <div className="pg">
       <CtaAnalytics />
       {/* The roster travels with the organization as `employee`, so the club
-          and the twelve people who work there resolve as one entity graph
+          and the people who work there resolve as one entity graph
           rather than a business and a disconnected list of names. */}
       <JsonLd data={healthClub(TRAINERS)} />
       <JsonLd
@@ -273,10 +273,12 @@ export default function PersonalTrainingHub() {
               title="Meet some of our training team"
               tight
             >
-              {/* The club has twelve trainers; this grid shows the ones with
-                  published profiles. Saying "twelve" above eight cards reads
-                  as a miscount, so the heading says "some" and the copy says
-                  how many are shown. */}
+              {/* The grid shows the trainers with published profiles, which
+                  is fewer than the staff count. Naming only the staff count
+                  above a shorter grid reads as a miscount, so the heading says
+                  "some" and the copy states both numbers. Both are
+                  interpolated — typing either by hand is how the old count
+                  survived two departures. */}
               <p className="lede lede--tight">
                 {TRAINERS.length} of our {CLUB.trainerCount} trainers, with
                 profiles published. A card answers one question: would this
@@ -301,10 +303,10 @@ export default function PersonalTrainingHub() {
             >
               <p className="lede lede--wide">
                 Timberhill Athletic Club has been locally owned in Corvallis
-                since 1980. Personal training here is a department with twelve
-                certified trainers and five program formats across sixty-five
-                thousand square feet — not a service the front desk arranges on
-                the side.
+                since 1980. Personal training here is a department with{" "}
+                {CLUB.trainerCountWord} certified trainers and five program
+                formats across sixty-five thousand square feet — not a service
+                the front desk arranges on the side.
               </p>
             </SectionHead>
             <div className="diffs">

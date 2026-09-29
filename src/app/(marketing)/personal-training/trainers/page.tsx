@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     type: "website",
     title: `Personal Trainers in Corvallis, OR | ${CLUB.name}`,
     description:
-      "Twelve trainers, each with their own specialty. Filter the roster and book a free 30-minute consultation.",
+      `${CLUB.trainerCountWord.replace(/^./, (c) => c.toUpperCase())} trainers, each with their own specialty. Filter the roster and book a free 30-minute consultation.`,
     url: canonicalPath("/personal-training/trainers"),
     images: [...OG_IMAGE_META],
   },
@@ -89,8 +89,9 @@ export default function TrainersIndex() {
                 relying on the H1 above it for its subject, so it still reads
                 correctly quoted on its own. */}
             <p className="page-lede">
-              Timberhill Athletic Club has twelve certified personal trainers on
-              staff in Corvallis, Oregon, each with their own specialty — from
+              Timberhill Athletic Club has {CLUB.trainerCountWord} certified
+              personal trainers on staff in Corvallis, Oregon, each with their
+              own specialty — from
               strength and athletic performance to pre and postnatal, healthy
               aging and corrective exercise. You do not have to pick one, but if
               someone here looks like the right fit, say so in your
