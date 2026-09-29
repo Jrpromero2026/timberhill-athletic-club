@@ -186,10 +186,23 @@ export const CLUB = {
 
 /** §7. Read from the live Setmore figure or review monthly — do not let a
  *  hard-coded number go stale. One definition so the audit is one edit. */
+/**
+ * Verified against the live Setmore page 2026-09-29.
+ *
+ * The true mean is 4.99 — 159 five-star and one four-star. Setmore itself
+ * displays 5.0, and that is the figure quoted here, so the site and the page
+ * a visitor clicks through to agree. `fiveStar` over `count` is the honest
+ * version of the same claim and is what the differentiator strip shows.
+ *
+ * §7 says to read this from the live figure or review it monthly rather than
+ * hard-code a number that goes stale. It is hard-coded; this date is the
+ * review.
+ */
 export const REVIEW_STATS = {
   average: "5.0",
   count: 160,
   fiveStar: 159,
+  verifiedOn: "2026-09-29",
 } as const;
 
 /* ── specialties ───────────────────────────────────────────────────────── */
@@ -792,12 +805,125 @@ export const FEATURED_TESTIMONIAL = {
   ],
 } as const;
 
-/** §7. Approved for immediate use — already public under the reviewer's own
- *  name on the club's Setmore review page. The text still needs pasting. */
+/**
+ * §7. Verbatim reviews from the club's own Setmore page, public under each
+ * reviewer's own name. Pulled 2026-09-29 by the PT Director.
+ *
+ * The hub renders the FIRST THREE. They are ordered for three different
+ * trainers and three different reasons somebody starts — coming back from an
+ * injury, starting from nothing, and wanting to feel stronger — rather than
+ * three variations on "good trainer". To change what the page shows, move a
+ * review into the first three; nothing else needs touching.
+ *
+ * Typos and trainer-name misspellings are the reviewers' own and are kept.
+ * "Connor" appears where the client wrote it; the attribution beside the
+ * quote spells Conner McAdams correctly.
+ *
+ * Jen Akeroyd's Setmore review is deliberately absent. She is the featured
+ * testimonial above under her first name, and the same client appearing twice
+ * on one page reads as thin proof rather than as more of it.
+ */
 export const REVIEWS: readonly Testimonial[] = [
-  { reviewer: "Jennifer Gervais", trainer: "Jess Caze", pending: true },
-  { reviewer: "Shawn Collins", trainer: "Josiah Iwamizu", pending: true },
-  { reviewer: "Barb LeBoss", trainer: "Conner McAdams", pending: true },
+  // ── rendered on the hub ──────────────────────────────────────────────
+  {
+    reviewer: "Catherine Williams",
+    trainer: "Josiah Iwamizu",
+    quote:
+      "I am delighted with my experience training with Josiah. When we started about four months ago, I couldn't use my right arm and right shoulder at all, due to injury. Now a short time later I am pain-free and I am lifting more than I was when I injured myself. Josiah is quite knowledgeable about the human body and has helped me so much.",
+  },
+  {
+    reviewer: "Meredith Payne",
+    trainer: "Devin Shelfer",
+    quote:
+      "Devin was remarkable. He made me feel comfortable and confident that I can do strength training successfully. He really took the time to understand my needs and give me a doable regime.",
+  },
+  {
+    reviewer: "Vicki Joines",
+    trainer: "Emma Ciechanowski",
+    quote:
+      "One of the best things I've done for myself. Signed up to work with a personal trainer at Timberhill. I'm getting so much stronger and feel amazing. Emma is so easy to work with and so encouraging. Love it!",
+  },
+  // ── also approved and public; promote any of these into the top three ─
+  {
+    reviewer: "Marlene G Hawk",
+    trainer: "Josiah Iwamizu",
+    quote:
+      "Jo Iwamizu's coaching is excellent. I'm 70+yrs old and had been pretty much inactive for going on 6 years when I decided to get back in the gym. Jo paid close attention to my physical fitness goals, my physical limitations, and my personal beliefs that affect my well-being holistically. He developed a workout program for me, arranged for me to have a body analysis done, explained the results, developed a food guide based on those results, and always helps me stay on track with all of it. I can trust that he wants me to succeed. He is knowledgeable in all areas of physical fitness that we have discussed. A top notch professional. I truly am grateful for him",
+  },
+  {
+    reviewer: "Shawn Collins",
+    trainer: "Josiah Iwamizu",
+    quote:
+      "Jo continues to be a great trainer for me. He checks in regularly to make sure old injuries aren't being aggravated, and tunes my workouts to build sustainable strength. I feel lucky to work with him.",
+  },
+  {
+    reviewer: "Amy Leslie",
+    trainer: "Conner McAdams",
+    quote:
+      "Connor set me up with just the routine I needed post surgery. He's a great listener and changes things up to prevent boredom. Just a few sessions gave me the confidence to tackle a real workout on my own.",
+  },
+  {
+    reviewer: "Barb LeBoss",
+    trainer: "Conner McAdams",
+    quote:
+      "I have been working with Connor, and within a short time I see improvement. He works me hard, but it's so conscientious about how much to do, what to do and how to do it, making sure that nothing causes discomfort or pain. He's a great Personal Trainer.",
+  },
+  {
+    reviewer: "Dick Keis",
+    trainer: "Conner McAdams",
+    quote:
+      "I was not looking forward to staring this weight training program. But Connor changed my mind set. He was sensitive to what I was capable of and made me look forward to my next session.",
+  },
+  {
+    reviewer: "Dallas Caples",
+    trainer: "Emma Ciechanowski",
+    quote:
+      "I had my first session with Emma recently, and I have appreciated how we are working to build back and increase my strength sustainably after taking time off due to surgery. I feel challenged but not overwhelmed, and I look forward to continuing our work together.",
+  },
+  {
+    reviewer: "Ann Brodie",
+    trainer: "Emma Ciechanowski",
+    quote:
+      "Emma was very helpful in suggesting some changes in my technique on some machines and also suggesting others to do. She warned me about using some of the machines because of my having ostoporesis. She was very professional and pleasant to work with.",
+  },
+  {
+    reviewer: "Jennifer A",
+    trainer: "Mason Morgan",
+    quote:
+      "I have seen steady progress over the last 2 months that I have trained with Mason. He provides expert tips on the fine points of form. This is really important for preventing injuries. He is also good at giving variations to increase challenges as I improve. I have a long way to go, but he makes me confident that ongoing change is possible! Thanks, Mason!",
+  },
+  {
+    reviewer: "LA Starcevich",
+    trainer: "Mason Morgan",
+    quote:
+      "I loved training with Mason. He gave me lots of new exercises to try and helped me add weight to the exercises and improve my form. I learned a lot in 8 sessions. Mason is a great guy and pleasant to work with. Highly recommend!",
+  },
+  {
+    reviewer: "Shannon",
+    trainer: "Mason Morgan",
+    quote:
+      "Mason has been the greatest trainer to work with my mom and I. He works with our injuries and customize our workouts accordingly. Mason is excellent at encouraging and making workouts fun even! The best part about working with Mason is his ability to explain the body mechanics and importance of proper form. I highly recommend Mason as the best personal trainer!",
+  },
+  {
+    reviewer: "Erica",
+    trainer: "Devin Shelfer",
+    quote:
+      "Devin is simply a great trainer. I've worked with him most of the year and I am stronger than ever, and every session has been fun and rewarding. Highly recommend!",
+  },
+  {
+    reviewer: "Erica McKenzie",
+    trainer: "Devin Shelfer",
+    quote:
+      "Devin has been wonderful to work with. Super knowledgeable, great at demonstrating moves and checking for correct form, and adjusting readily for any physical challenges. I am really happy i signed up and enjoy working with him!",
+  },
+  {
+    reviewer: "Jennifer Gervais",
+    trainer: "Jess Caze",
+    quote:
+      "Jess Caze was great- listened carefully to what I wanted and worked within the parameters I set. She is clearly very knowledgable. She was focused, professional, and very helpful. Highly recommended.",
+  },
+  // Approved in the build brief, but no review text has been captured for
+  // her. `publishedReviews` drops this entry until a quote is pasted.
   { reviewer: "Judy Saslow", trainer: "Emma Ciechanowski", pending: true },
 ];
 
@@ -819,12 +945,33 @@ export function publishedReviews(
   );
 }
 
+/**
+ * Reviews shown on a trainer's own profile page.
+ *
+ * Only trainers with a published profile have an entry; the rest of the
+ * approved reviews live in REVIEWS above, grouped by `trainer`, ready for
+ * whichever profile is written next.
+ *
+ * Jen Akeroyd's Setmore review is not added here either: she is already the
+ * featured testimonial on the hub, and this page already carries her shorter
+ * quote below.
+ */
 export const PROFILE_REVIEWS: Record<string, readonly Testimonial[]> = {
   "jr-romero": [
     {
       reviewer: "Jen · client since May 2025",
       quote:
         "Working with JR has helped me safely continue progressing long after formal physical therapy ended, giving me the guidance, accountability, and confidence to keep getting stronger.",
+    },
+    {
+      reviewer: "North",
+      quote:
+        "JR is a well educated and top notch strength and conditioning coach. He is iterating over a custom strength training plan for me that will fit into my endurance cycling workouts. He understands the difficulties and nuance of combining strength training and endurance training while providing enough recovery. He knows all about progressive overload, training stress scores, macro and micro periodization, block training, and other concepts that many coaches don't understand. I feel lucky to have such a good coach.",
+    },
+    {
+      reviewer: "Walt Pebley",
+      quote:
+        "Today's training with JR, was exactly the same as every workout. He is the consummate professional, exhibiting knowledge around various issues I have physically to both provide confidence and challenge. I cannot express enough gratitude that he is at Timberhill.",
     },
   ],
 };
