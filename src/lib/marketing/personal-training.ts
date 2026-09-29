@@ -239,6 +239,17 @@ export type Trainer = {
   profile?: readonly { heading: string; body: string }[];
   /** Job title, for the profile page and its Person schema. */
   jobTitles?: readonly string[];
+  /**
+   * Degrees and certifications, most significant first, for the list under
+   * the profile photograph.
+   *
+   * Structured rather than one pre-joined string: the post-nominal is what a
+   * reader scans for, and it can only be set apart from the award if the two
+   * are separate fields. Splitting a joined string on " · " and guessing which
+   * trailing parenthesis is an abbreviation works until a credential contains
+   * a bracket for any other reason.
+   */
+  certifications?: readonly { award: string; issuer?: string; abbr?: string }[];
 };
 
 export const TRAINERS: readonly Trainer[] = [
@@ -262,6 +273,22 @@ export const TRAINERS: readonly Trainer[] = [
     // Unresolved Phase 2 gate: the Drive bio heading says Head Trainer, the
     // body says Director of Training. Both are carried until one is picked.
     jobTitles: ["Head Trainer", "Director of Training"],
+    // Split out of the former "Credentials" prose block. Same nine, same
+    // order, same wording — only the joining changed.
+    certifications: [
+      {
+        award: "B.S. Exercise and Sport Science",
+        issuer: "Oregon State University",
+      },
+      { award: "Certified Strength and Conditioning Specialist", abbr: "CSCS" },
+      { award: "Certified Personal Trainer", abbr: "NSCA-CPT" },
+      { award: "Performance Enhancement Specialist", abbr: "NASM-PES" },
+      { award: "Physique & Bodybuilding Coach", abbr: "NASM-PBC" },
+      { award: "Precision Nutrition Level 1 Coach", abbr: "Pn1" },
+      { award: "Certified Speed & Agility Coach", abbr: "CSAC-NSPA" },
+      { award: "Kinetic Integration Exercise Professional", abbr: "KIEP" },
+      { award: "CrossFit Level 1 Trainer", abbr: "CF-L1" },
+    ],
     profile: [
       {
         heading: "Approach",
@@ -275,10 +302,7 @@ export const TRAINERS: readonly Trainer[] = [
         heading: "Built For Her™",
         body: "JR is the creator of Built For Her™, a standards-based coaching system for women's physique and performance. The system integrates progressive strength training, nutrition strategy, recovery, and accountability to help women develop strength, build muscle, improve body composition, and achieve a higher standard of physical capability.",
       },
-      {
-        heading: "Credentials",
-        body: "B.S. Exercise and Sport Science, Oregon State University · Certified Strength and Conditioning Specialist (CSCS) · Certified Personal Trainer (NSCA-CPT) · Performance Enhancement Specialist (NASM-PES) · Physique & Bodybuilding Coach (NASM-PBC) · Precision Nutrition Level 1 Coach (Pn1) · Certified Speed & Agility Coach (CSAC-NSPA) · Kinetic Integration Exercise Professional (KIEP) · CrossFit Level 1 Trainer (CF-L1)",
-      },
+
     ],
   },
   {

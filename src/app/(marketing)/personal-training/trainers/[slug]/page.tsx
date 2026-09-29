@@ -134,12 +134,39 @@ export default async function TrainerProfile({
         <section className="sec" style={{ paddingTop: "clamp(28px,4vw,52px)" }}>
           <div className="wrap">
             <div className="g2 profile-grid">
-              <AssetSlot
-                spec="trainer headshot · 3:4 · ≥800×1066 · release signed and filed"
-                shape="portrait"
-                className="profile-slot"
-                framed
-              />
+              {/* Left column: the photograph, and the credentials directly
+                  beneath it. They sit here rather than in the biography
+                  blocks because they are reference material — scanned once to
+                  answer "is this person qualified", not read in sequence with
+                  the prose. */}
+              <div className="profile-aside">
+                <AssetSlot
+                  spec="trainer headshot · 3:4 · ≥800×1066 · release signed and filed"
+                  shape="portrait"
+                  className="profile-slot"
+                  framed
+                />
+                {trainer.certifications ? (
+                  <div className="creds">
+                    <h2 className="creds-h">Credentials</h2>
+                    <ul className="creds-list">
+                      {trainer.certifications.map((cert) => (
+                        <li className="creds-row" key={cert.award}>
+                          <span className="creds-award">
+                            {cert.award}
+                            {cert.issuer ? (
+                              <span className="creds-issuer">{cert.issuer}</span>
+                            ) : null}
+                          </span>
+                          {cert.abbr ? (
+                            <span className="creds-abbr">{cert.abbr}</span>
+                          ) : null}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
 
               <div>
                 {trainer.acceptingClients ? (

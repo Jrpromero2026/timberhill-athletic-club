@@ -3,6 +3,7 @@ import {
   HUB_FAQS,
   RECOGNITION,
   SETMORE,
+  TRAINERS,
 } from "../src/lib/marketing/personal-training";
 
 /** Questions whose answers are settled — the only ones that reach a page. */
@@ -352,7 +353,18 @@ test.describe("trainer profile", () => {
       "href",
       /products=8aff2d32/,
     );
-    await expect(page.locator(".block-h")).toHaveCount(4);
+    // Assert against the content, not a literal: this read `toHaveCount(4)`
+    // and broke the moment the credentials moved out of the prose blocks and
+    // under the photograph, which was the intended change.
+    const jr = TRAINERS.find((t) => t.slug === "jr-romero");
+    await expect(page.locator(".block-h")).toHaveCount(jr!.profile!.length);
+
+    // Credentials are a reference list beside the biography, one row per
+    // award, not a paragraph of dot-separated prose.
+    await expect(page.locator(".creds-row")).toHaveCount(
+      jr!.certifications!.length,
+    );
+    await expect(page.locator(".blocks")).not.toContainText("(CSCS) ·");
   });
 
   test("a trainer without a published profile 404s", async ({ page }) => {

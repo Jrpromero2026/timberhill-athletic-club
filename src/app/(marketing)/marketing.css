@@ -1142,6 +1142,44 @@ proportions. BUILD_BRIEF §9. */
 .tac-site .profile-slot {
   aspect-ratio: 3 / 4;
 }
+/* ═══ 2 · profile credentials ════════════════════════════════════════════
+A reference list, not prose: one award per row, hairline-ruled, with the
+post-nominal set apart at the end of the row. The abbreviation is what a
+reader actually scans for, so it is given its own column rather than left
+inside a parenthesis at the end of a sentence.
+
+`align-items: baseline` so the abbreviation sits on the first line of a
+two-line award rather than floating to its optical centre. */
+.tac-site .profile-aside {
+  display: flex; flex-direction: column;
+}
+.tac-site .creds {
+  margin-top: 26px;
+}
+.tac-site .creds-h {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--color-accent); margin-bottom: 4px;
+}
+.tac-site .creds-list {
+  list-style: none; margin: 0; padding: 0;
+}
+.tac-site .creds-row {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+  padding: 11px 0; border-bottom: 1px solid var(--color-divider);
+}
+.tac-site .creds-award {
+  font-size: 14px; line-height: 1.45; color: var(--color-text);
+  text-wrap: pretty;
+}
+.tac-site .creds-issuer {
+  display: block; font-size: 12.5px; line-height: 1.45;
+  color: var(--color-neutral-700); margin-top: 2px;
+}
+/* Monospace so nine post-nominals of differing length read as one column. */
+.tac-site .creds-abbr {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em;
+  color: var(--color-accent); white-space: nowrap; flex: none;
+}
 .tac-site .profile-h1 {
   font-family: var(--font-heading); font-weight: 700;
   font-size: clamp(36px, 6vw, 64px); line-height: 0.98;
@@ -1269,6 +1307,14 @@ AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
      tracking and the separator gutters give way. */
   .tac-site .spec-inline {
     letter-spacing: 0.04em;
+  }
+  /* Single column below 760px: the list follows the photograph and precedes
+     the name, so it needs less air above it than it does beside a 3:4 image. */
+  .tac-site .creds {
+    margin-top: 20px;
+  }
+  .tac-site .creds-row {
+    padding: 10px 0;
   }
   .tac-site .spec-inline li + li::before {
     margin: 0 5px;
