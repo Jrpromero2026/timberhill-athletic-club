@@ -922,6 +922,23 @@ export const REVIEWS: readonly Testimonial[] = [
     quote:
       "Jess Caze was great- listened carefully to what I wanted and worked within the parameters I set. She is clearly very knowledgable. She was focused, professional, and very helpful. Highly recommended.",
   },
+  // Steve Sackmann is on staff but has no published profile yet. Both of his
+  // reviews are from the same client and both misspell his surname — "Sackman"
+  // in one, "Jackman" in the other. Kept verbatim; the attribution spells it
+  // correctly. Two reviews from one reviewer are thin as a pair, so they are
+  // held out of the top three rather than shown side by side.
+  {
+    reviewer: "John Swanson",
+    trainer: "Steve Sackmann",
+    quote:
+      "Steve Sackman is doing a great job of getting my fitness program upgraded and establsihed.",
+  },
+  {
+    reviewer: "John Swanson",
+    trainer: "Steve Sackmann",
+    quote:
+      "First Session with Steve Jackman was three thumbs up and six stars.",
+  },
   // Approved in the build brief, but no review text has been captured for
   // her. `publishedReviews` drops this entry until a quote is pasted.
   { reviewer: "Judy Saslow", trainer: "Emma Ciechanowski", pending: true },
