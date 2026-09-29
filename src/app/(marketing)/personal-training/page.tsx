@@ -357,19 +357,25 @@ export default function PersonalTrainingHub() {
               </div>
             </figure>
 
+            {/* Three across, and only three: a fourth wraps to a row of its
+                own and reads as a layout fault rather than as more proof.
+                `publishedReviews` has already dropped any whose verbatim text
+                has not been pasted yet, so this never renders a placeholder. */}
             {reviews.length > 0 ? (
-              <div className="g4">
-                {reviews.map((review) => (
-                  <div className="blueprint review-card" key={review.reviewer}>
-                    <Stars />
-                    <div className="review-box">“{review.quote}”</div>
-                    <div className="review-attrib">
+              <div className="g3 review-row">
+                {reviews.slice(0, 3).map((review) => (
+                  <figure className="blueprint review-card" key={review.reviewer}>
+                    <Stars className="review-stars" />
+                    <blockquote className="review-box">
+                      “{review.quote}”
+                    </blockquote>
+                    <figcaption className="review-attrib">
                       <strong>{review.reviewer}</strong>
                       {review.trainer ? (
                         <span> · on {review.trainer}</span>
                       ) : null}
-                    </div>
-                  </div>
+                    </figcaption>
+                  </figure>
                 ))}
               </div>
             ) : null}

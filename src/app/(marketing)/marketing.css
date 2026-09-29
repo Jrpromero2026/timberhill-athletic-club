@@ -803,15 +803,25 @@ first-party review data. BUILD_BRIEF §8. */
 .tac-site .quote-body p {
   margin: 0;
 }
+/* Three across rather than four. At four the quote column is narrow enough
+   that a two-sentence review runs to seven or eight lines and the row reads
+   as a wall; at three each card carries its text in four or five. */
+.tac-site .review-row {
+  margin-top: 26px;
+}
 .tac-site .review-card {
-  background: var(--color-bg); padding: 22px; display: flex; flex-direction: column; gap: 14px;
+  background: var(--color-bg); padding: 24px; display: flex; flex-direction: column; gap: 14px;
+  margin: 0;
+}
+.tac-site .review-stars {
+  margin-bottom: 2px;
 }
 /* Holds review text exactly as the reviewer wrote it. Never fabricated, never
 composited, not even as a placeholder — a review whose text has not been
 pasted yet is not rendered at all (see `publishedReviews`). BUILD_BRIEF §7. */
 .tac-site .review-box {
   border-left: 2px solid var(--color-accent-300);
-  padding-left: 14px; font-size: 14.5px; line-height: 1.65;
+  padding-left: 16px; margin: 0; font-size: 15px; line-height: 1.65;
   color: color-mix(in srgb, var(--color-text) 88%, transparent);
   flex: 1; text-wrap: pretty;
 }
