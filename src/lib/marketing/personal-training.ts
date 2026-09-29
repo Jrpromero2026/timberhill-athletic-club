@@ -272,8 +272,8 @@ export const TRAINERS: readonly Trainer[] = [
         body: "JR's coaching experience spans a wide range of populations, from beginners starting their fitness journey to competitive athletes and high-performing professionals seeking to maximize their physical potential. His approach combines evidence-based training, practical nutrition coaching, and individualized programming to create measurable results and sustainable progress. He specializes in body recomposition, muscle hypertrophy, strength development, and performance enhancement.",
       },
       {
-        heading: "Built For Her",
-        body: "JR is the creator of Built For Her, a standards-based coaching system for women's physique and performance. The system integrates progressive strength training, nutrition strategy, recovery, and accountability to help women develop strength, build muscle, improve body composition, and achieve a higher standard of physical capability.",
+        heading: "Built For Her™",
+        body: "JR is the creator of Built For Her™, a standards-based coaching system for women's physique and performance. The system integrates progressive strength training, nutrition strategy, recovery, and accountability to help women develop strength, build muscle, improve body composition, and achieve a higher standard of physical capability.",
       },
       {
         heading: "Credentials",
@@ -580,7 +580,7 @@ export const SERVICE_FAMILIES = [
   },
   {
     name: "Seasonal and Focused Programs",
-    body: "Time-boxed programs with a specific brief — Built For Her and Peak Ready Performance run to their own calendar.",
+    body: "Time-boxed programs with a specific brief — Built For Her™ and Peak Ready Performance run to their own calendar.",
   },
 ] as const;
 
