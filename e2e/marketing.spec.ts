@@ -379,6 +379,41 @@ test.describe("trainer profile", () => {
     await expect(page.locator(".blocks")).not.toContainText("(CSCS) ·");
   });
 
+  test("the free session is a second door, never the first", async ({ page }) => {
+    // JR takes the consultations, so his profile offers nothing else.
+    await page.goto("/personal-training/trainers/jr-romero");
+    await expect(
+      page.locator('[data-cta-section="profile-free-session"]'),
+    ).toHaveCount(0);
+    await expect(page.locator('[data-cta-section="profile"]')).toHaveAttribute(
+      "href",
+      SETMORE.consultation,
+    );
+
+    // A trainer who takes free sessions offers both, and the consultation is
+    // still the primary — a second door must never become the first.
+    const offering = TRAINERS.find((t) => t.offersFreeSession && t.profile);
+    expect(offering).toBeDefined();
+    await page.goto(`/personal-training/trainers/${offering!.slug}`);
+
+    const primary = page.locator('[data-cta-section="profile"]');
+    const second = page.locator('[data-cta-section="profile-free-session"]');
+    await expect(primary).toHaveAttribute("href", SETMORE.consultation);
+    await expect(second).toHaveCount(1);
+
+    // Whichever link the second door carries, the copy must match what it can
+    // do: only a link with a staff id may promise this trainer by name.
+    const href = (await second.getAttribute("href")) ?? "";
+    const note = await page.locator(".profile-alt .cta-note").innerText();
+    const firstName = offering!.name.split(" ")[0];
+    if (href.includes("staff=")) {
+      expect(note).toContain(firstName);
+    } else {
+      expect(note).toContain("choose your trainer");
+      expect(note).not.toContain(`with ${firstName} directly`);
+    }
+  });
+
   test("a slug with no published profile 404s", async ({ page }) => {
     // Named jess-caze until she got a profile, at which point the test failed
     // for the best possible reason. Take whoever currently has no profile; if

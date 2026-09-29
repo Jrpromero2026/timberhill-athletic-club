@@ -7,13 +7,14 @@ import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { StickyCta } from "@/components/marketing/sticky-cta";
 import {
-  canonicalPath,
   CLUB,
   OG_IMAGE_META,
   PROFILE_FEATURED,
   PROFILE_REVIEWS,
-  publishedReviews,
+  SETMORE,
   TRAINERS,
+  canonicalPath,
+  publishedReviews,
   trainerBySlug,
 } from "@/lib/marketing/personal-training";
 import { breadcrumbs, person, webPage } from "@/lib/marketing/schema";
@@ -80,6 +81,17 @@ export default async function TrainerProfile({
 
   const reviews = publishedReviews(PROFILE_REVIEWS[trainer.slug] ?? []);
   const featured = PROFILE_FEATURED[trainer.slug];
+
+  // A trainer's own link if they have one, otherwise the shared free-session
+  // link, which opens the staff picker rather than a calendar. The copy below
+  // changes with it: only a link carrying a staff id can promise a booking
+  // with this trainer.
+  const freeSessionUrl = trainer.freeSession
+    ? trainer.freeSession
+    : trainer.offersFreeSession
+      ? SETMORE.freeTrial
+      : null;
+  const booksThisTrainerDirectly = Boolean(trainer.freeSession);
   const others = TRAINERS.filter((other) => other.slug !== trainer.slug).slice(
     0,
     4,
@@ -208,11 +220,11 @@ export default async function TrainerProfile({
                     that sits beneath it as a second door for a reader who has
                     finished the page and already decided. */}
                 <PrimaryCta section="profile" />
-                {trainer.freeSession ? (
+                {freeSessionUrl ? (
                   <div className="profile-alt">
                     <a
                       className="btn btn-secondary btn-cta"
-                      href={trainer.freeSession}
+                      href={freeSessionUrl}
                       target="_blank"
                       rel="noopener"
                       data-cta-section="profile-free-session"
@@ -221,9 +233,19 @@ export default async function TrainerProfile({
                     </a>
                     <p className="cta-note">
                       The consultation covers what you want and which trainer
-                      fits. This books a free session with{" "}
-                      {trainer.name.split(" ")[0]} directly — take it if you
-                      have already decided.
+                      fits.{" "}
+                      {booksThisTrainerDirectly ? (
+                        <>
+                          This books a free session with{" "}
+                          {trainer.name.split(" ")[0]} directly — take it if you
+                          have already decided.
+                        </>
+                      ) : (
+                        <>
+                          This books a free session straight away; you choose
+                          your trainer on the booking page.
+                        </>
+                      )}
                     </p>
                   </div>
                 ) : (

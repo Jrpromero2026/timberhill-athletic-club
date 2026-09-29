@@ -24,11 +24,13 @@
  * in Setmore the ID changes and every CTA breaks silently — so they are
  * defined once, here, and nowhere else.
  *
- * ONLY `consultation` may be used by a call to action. `freeTrial` and
- * `performanceLab` are recorded so the IDs are not lost, and are deliberately
- * not linked from any page: sending a prospect to a specific service asks them
- * to diagnose which product they need, which is the job the consultation
- * exists to do.
+ * `consultation` is the primary call to action everywhere. `freeTrial` is the
+ * free 45-minute session, offered as a second action on the profile of any
+ * trainer who takes them — it opens the staff picker rather than a calendar,
+ * because it carries no `staff` parameter. `performanceLab` is recorded so the
+ * ID is not lost and is deliberately not linked from any page: sending a
+ * prospect to a specific service asks them to diagnose which product they
+ * need, which is the job the consultation exists to do.
  *
  * `consultation` is a DEEP LINK, not the booking menu. `step=time-slot` with a
  * product and a pre-selected staff member should land the visitor straight on
@@ -253,20 +255,28 @@ export type Trainer = {
   /** Job title, for the profile page and its Person schema. */
   jobTitles?: readonly string[];
   /**
-   * This trainer's own Setmore link for a free 45-minute training session.
+   * Whether this trainer takes free 45-minute training sessions.
    *
    * The consultation is the front door and stays the primary call to action on
-   * every page including this one. This is the second door: a visitor who has
-   * read a profile and decided can book that trainer directly instead of being
-   * routed through a consultation with the director.
+   * every page including this one. This is the second door, for a visitor who
+   * has read a profile and already decided. JR Romero does not have one —
+   * consultations are his.
+   */
+  offersFreeSession?: boolean;
+  /**
+   * This trainer's OWN Setmore link, landing on their calendar.
    *
-   * Optional on purpose. A trainer without one gets no second button rather
-   * than a button that goes nowhere, so the links can arrive one at a time.
-   * JR Romero will not have one — consultations are his.
+   * Absent for everyone today. The only free-session link that exists is
+   * `SETMORE.freeTrial`, which carries no `staff` parameter and opens the
+   * staff picker, so a visitor chooses their trainer there — including one
+   * they have just finished reading about. `offersFreeSession` alone falls
+   * back to that link and the page says so rather than promising a direct
+   * booking it cannot deliver.
    *
-   * Each URL carries that trainer's own Setmore staff id. Copy it from a real
-   * booking for that person; do not build one by editing somebody else's, or
-   * the session lands on the wrong calendar.
+   * Set this and the copy changes to name the trainer. Each URL carries that
+   * trainer's own Setmore staff id and must be copied from a real booking for
+   * that person — building one by editing somebody else's puts the session on
+   * the wrong calendar.
    */
   freeSession?: string;
   /**
@@ -337,6 +347,7 @@ export const TRAINERS: readonly Trainer[] = [
   },
   {
     slug: "jess-caze",
+    offersFreeSession: true,
     name: "Jess Caze",
     credentials: "CSCS · B.S. Exercise & Sports Science",
     specialties: [
@@ -363,6 +374,7 @@ export const TRAINERS: readonly Trainer[] = [
   },
   {
     slug: "mason-morgan",
+    offersFreeSession: true,
     name: "Mason Morgan",
     credentials: "CSCS · Kinesiology, Oregon State University",
     specialties: [
@@ -389,6 +401,7 @@ export const TRAINERS: readonly Trainer[] = [
   },
   {
     slug: "becca-reeve",
+    offersFreeSession: true,
     name: "Becca Reeve",
     credentials:
       "CPT · Pregnancy and Postpartum Corrective Exercise Specialist · PN1 Nutrition Coach",
@@ -425,6 +438,7 @@ export const TRAINERS: readonly Trainer[] = [
   },
   {
     slug: "josiah-iwamizu",
+    offersFreeSession: true,
     name: "Josiah Iwamizu",
     credentials:
       "CPT · Corrective Exercise Specialist · Certified Nutrition Coach · Brown belt, judo and jujitsu",
@@ -454,6 +468,7 @@ export const TRAINERS: readonly Trainer[] = [
   },
   {
     slug: "conner-mcadams",
+    offersFreeSession: true,
     name: "Conner McAdams",
     credentials: "CPT-ACE",
     specialties: [
@@ -479,6 +494,7 @@ export const TRAINERS: readonly Trainer[] = [
   },
   {
     slug: "emma-ciechanowski",
+    offersFreeSession: true,
     name: "Emma Ciechanowski",
     credentials: "ACSM-CPT · H.B.S. Kinesiology, Oregon State University",
     specialties: [
@@ -505,6 +521,7 @@ export const TRAINERS: readonly Trainer[] = [
   },
   {
     slug: "devin-shelfer",
+    offersFreeSession: true,
     name: "Devin Shelfer",
     credentials: "NASM-CPT",
     specialties: ["Beginners", "Strength", "Returning to Fitness"],
