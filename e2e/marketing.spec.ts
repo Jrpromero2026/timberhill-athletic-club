@@ -309,13 +309,25 @@ test.describe("trainers index", () => {
     page,
   }) => {
     await page.goto("/personal-training/trainers");
-    // §3: profiles are Phase 3. Today only JR Romero has one, and seven dead
-    // links would be worse than seven cards without one.
+    // §3: a card links to a profile only where one exists. Dead links would be
+    // worse than cards without one.
+    //
+    // Asserted against the content, not a literal: this named JR Romero and
+    // demanded exactly one link, so it failed the moment a second trainer got
+    // a profile — which is the change working, not breaking.
+    const withProfiles = TRAINERS.filter((t) => t.profile);
+    expect(withProfiles.length).toBeGreaterThan(0);
+
     const links = page.getByRole("link", { name: "Full profile ›" });
-    await expect(links).toHaveCount(1);
-    await expect(links).toHaveAttribute(
-      "href",
-      "/personal-training/trainers/jr-romero",
+    await expect(links).toHaveCount(withProfiles.length);
+
+    const hrefs = await links.evaluateAll((els) =>
+      els.map((a) => a.getAttribute("href")),
+    );
+    expect([...hrefs].sort()).toEqual(
+      withProfiles
+        .map((t) => `/personal-training/trainers/${t.slug}`)
+        .sort(),
     );
   });
 });

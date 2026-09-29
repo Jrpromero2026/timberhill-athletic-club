@@ -369,6 +369,24 @@ export const TRAINERS: readonly Trainer[] = [
       "I work with women to improve general fitness and wellness and aim to empower them to feel functionally strong and confident in their bodies.",
     acceptingClients: true,
     photo: null,
+    // Split from her credentials line. "CPT" is expanded to its standard
+    // meaning; the issuing body is not recorded anywhere, so none is stated.
+    // The other two are exactly as she wrote them.
+    certifications: [
+      { award: "Certified Personal Trainer", abbr: "CPT" },
+      { award: "Pregnancy and Postpartum Corrective Exercise Specialist" },
+      { award: "Nutrition Coach", abbr: "PN1" },
+    ],
+    // Her own words, from the roster card. This is the whole biography on
+    // file: there is no long-form bio for her the way there is for JR, and
+    // none has been written here. The page stands on her credentials, her
+    // specialties and three clients in her own clients' words.
+    profile: [
+      {
+        heading: "Approach",
+        body: "I work with women to improve general fitness and wellness and aim to empower them to feel functionally strong and confident in their bodies.",
+      },
+    ],
   },
   {
     slug: "josiah-iwamizu",
@@ -926,6 +944,8 @@ export const REVIEWS: readonly Testimonial[] = [
     quote:
       "Jess Caze was great- listened carefully to what I wanted and worked within the parameters I set. She is clearly very knowledgable. She was focused, professional, and very helpful. Highly recommended.",
   },
+  // Trimmed for card width — two sentences out, none rewritten. Her profile
+  // page carries the review in full, where there is room for it.
   {
     reviewer: "Annie Todd",
     trainer: "Becca Reeve",
@@ -998,6 +1018,23 @@ export function publishedReviews(
  * quote below.
  */
 export const PROFILE_REVIEWS: Record<string, readonly Testimonial[]> = {
+  "becca-reeve": [
+    {
+      reviewer: "Annie Todd",
+      quote:
+        "I came to Becca 6 months post partum and unable to hold my baby while standing for more than a few minutes due to back pain, which was devastating to me. I started going to Becca for this reason, which quickly resolved, but I've gotten so much more out of our sessions than I bargained for. She is able to pinpoint small weaknesses and teach you how to strengthen them. Her workouts are unique and might look easy from the outside but are definitely challenging. She is so incredibly smart and finds ways to help you connect to your body and feel comfortable and confident in your body. I started out with 8 classes, and I'm hooked now with no end in sight :) She is THE person to see postpartum, or better yet while pregnant to help prepare your body and gain strength. She's also just an insanely kind and relatable human!",
+    },
+    {
+      reviewer: "Karen Barker",
+      quote:
+        "I've worked with Timberhill Trainer Rebeca Reeve for 8 months. I feel better, look better, and I'm getting stronger every week. Rebecca is great partner on the fitness journey. Rebecca is: Smart. Knowledgeable. Inspirational. Great with the fit, or not so fit. Hears you when you need to be heard. Tough when you need toughness. Fun. I give Rebecca 150 points on a scale of 100.",
+    },
+    {
+      reviewer: "Karen Emery",
+      quote:
+        "I've been training with Becca for 4 1/2 months and her program has increased my range of motion, strength and has added 40 yards to my golf swing.",
+    },
+  ],
   "jr-romero": [
     {
       reviewer: "Jen · client since May 2025",
