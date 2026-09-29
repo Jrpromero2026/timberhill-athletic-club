@@ -998,8 +998,10 @@ export const REVIEWS: readonly Testimonial[] = [
     quote:
       "Jess Caze was great- listened carefully to what I wanted and worked within the parameters I set. She is clearly very knowledgable. She was focused, professional, and very helpful. Highly recommended.",
   },
-  // Trimmed for card width — two sentences out, none rewritten. Her profile
-  // page carries the review in full, where there is room for it.
+  // Trimmed for card width — two sentences out, none rewritten. This is the
+  // cut that renders everywhere, including her profile: at 826 characters the
+  // full review set a 537px row height against a 148-character review beside
+  // it, and the short card was mostly empty space.
   {
     reviewer: "Annie Todd",
     trainer: "Becca Reeve",
@@ -1168,7 +1170,7 @@ export const PROFILE_REVIEWS: Record<string, readonly Testimonial[]> = {
     {
       reviewer: "Annie Todd",
       quote:
-        "I came to Becca 6 months post partum and unable to hold my baby while standing for more than a few minutes due to back pain, which was devastating to me. I started going to Becca for this reason, which quickly resolved, but I've gotten so much more out of our sessions than I bargained for. She is able to pinpoint small weaknesses and teach you how to strengthen them. Her workouts are unique and might look easy from the outside but are definitely challenging. She is so incredibly smart and finds ways to help you connect to your body and feel comfortable and confident in your body. I started out with 8 classes, and I'm hooked now with no end in sight :) She is THE person to see postpartum, or better yet while pregnant to help prepare your body and gain strength. She's also just an insanely kind and relatable human!",
+        "I came to Becca 6 months post partum and unable to hold my baby while standing for more than a few minutes due to back pain, which was devastating to me. I started going to Becca for this reason, which quickly resolved, but I've gotten so much more out of our sessions than I bargained for. She is able to pinpoint small weaknesses and teach you how to strengthen them. She is so incredibly smart and finds ways to help you connect to your body and feel comfortable and confident in your body. She is THE person to see postpartum, or better yet while pregnant to help prepare your body and gain strength.",
     },
     {
       reviewer: "Karen Barker",

@@ -229,15 +229,26 @@ export default async function TrainerProfile({
                 Written by clients under their own names on the club&apos;s
                 booking page. Quoted here word for word.
               </p>
-              <div className="g2">
-                {reviews.map((review) => (
-                  <div className="blueprint review-card" key={review.reviewer}>
-                    <Stars />
-                    <div className="review-box">“{review.quote}”</div>
-                    <div className="review-attrib">
+              {/* Three across in one row, matching the hub. Two columns left
+                  a third review stranded on a row of its own and paired a long
+                  quote with a short one, which reads as a layout fault rather
+                  than as proof. Capped at three for the same reason. */}
+              <div
+                className={`g3 review-row review-row--tight review-row--n${Math.min(
+                  3,
+                  reviews.length,
+                )}`}
+              >
+                {reviews.slice(0, 3).map((review) => (
+                  <figure className="blueprint review-card" key={review.reviewer}>
+                    <Stars className="review-stars" />
+                    <blockquote className="review-box">
+                      “{review.quote}”
+                    </blockquote>
+                    <figcaption className="review-attrib">
                       <strong>{review.reviewer}</strong>
-                    </div>
-                  </div>
+                    </figcaption>
+                  </figure>
                 ))}
               </div>
             </div>

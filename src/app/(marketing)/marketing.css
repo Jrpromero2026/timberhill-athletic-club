@@ -816,6 +816,29 @@ first-party review data. BUILD_BRIEF §8. */
 .tac-site .review-stars {
   margin-bottom: 2px;
 }
+/* The profile variant. Three reviews of unequal length in one row are only
+   even if the cards are tight enough that the difference is a line or two
+   rather than half a card, so the type steps down and the padding closes in.
+   The hub keeps its roomier setting: it carries three reviews on a page that
+   is selling, where a profile carries them as supporting evidence. */
+.tac-site .review-row--tight .review-card {
+  padding: 18px 18px 16px; gap: 10px;
+}
+.tac-site .review-row--tight .review-box {
+  font-size: 13.5px; line-height: 1.55; padding-left: 13px;
+}
+.tac-site .review-row--tight .review-attrib {
+  font-size: 12.5px;
+}
+/* A trainer with fewer than three reviews gets a grid the size of what they
+   have. One card in a three-column grid reads as two reviews that failed to
+   load, rather than as one review. */
+.tac-site .review-row--n1 {
+  grid-template-columns: minmax(0, 420px);
+}
+.tac-site .review-row--n2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 /* Holds review text exactly as the reviewer wrote it. Never fabricated, never
 composited, not even as a placeholder — a review whose text has not been
 pasted yet is not rendered at all (see `publishedReviews`). BUILD_BRIEF §7. */
@@ -1317,6 +1340,11 @@ AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
      tracking and the separator gutters give way. */
   .tac-site .spec-inline {
     letter-spacing: 0.04em;
+  }
+  /* The count-sized grids collapse with everything else below 760px. */
+  .tac-site .review-row--n1,
+.tac-site .review-row--n2 {
+    grid-template-columns: minmax(0, 1fr);
   }
   /* Single column below 760px: the list follows the photograph and precedes
      the name, so it needs less air above it than it does beside a 3:4 image. */
