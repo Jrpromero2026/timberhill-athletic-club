@@ -334,6 +334,15 @@ export const TRAINERS: readonly Trainer[] = [
       "Jess is passionate about helping clients build confidence, stay active, and maintain the physical capabilities needed to enjoy the activities that matter most to them. She focuses on creating sustainable habits and meaningful results that last.",
     acceptingClients: true,
     photo: null,
+    certifications: [
+      { award: "Certified Strength and Conditioning Specialist", abbr: "CSCS" },
+      { award: "B.S. Exercise & Sports Science" },
+    ],
+    // The trainer's own words, from the roster card. No long-form
+    // biography exists for them; none has been written here.
+    profile: [
+      { heading: "Approach", body: "Jess is passionate about helping clients build confidence, stay active, and maintain the physical capabilities needed to enjoy the activities that matter most to them. She focuses on creating sustainable habits and meaningful results that last." },
+    ],
   },
   {
     slug: "mason-morgan",
@@ -351,6 +360,15 @@ export const TRAINERS: readonly Trainer[] = [
       "My goal as a coach is to inspire people to become more active and confident in their abilities, whether that means taking more daily walks, beginning a fitness journey, or striving for athletic excellence. I believe movement has the power to improve quality of life at every stage.",
     acceptingClients: true,
     photo: null,
+    certifications: [
+      { award: "Certified Strength and Conditioning Specialist", abbr: "CSCS" },
+      { award: "Kinesiology", issuer: "Oregon State University" },
+    ],
+    // The trainer's own words, from the roster card. No long-form
+    // biography exists for them; none has been written here.
+    profile: [
+      { heading: "Approach", body: "My goal as a coach is to inspire people to become more active and confident in their abilities, whether that means taking more daily walks, beginning a fitness journey, or striving for athletic excellence. I believe movement has the power to improve quality of life at every stage." },
+    ],
   },
   {
     slug: "becca-reeve",
@@ -405,6 +423,17 @@ export const TRAINERS: readonly Trainer[] = [
       "With nearly two decades immersed in the world of sports and fitness, I bring a deep passion and wealth of experience to every training session. I've coached a wide range of clients — from kids just starting out to adults chasing personal bests — so I know how to adapt and motivate at every level.",
     acceptingClients: true,
     photo: null,
+    certifications: [
+      { award: "Certified Personal Trainer", abbr: "CPT" },
+      { award: "Corrective Exercise Specialist" },
+      { award: "Certified Nutrition Coach" },
+      { award: "Brown belt, judo and jujitsu" },
+    ],
+    // The trainer's own words, from the roster card. No long-form
+    // biography exists for them; none has been written here.
+    profile: [
+      { heading: "Approach", body: "With nearly two decades immersed in the world of sports and fitness, I bring a deep passion and wealth of experience to every training session. I've coached a wide range of clients — from kids just starting out to adults chasing personal bests — so I know how to adapt and motivate at every level." },
+    ],
   },
   {
     slug: "conner-mcadams",
@@ -422,6 +451,14 @@ export const TRAINERS: readonly Trainer[] = [
       "His philosophy is simple: meet people exactly where they are, then guide them — methodically and relentlessly — toward where they want to be. Every client shares a common goal of self-improvement, and Conner excels at building the roadmap that turns that ambition into measurable progress.",
     acceptingClients: true,
     photo: null,
+    certifications: [
+      { award: "Certified Personal Trainer", abbr: "CPT-ACE" },
+    ],
+    // The trainer's own words, from the roster card. No long-form
+    // biography exists for them; none has been written here.
+    profile: [
+      { heading: "Approach", body: "His philosophy is simple: meet people exactly where they are, then guide them — methodically and relentlessly — toward where they want to be. Every client shares a common goal of self-improvement, and Conner excels at building the roadmap that turns that ambition into measurable progress." },
+    ],
   },
   {
     slug: "emma-ciechanowski",
@@ -439,6 +476,15 @@ export const TRAINERS: readonly Trainer[] = [
       "As a personal trainer, my goal is to help clients build sustainable habits, gain confidence, and achieve meaningful results that improve their everyday lives. My coaching philosophy focuses on creating realistic, personalized programs that support long-term success both inside and outside the gym.",
     acceptingClients: true,
     photo: null,
+    certifications: [
+      { award: "Certified Personal Trainer", abbr: "ACSM-CPT" },
+      { award: "H.B.S. Kinesiology", issuer: "Oregon State University" },
+    ],
+    // The trainer's own words, from the roster card. No long-form
+    // biography exists for them; none has been written here.
+    profile: [
+      { heading: "Approach", body: "As a personal trainer, my goal is to help clients build sustainable habits, gain confidence, and achieve meaningful results that improve their everyday lives. My coaching philosophy focuses on creating realistic, personalized programs that support long-term success both inside and outside the gym." },
+    ],
   },
   {
     slug: "devin-shelfer",
@@ -451,6 +497,14 @@ export const TRAINERS: readonly Trainer[] = [
       "The world of physical fitness has always been an interest of mine. What started as an interest has slowly turned into an obsession as I've delved deeper into learning the human body. Beginning the journey is always an excitingly scary process but every step taken is matched with realizations on just how powerful both your mind and body can be.",
     acceptingClients: true,
     photo: null,
+    certifications: [
+      { award: "Certified Personal Trainer", abbr: "NASM-CPT" },
+    ],
+    // The trainer's own words, from the roster card. No long-form
+    // biography exists for them; none has been written here.
+    profile: [
+      { heading: "Approach", body: "The world of physical fitness has always been an interest of mine. What started as an interest has slowly turned into an obsession as I've delved deeper into learning the human body. Beginning the journey is always an excitingly scary process but every step taken is matched with realizations on just how powerful both your mind and body can be." },
+    ],
   },
 ];
 
@@ -1018,6 +1072,98 @@ export function publishedReviews(
  * quote below.
  */
 export const PROFILE_REVIEWS: Record<string, readonly Testimonial[]> = {
+  "jess-caze": [
+    {
+      reviewer: "Jennifer Gervais",
+      quote:
+        "Jess Caze was great- listened carefully to what I wanted and worked within the parameters I set. She is clearly very knowledgable. She was focused, professional, and very helpful. Highly recommended.",
+    },
+  ],
+  "mason-morgan": [
+    {
+      reviewer: "Shannon",
+      quote:
+        "Mason has been the greatest trainer to work with my mom and I. He works with our injuries and customize our workouts accordingly. Mason is excellent at encouraging and making workouts fun even! The best part about working with Mason is his ability to explain the body mechanics and importance of proper form. I highly recommend Mason as the best personal trainer!",
+    },
+    {
+      reviewer: "Jennifer A",
+      quote:
+        "I have seen steady progress over the last 2 months that I have trained with Mason. He provides expert tips on the fine points of form. This is really important for preventing injuries. He is also good at giving variations to increase challenges as I improve. I have a long way to go, but he makes me confident that ongoing change is possible! Thanks, Mason!",
+    },
+    {
+      reviewer: "LA Starcevich",
+      quote:
+        "I loved training with Mason. He gave me lots of new exercises to try and helped me add weight to the exercises and improve my form. I learned a lot in 8 sessions. Mason is a great guy and pleasant to work with. Highly recommend!",
+    },
+  ],
+  "josiah-iwamizu": [
+    {
+      reviewer: "Marlene G Hawk",
+      quote:
+        "Jo Iwamizu's coaching is excellent. I'm 70+yrs old and had been pretty much inactive for going on 6 years when I decided to get back in the gym. Jo paid close attention to my physical fitness goals, my physical limitations, and my personal beliefs that affect my well-being holistically. He developed a workout program for me, arranged for me to have a body analysis done, explained the results, developed a food guide based on those results, and always helps me stay on track with all of it. I can trust that he wants me to succeed. He is knowledgeable in all areas of physical fitness that we have discussed. A top notch professional. I truly am grateful for him",
+    },
+    {
+      reviewer: "Catherine Williams",
+      quote:
+        "I am delighted with my experience training with Josiah. When we started about four months ago, I couldn't use my right arm and right shoulder at all, due to injury. Now a short time later I am pain-free and I am lifting more than I was when I injured myself. Josiah is quite knowledgeable about the human body and has helped me so much.",
+    },
+    {
+      reviewer: "Shawn Collins",
+      quote:
+        "Jo continues to be a great trainer for me. He checks in regularly to make sure old injuries aren't being aggravated, and tunes my workouts to build sustainable strength. I feel lucky to work with him.",
+    },
+  ],
+  "conner-mcadams": [
+    {
+      reviewer: "Barb LeBoss",
+      quote:
+        "I have been working with Connor, and within a short time I see improvement. He works me hard, but it's so conscientious about how much to do, what to do and how to do it, making sure that nothing causes discomfort or pain. He's a great Personal Trainer.",
+    },
+    {
+      reviewer: "Amy Leslie",
+      quote:
+        "Connor set me up with just the routine I needed post surgery. He's a great listener and changes things up to prevent boredom. Just a few sessions gave me the confidence to tackle a real workout on my own.",
+    },
+    {
+      reviewer: "Dick Keis",
+      quote:
+        "I was not looking forward to staring this weight training program. But Connor changed my mind set. He was sensitive to what I was capable of and made me look forward to my next session.",
+    },
+  ],
+  "emma-ciechanowski": [
+    {
+      reviewer: "Dallas Caples",
+      quote:
+        "I had my first session with Emma recently, and I have appreciated how we are working to build back and increase my strength sustainably after taking time off due to surgery. I feel challenged but not overwhelmed, and I look forward to continuing our work together.",
+    },
+    {
+      reviewer: "Ann Brodie",
+      quote:
+        "Emma was very helpful in suggesting some changes in my technique on some machines and also suggesting others to do. She warned me about using some of the machines because of my having ostoporesis. She was very professional and pleasant to work with.",
+    },
+    {
+      reviewer: "Vicki Joines",
+      quote:
+        "One of the best things I've done for myself. Signed up to work with a personal trainer at Timberhill. I'm getting so much stronger and feel amazing. Emma is so easy to work with and so encouraging. Love it!",
+    },
+  ],
+  "devin-shelfer": [
+    {
+      reviewer: "Erica McKenzie",
+      quote:
+        "Devin has been wonderful to work with. Super knowledgeable, great at demonstrating moves and checking for correct form, and adjusting readily for any physical challenges. I am really happy i signed up and enjoy working with him!",
+    },
+    {
+      reviewer: "Meredith Payne",
+      quote:
+        "Devin was remarkable. He made me feel comfortable and confident that I can do strength training successfully. He really took the time to understand my needs and give me a doable regime.",
+    },
+    {
+      reviewer: "Erica",
+      quote:
+        "Devin is simply a great trainer. I've worked with him most of the year and I am stronger than ever, and every session has been fun and rewarding. Highly recommend!",
+    },
+  ],
   "becca-reeve": [
     {
       reviewer: "Annie Todd",

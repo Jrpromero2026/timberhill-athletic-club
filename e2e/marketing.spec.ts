@@ -379,9 +379,17 @@ test.describe("trainer profile", () => {
     await expect(page.locator(".blocks")).not.toContainText("(CSCS) ·");
   });
 
-  test("a trainer without a published profile 404s", async ({ page }) => {
+  test("a slug with no published profile 404s", async ({ page }) => {
+    // Named jess-caze until she got a profile, at which point the test failed
+    // for the best possible reason. Take whoever currently has no profile; if
+    // everyone on the roster has one, a slug that is not a trainer at all has
+    // to 404 rather than render an empty page. Amanda Knight is on staff and
+    // deliberately not on the roster, so it is a URL somebody really might try.
+    const withoutProfile = TRAINERS.find((t) => !t.profile);
+    const slug = withoutProfile ? withoutProfile.slug : "amanda-knight";
+
     const response = await page.goto(
-      "/personal-training/trainers/jess-caze",
+      `/personal-training/trainers/${slug}`,
       { waitUntil: "domcontentloaded" },
     );
     expect(response?.status()).toBe(404);
