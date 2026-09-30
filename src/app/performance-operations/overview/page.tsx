@@ -126,26 +126,34 @@ export default async function OverviewPage() {
               No departments visible in this workspace.
             </p>
           ) : (
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
-                  <th className="px-4 py-2 font-medium">Department</th>
-                  <th className="px-4 py-2 font-medium">Organization</th>
-                  <th className="px-4 py-2 font-medium">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.departments.map((dept) => (
-                  <tr key={dept.id} className="border-b border-border last:border-0">
-                    <td className="px-4 py-2.5 font-medium text-ink">{dept.name}</td>
-                    <td className="px-4 py-2.5 text-ink-secondary">{dept.organizationName}</td>
-                    <td className="px-4 py-2.5">
-                      <StatusBadge status={dept.status} />
-                    </td>
+            /*
+             * The card scrolls, not the page. Without this the table's minimum
+             * content width pushed the whole document sideways on a narrow phone.
+             * No `min-w`: the table already fits at common widths, and forcing one
+             * would add a scrollbar where none is needed.
+             */
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
+                    <th className="px-4 py-2 font-medium">Department</th>
+                    <th className="px-4 py-2 font-medium">Organization</th>
+                    <th className="px-4 py-2 font-medium">Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {data.departments.map((dept) => (
+                    <tr key={dept.id} className="border-b border-border last:border-0">
+                      <td className="px-4 py-2.5 font-medium text-ink">{dept.name}</td>
+                      <td className="px-4 py-2.5 text-ink-secondary">{dept.organizationName}</td>
+                      <td className="px-4 py-2.5">
+                        <StatusBadge status={dept.status} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </section>
       </div>
@@ -399,43 +407,51 @@ function DepartmentSnapshot({
   }
   return (
     <Widget>
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
-            <th className="py-1.5 pr-2 font-medium">Department</th>
-            <th className="py-1.5 pr-2 text-right font-medium">Sessions</th>
-            <th className="py-1.5 pr-2 text-right font-medium">Coaching time</th>
-            <th className="py-1.5 text-right font-medium">Revenue</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sessions.rows.map((row) => (
-            <tr key={row.key} className="border-b border-border last:border-0">
-              <td className="py-2 pr-2">
-                <Link
-                  href={`/performance-operations/departments/${row.key}`}
-                  className="font-medium text-ink hover:text-accent"
-                >
-                  {row.label}
-                </Link>
-              </td>
-              <td className="py-2 pr-2 text-right font-mono text-xs">{row.value ?? "—"}</td>
-              <td className="py-2 pr-2 text-right font-mono text-xs">
-                {formatMetricValue(
-                  minutes.rows.find((r) => r.key === row.key)?.value ?? null,
-                  "minutes",
-                )}
-              </td>
-              <td className="py-2 text-right font-mono text-xs">
-                {formatMetricValue(
-                  revenue.rows.find((r) => r.key === row.key)?.value ?? null,
-                  "cents",
-                )}
-              </td>
+      {/*
+          The card scrolls, not the page. Without this the table's minimum
+          content width pushed the whole document sideways on a narrow phone.
+          No `min-w`: the table already fits at common widths, and forcing one
+          would add a scrollbar where none is needed.
+      */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
+              <th className="py-1.5 pr-2 font-medium">Department</th>
+              <th className="py-1.5 pr-2 text-right font-medium">Sessions</th>
+              <th className="py-1.5 pr-2 text-right font-medium">Coaching time</th>
+              <th className="py-1.5 text-right font-medium">Revenue</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sessions.rows.map((row) => (
+              <tr key={row.key} className="border-b border-border last:border-0">
+                <td className="py-2 pr-2">
+                  <Link
+                    href={`/performance-operations/departments/${row.key}`}
+                    className="font-medium text-ink hover:text-accent"
+                  >
+                    {row.label}
+                  </Link>
+                </td>
+                <td className="py-2 pr-2 text-right font-mono text-xs">{row.value ?? "—"}</td>
+                <td className="py-2 pr-2 text-right font-mono text-xs">
+                  {formatMetricValue(
+                    minutes.rows.find((r) => r.key === row.key)?.value ?? null,
+                    "minutes",
+                  )}
+                </td>
+                <td className="py-2 text-right font-mono text-xs">
+                  {formatMetricValue(
+                    revenue.rows.find((r) => r.key === row.key)?.value ?? null,
+                    "cents",
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </Widget>
   );
 }
@@ -459,29 +475,37 @@ function TrainerSnapshot({
   }
   return (
     <Widget>
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
-            <th className="py-1.5 pr-2 font-medium">Trainer</th>
-            <th className="py-1.5 pr-2 text-right font-medium">Sessions</th>
-            <th className="py-1.5 text-right font-medium">Revenue</th>
-          </tr>
-        </thead>
-        <tbody>
-          {top.map((row) => (
-            <tr key={row.key} className="border-b border-border last:border-0">
-              <td className="py-2 pr-2 font-medium text-ink">{row.label}</td>
-              <td className="py-2 pr-2 text-right font-mono text-xs">{row.value ?? "—"}</td>
-              <td className="py-2 text-right font-mono text-xs">
-                {formatMetricValue(
-                  revenue.rows.find((r) => r.key === row.key)?.value ?? null,
-                  "cents",
-                )}
-              </td>
+      {/*
+          The card scrolls, not the page. Without this the table's minimum
+          content width pushed the whole document sideways on a narrow phone.
+          No `min-w`: the table already fits at common widths, and forcing one
+          would add a scrollbar where none is needed.
+      */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
+              <th className="py-1.5 pr-2 font-medium">Trainer</th>
+              <th className="py-1.5 pr-2 text-right font-medium">Sessions</th>
+              <th className="py-1.5 text-right font-medium">Revenue</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {top.map((row) => (
+              <tr key={row.key} className="border-b border-border last:border-0">
+                <td className="py-2 pr-2 font-medium text-ink">{row.label}</td>
+                <td className="py-2 pr-2 text-right font-mono text-xs">{row.value ?? "—"}</td>
+                <td className="py-2 text-right font-mono text-xs">
+                  {formatMetricValue(
+                    revenue.rows.find((r) => r.key === row.key)?.value ?? null,
+                    "cents",
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </Widget>
   );
 }

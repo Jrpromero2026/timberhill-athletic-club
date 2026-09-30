@@ -18,6 +18,52 @@ const ROUTES: Array<{ path: string; heading: string }> = [
   { path: "/performance-operations/audit", heading: "Audit" },
 ];
 
+/**
+ * The page never scrolls sideways.
+ *
+ * A wide element in the shell or in a widget pushes the whole document, and
+ * the symptom a person reports is not "the table is wide" — it is that the
+ * page drifts under their thumb and controls sit off the edge. Two separate
+ * causes were found this way: a header whose flex items would not shrink, and
+ * a data table with no scroller of its own.
+ *
+ * 320px is below any current iPhone, but it is where a too-wide element shows
+ * up first, so it is the width worth asserting.
+ */
+for (const width of [320, 360]) {
+  for (const path of ["/performance-operations/overview", "/performance-operations/payroll"]) {
+    test(`${path} does not scroll sideways at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(path);
+
+      const offenders = await page.evaluate(() => {
+        const root = document.documentElement;
+        const overflow = root.scrollWidth - root.clientWidth;
+        if (overflow <= 0) return { overflow, culprits: [] as string[] };
+        // Name what stuck out, so a failure says which element to look at
+        // rather than only that the number is wrong. Anything inside its own
+        // horizontal scroller is clipped by it and is not the cause.
+        const culprits: string[] = [];
+        for (const el of document.querySelectorAll("body *")) {
+          const box = el.getBoundingClientRect();
+          if (box.width === 0 || box.right <= root.clientWidth + 0.5) continue;
+          let scrolled = false;
+          for (let p = el.parentElement; p; p = p.parentElement) {
+            if (getComputedStyle(p).overflowX !== "visible") { scrolled = true; break; }
+          }
+          if (!scrolled) culprits.push(`${el.tagName}.${String(el.className).slice(0, 40)}`);
+        }
+        return { overflow, culprits };
+      });
+
+      expect(
+        offenders.overflow,
+        `page scrolls ${offenders.overflow}px sideways; past the edge: ${offenders.culprits.slice(0, 3).join(", ") || "(all inside a scroller)"}`,
+      ).toBe(0);
+    });
+  }
+}
+
 test("root redirects to the public site, not the operations app", async ({
   page,
 }) => {
