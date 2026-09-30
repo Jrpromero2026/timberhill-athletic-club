@@ -99,37 +99,46 @@ export default async function ServiceDetailPage({
               service. One alias maps to one service per source.
             </p>
           </div>
-          <table className="w-full text-sm">
-            <tbody>
-              {aliases.map((alias) => (
-                <tr key={alias.id} className="border-b border-border last:border-0">
-                  <td className="px-4 py-2 font-mono text-xs uppercase text-ink-muted">
-                    {alias.source}
-                  </td>
-                  <td className="px-4 py-2 text-ink">{alias.alias}</td>
-                  <td className="px-4 py-2 text-right">
-                    {canManage && (
-                      <form action={removeServiceAlias} className="inline">
-                        <input type="hidden" name="aliasId" value={alias.id} />
-                        <button type="submit"
-                          className="h-7 rounded-[--radius-control] border border-border px-2 text-xs text-negative hover:bg-negative-soft">
-                          Remove
-                        </button>
-                      </form>
-                    )}
-                  </td>
-                </tr>
-              ))}
-              {aliases.length === 0 && (
-                <tr>
-                  <td className="px-4 py-5 text-sm text-warning" colSpan={3}>
-                    No aliases yet — imports cannot match this service until at
-                    least one alias exists.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+          {/*
+              The card scrolls, not the page: a table with no scroller of its own
+              pushes the whole document sideways on a narrow screen. No `min-w` —
+              this table is only reachable with live data, so there is nothing to
+              measure a sensible minimum against, and one would force a scrollbar
+              at widths that do not need it.
+          */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <tbody>
+                {aliases.map((alias) => (
+                  <tr key={alias.id} className="border-b border-border last:border-0">
+                    <td className="px-4 py-2 font-mono text-xs uppercase text-ink-muted">
+                      {alias.source}
+                    </td>
+                    <td className="px-4 py-2 text-ink">{alias.alias}</td>
+                    <td className="px-4 py-2 text-right">
+                      {canManage && (
+                        <form action={removeServiceAlias} className="inline">
+                          <input type="hidden" name="aliasId" value={alias.id} />
+                          <button type="submit"
+                            className="h-7 rounded-[--radius-control] border border-border px-2 text-xs text-negative hover:bg-negative-soft">
+                            Remove
+                          </button>
+                        </form>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+                {aliases.length === 0 && (
+                  <tr>
+                    <td className="px-4 py-5 text-sm text-warning" colSpan={3}>
+                      No aliases yet — imports cannot match this service until at
+                      least one alias exists.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
           {canManage && (
             <div className="border-t border-border px-4 py-3">
               <AddAliasForm serviceId={service.id} />
@@ -141,38 +150,47 @@ export default async function ServiceDetailPage({
           <div className="border-b border-border px-4 py-3">
             <h2 className="text-sm font-semibold text-ink">Department assignments</h2>
           </div>
-          <table className="w-full text-sm">
-            <tbody>
-              {deptAssignments.map((assignment) => (
-                <tr key={assignment.id} className="border-b border-border last:border-0">
-                  <td className="px-4 py-2 font-medium text-ink">
-                    {assignment.departments?.name}
-                  </td>
-                  <td className="px-4 py-2 font-mono text-xs text-ink-muted">
-                    {assignment.effective_from} → {assignment.effective_to ?? "present"}
-                  </td>
-                  <td className="px-4 py-2 text-right">
-                    {assignment.effective_to === null && canManage && (
-                      <form action={endServiceDepartmentAssignment} className="inline">
-                        <input type="hidden" name="assignmentId" value={assignment.id} />
-                        <button type="submit"
-                          className="h-7 rounded-[--radius-control] border border-border px-2 text-xs text-negative hover:bg-negative-soft">
-                          End
-                        </button>
-                      </form>
-                    )}
-                  </td>
-                </tr>
-              ))}
-              {deptAssignments.length === 0 && (
-                <tr>
-                  <td className="px-4 py-5 text-sm text-ink-muted" colSpan={3}>
-                    Not assigned to any department.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+          {/*
+              The card scrolls, not the page: a table with no scroller of its own
+              pushes the whole document sideways on a narrow screen. No `min-w` —
+              this table is only reachable with live data, so there is nothing to
+              measure a sensible minimum against, and one would force a scrollbar
+              at widths that do not need it.
+          */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <tbody>
+                {deptAssignments.map((assignment) => (
+                  <tr key={assignment.id} className="border-b border-border last:border-0">
+                    <td className="px-4 py-2 font-medium text-ink">
+                      {assignment.departments?.name}
+                    </td>
+                    <td className="px-4 py-2 font-mono text-xs text-ink-muted">
+                      {assignment.effective_from} → {assignment.effective_to ?? "present"}
+                    </td>
+                    <td className="px-4 py-2 text-right">
+                      {assignment.effective_to === null && canManage && (
+                        <form action={endServiceDepartmentAssignment} className="inline">
+                          <input type="hidden" name="assignmentId" value={assignment.id} />
+                          <button type="submit"
+                            className="h-7 rounded-[--radius-control] border border-border px-2 text-xs text-negative hover:bg-negative-soft">
+                            End
+                          </button>
+                        </form>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+                {deptAssignments.length === 0 && (
+                  <tr>
+                    <td className="px-4 py-5 text-sm text-ink-muted" colSpan={3}>
+                      Not assigned to any department.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
           {canManage && (
             <div className="border-t border-border px-4 py-3">
               <AddServiceDeptForm

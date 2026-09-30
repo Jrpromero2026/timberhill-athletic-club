@@ -189,36 +189,45 @@ export default async function TrainerDetailPage({
             <div className="border-b border-border px-4 py-3">
               <h2 className="text-sm font-semibold text-ink">Organization assignments</h2>
             </div>
-            <table className="w-full text-sm">
-              <tbody>
-                {orgAssignments.map((assignment) => (
-                  <tr key={assignment.id} className="border-b border-border last:border-0">
-                    <td className="px-4 py-2.5 font-medium text-ink">
-                      {assignment.organizations?.name}
-                    </td>
-                    <td className="px-4 py-2.5 text-ink-secondary">{assignment.title}</td>
-                    <td className="px-4 py-2.5 font-mono text-xs text-ink-muted">
-                      {assignment.effective_from} → {assignment.effective_to ?? "present"}
-                    </td>
-                    <td className="px-4 py-2.5 text-right">
-                      {assignment.effective_to === null &&
-                        manageableOrgIds.includes(assignment.organization_id) && (
-                          <form action={endTrainerOrganizationAssignment} className="inline">
-                            <input type="hidden" name="assignmentId" value={assignment.id} />
-                            <button type="submit"
-                              className="h-8 rounded-[--radius-control] border border-border px-2.5 text-xs font-medium text-negative hover:bg-negative-soft">
-                              End
-                            </button>
-                          </form>
-                        )}
-                    </td>
-                  </tr>
-                ))}
-                {orgAssignments.length === 0 && (
-                  <tr><td className="px-4 py-6 text-sm text-ink-muted">No assignments.</td></tr>
-                )}
-              </tbody>
-            </table>
+            {/*
+                The card scrolls, not the page: a table with no scroller of its own
+                pushes the whole document sideways on a narrow screen. No `min-w` —
+                this table is only reachable with live data, so there is nothing to
+                measure a sensible minimum against, and one would force a scrollbar
+                at widths that do not need it.
+            */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <tbody>
+                  {orgAssignments.map((assignment) => (
+                    <tr key={assignment.id} className="border-b border-border last:border-0">
+                      <td className="px-4 py-2.5 font-medium text-ink">
+                        {assignment.organizations?.name}
+                      </td>
+                      <td className="px-4 py-2.5 text-ink-secondary">{assignment.title}</td>
+                      <td className="px-4 py-2.5 font-mono text-xs text-ink-muted">
+                        {assignment.effective_from} → {assignment.effective_to ?? "present"}
+                      </td>
+                      <td className="px-4 py-2.5 text-right">
+                        {assignment.effective_to === null &&
+                          manageableOrgIds.includes(assignment.organization_id) && (
+                            <form action={endTrainerOrganizationAssignment} className="inline">
+                              <input type="hidden" name="assignmentId" value={assignment.id} />
+                              <button type="submit"
+                                className="h-8 rounded-[--radius-control] border border-border px-2.5 text-xs font-medium text-negative hover:bg-negative-soft">
+                                End
+                              </button>
+                            </form>
+                          )}
+                      </td>
+                    </tr>
+                  ))}
+                  {orgAssignments.length === 0 && (
+                    <tr><td className="px-4 py-6 text-sm text-ink-muted">No assignments.</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
             {canManage && unassignedOrgs.length > 0 && (
               <div className="border-t border-border px-4 py-3">
                 <AddOrgAssignmentForm trainerId={trainer.id} organizations={unassignedOrgs} />
@@ -230,35 +239,44 @@ export default async function TrainerDetailPage({
             <div className="border-b border-border px-4 py-3">
               <h2 className="text-sm font-semibold text-ink">Department assignments</h2>
             </div>
-            <table className="w-full text-sm">
-              <tbody>
-                {deptAssignments.map((assignment) => (
-                  <tr key={assignment.id} className="border-b border-border last:border-0">
-                    <td className="px-4 py-2.5 font-medium text-ink">
-                      {assignment.departments?.name}
-                    </td>
-                    <td className="px-4 py-2.5 font-mono text-xs text-ink-muted">
-                      {assignment.effective_from} → {assignment.effective_to ?? "present"}
-                    </td>
-                    <td className="px-4 py-2.5 text-right">
-                      {assignment.effective_to === null &&
-                        manageableOrgIds.includes(assignment.organization_id) && (
-                          <form action={endTrainerDepartmentAssignment} className="inline">
-                            <input type="hidden" name="assignmentId" value={assignment.id} />
-                            <button type="submit"
-                              className="h-8 rounded-[--radius-control] border border-border px-2.5 text-xs font-medium text-negative hover:bg-negative-soft">
-                              End
-                            </button>
-                          </form>
-                        )}
-                    </td>
-                  </tr>
-                ))}
-                {deptAssignments.length === 0 && (
-                  <tr><td className="px-4 py-6 text-sm text-ink-muted">No department assignments.</td></tr>
-                )}
-              </tbody>
-            </table>
+            {/*
+                The card scrolls, not the page: a table with no scroller of its own
+                pushes the whole document sideways on a narrow screen. No `min-w` —
+                this table is only reachable with live data, so there is nothing to
+                measure a sensible minimum against, and one would force a scrollbar
+                at widths that do not need it.
+            */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <tbody>
+                  {deptAssignments.map((assignment) => (
+                    <tr key={assignment.id} className="border-b border-border last:border-0">
+                      <td className="px-4 py-2.5 font-medium text-ink">
+                        {assignment.departments?.name}
+                      </td>
+                      <td className="px-4 py-2.5 font-mono text-xs text-ink-muted">
+                        {assignment.effective_from} → {assignment.effective_to ?? "present"}
+                      </td>
+                      <td className="px-4 py-2.5 text-right">
+                        {assignment.effective_to === null &&
+                          manageableOrgIds.includes(assignment.organization_id) && (
+                            <form action={endTrainerDepartmentAssignment} className="inline">
+                              <input type="hidden" name="assignmentId" value={assignment.id} />
+                              <button type="submit"
+                                className="h-8 rounded-[--radius-control] border border-border px-2.5 text-xs font-medium text-negative hover:bg-negative-soft">
+                                End
+                              </button>
+                            </form>
+                          )}
+                      </td>
+                    </tr>
+                  ))}
+                  {deptAssignments.length === 0 && (
+                    <tr><td className="px-4 py-6 text-sm text-ink-muted">No department assignments.</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
             {canManage && (
               <div className="border-t border-border px-4 py-3">
                 <AddDeptAssignmentForm

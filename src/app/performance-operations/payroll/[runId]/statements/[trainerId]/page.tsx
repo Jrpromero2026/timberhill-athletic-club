@@ -100,46 +100,55 @@ export default async function TrainerStatementPage({
         </p>
       </header>
 
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
-            <th className="py-1.5 pr-2 font-medium">Date</th>
-            <th className="py-1.5 pr-2 font-medium">Type</th>
-            <th className="py-1.5 pr-2 font-medium">Service</th>
-            <th className="py-1.5 pr-2 font-medium">Status</th>
-            <th className="py-1.5 pr-2 text-right font-medium">Basis</th>
-            <th className="py-1.5 pr-2 text-right font-medium">Rate</th>
-            <th className="py-1.5 text-right font-medium">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {statement.lines.map((line) => (
-            <tr key={line.id} className="border-b border-border last:border-0">
-              <td className="py-1.5 pr-2 font-mono text-xs">{line.appointmentDate ?? "—"}</td>
-              <td className="py-1.5 pr-2 text-xs">{line.lineType.replaceAll("_", " ")}</td>
-              <td className="py-1.5 pr-2 text-xs">{line.serviceName ?? "—"}</td>
-              <td className="py-1.5 pr-2 text-xs">
-                {line.calculationStatus === "calculated"
-                  ? (line.canonicalStatus ?? "—")
-                  : `${line.calculationStatus}${line.exclusionReason ? `: ${line.exclusionReason}` : ""}`}
-              </td>
-              <td className="py-1.5 pr-2 text-right font-mono text-xs">
-                {line.basisAmountCents === null ? "—" : formatCents(line.basisAmountCents)}
-              </td>
-              <td className="py-1.5 pr-2 text-right font-mono text-xs">
-                {line.rateAmountCents !== null
-                  ? formatCents(line.rateAmountCents)
-                  : line.rateBasisPoints !== null
-                    ? `${(line.rateBasisPoints / 100).toFixed(2)}%`
-                    : "—"}
-              </td>
-              <td className="py-1.5 text-right font-mono text-xs font-semibold">
-                {formatCents(line.roundedAmountCents)}
-              </td>
+      {/*
+          The card scrolls, not the page: a table with no scroller of its own
+          pushes the whole document sideways on a narrow screen. No `min-w` —
+          this table is only reachable with live data, so there is nothing to
+          measure a sensible minimum against, and one would force a scrollbar
+          at widths that do not need it.
+      */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
+              <th className="py-1.5 pr-2 font-medium">Date</th>
+              <th className="py-1.5 pr-2 font-medium">Type</th>
+              <th className="py-1.5 pr-2 font-medium">Service</th>
+              <th className="py-1.5 pr-2 font-medium">Status</th>
+              <th className="py-1.5 pr-2 text-right font-medium">Basis</th>
+              <th className="py-1.5 pr-2 text-right font-medium">Rate</th>
+              <th className="py-1.5 text-right font-medium">Amount</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {statement.lines.map((line) => (
+              <tr key={line.id} className="border-b border-border last:border-0">
+                <td className="py-1.5 pr-2 font-mono text-xs">{line.appointmentDate ?? "—"}</td>
+                <td className="py-1.5 pr-2 text-xs">{line.lineType.replaceAll("_", " ")}</td>
+                <td className="py-1.5 pr-2 text-xs">{line.serviceName ?? "—"}</td>
+                <td className="py-1.5 pr-2 text-xs">
+                  {line.calculationStatus === "calculated"
+                    ? (line.canonicalStatus ?? "—")
+                    : `${line.calculationStatus}${line.exclusionReason ? `: ${line.exclusionReason}` : ""}`}
+                </td>
+                <td className="py-1.5 pr-2 text-right font-mono text-xs">
+                  {line.basisAmountCents === null ? "—" : formatCents(line.basisAmountCents)}
+                </td>
+                <td className="py-1.5 pr-2 text-right font-mono text-xs">
+                  {line.rateAmountCents !== null
+                    ? formatCents(line.rateAmountCents)
+                    : line.rateBasisPoints !== null
+                      ? `${(line.rateBasisPoints / 100).toFixed(2)}%`
+                      : "—"}
+                </td>
+                <td className="py-1.5 text-right font-mono text-xs font-semibold">
+                  {formatCents(line.roundedAmountCents)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <section className="ml-auto max-w-sm space-y-1">
         {totalRows.map(([label, cents]) => (

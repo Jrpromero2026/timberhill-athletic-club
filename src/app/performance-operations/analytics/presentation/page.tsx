@@ -114,45 +114,54 @@ export default async function PresentationPage() {
         {scorecard.sections.map((section) => (
           <section key={section.title} className="print:break-inside-avoid">
             <h2 className="text-lg font-semibold text-ink">{section.title}</h2>
-            <table className="mt-2 w-full text-sm">
-              <thead>
-                <tr className="border-b-2 border-border-strong text-left text-xs uppercase text-ink-muted">
-                  <th scope="col" className="py-1.5 pr-3 font-semibold">Metric</th>
-                  <th scope="col" className="py-1.5 pr-3 text-right font-semibold">Current</th>
-                  <th scope="col" className="py-1.5 pr-3 text-right font-semibold">Previous period</th>
-                  <th scope="col" className="py-1.5 text-right font-semibold">Prior year</th>
-                </tr>
-              </thead>
-              <tbody>
-                {section.rows.map((row) => (
-                  <tr key={row.metricId} className="border-b border-border">
-                    <th scope="row" className="py-1.5 pr-3 text-left font-medium text-ink">
-                      {row.label}
-                      {row.current.health !== "healthy" && (
-                        <span className="ml-2 text-[10px] uppercase text-ink-muted">
-                          ({row.current.health.replaceAll("_", " ")})
-                        </span>
-                      )}
-                    </th>
-                    <td className="py-1.5 pr-3 text-right font-mono font-semibold text-ink">
-                      {formatMetricValue(row.current.value, row.unit as MetricUnit)}
-                    </td>
-                    <td className="py-1.5 pr-3 text-right font-mono text-ink-secondary">
-                      {formatMetricValue(
-                        row.previousPeriod?.comparison?.value ?? null,
-                        row.unit as MetricUnit,
-                      )}
-                    </td>
-                    <td className="py-1.5 text-right font-mono text-ink-secondary">
-                      {formatMetricValue(
-                        row.priorYear?.comparison?.value ?? null,
-                        row.unit as MetricUnit,
-                      )}
-                    </td>
+            {/*
+                The card scrolls, not the page: a table with no scroller of its own
+                pushes the whole document sideways on a narrow screen. No `min-w` —
+                this table is only reachable with live data, so there is nothing to
+                measure a sensible minimum against, and one would force a scrollbar
+                at widths that do not need it.
+            */}
+            <div className="overflow-x-auto">
+              <table className="mt-2 w-full text-sm">
+                <thead>
+                  <tr className="border-b-2 border-border-strong text-left text-xs uppercase text-ink-muted">
+                    <th scope="col" className="py-1.5 pr-3 font-semibold">Metric</th>
+                    <th scope="col" className="py-1.5 pr-3 text-right font-semibold">Current</th>
+                    <th scope="col" className="py-1.5 pr-3 text-right font-semibold">Previous period</th>
+                    <th scope="col" className="py-1.5 text-right font-semibold">Prior year</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {section.rows.map((row) => (
+                    <tr key={row.metricId} className="border-b border-border">
+                      <th scope="row" className="py-1.5 pr-3 text-left font-medium text-ink">
+                        {row.label}
+                        {row.current.health !== "healthy" && (
+                          <span className="ml-2 text-[10px] uppercase text-ink-muted">
+                            ({row.current.health.replaceAll("_", " ")})
+                          </span>
+                        )}
+                      </th>
+                      <td className="py-1.5 pr-3 text-right font-mono font-semibold text-ink">
+                        {formatMetricValue(row.current.value, row.unit as MetricUnit)}
+                      </td>
+                      <td className="py-1.5 pr-3 text-right font-mono text-ink-secondary">
+                        {formatMetricValue(
+                          row.previousPeriod?.comparison?.value ?? null,
+                          row.unit as MetricUnit,
+                        )}
+                      </td>
+                      <td className="py-1.5 text-right font-mono text-ink-secondary">
+                        {formatMetricValue(
+                          row.priorYear?.comparison?.value ?? null,
+                          row.unit as MetricUnit,
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </section>
         ))}
 

@@ -30,8 +30,18 @@ const ROUTES: Array<{ path: string; heading: string }> = [
  * 320px is below any current iPhone, but it is where a too-wide element shows
  * up first, so it is the width worth asserting.
  */
+/**
+ * What this does NOT cover: a table only reachable with live data. Every
+ * route here renders its empty state offline, so the guard sees the shell and
+ * the widgets around a table rather than a populated one. The wide tables —
+ * the seven-column payroll statement, the four-column department breakdown —
+ * are reviewed by reading, not by rendering.
+ */
 for (const width of [320, 360]) {
-  for (const path of ["/performance-operations/overview", "/performance-operations/payroll"]) {
+  for (const path of [
+    "/performance-operations/overview",
+    ...ROUTES.map((route) => route.path),
+  ]) {
     test(`${path} does not scroll sideways at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(path);

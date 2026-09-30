@@ -128,31 +128,40 @@ export default async function CompensationPlanPage({
                 {rules.length === 0 ? (
                   <p className="text-sm text-ink-muted">No rules.</p>
                 ) : (
-                  <table className="w-full text-sm">
-                    <tbody>
-                      {rules.map((rule) => (
-                        <tr key={rule.id} className="border-b border-border last:border-0">
-                          <td className="py-1.5 pr-2 text-ink">{humanize(rule.rule_type)}</td>
-                          <td className="py-1.5 pr-2 text-right font-mono text-ink">
-                            {rule.amount_cents !== null
-                              ? formatCents(rule.amount_cents)
-                              : formatBasisPoints(rule.rate_basis_points ?? 0)}
-                          </td>
-                          <td className="py-1.5 text-right">
-                            {editable && (
-                              <form action={deleteRule} className="inline">
-                                <input type="hidden" name="ruleId" value={rule.id} />
-                                <button type="submit"
-                                  className="h-7 rounded-[--radius-control] border border-border px-2 text-xs text-negative hover:bg-negative-soft">
-                                  Remove
-                                </button>
-                              </form>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                  /*
+                   * The card scrolls, not the page: a table with no scroller of its own
+                   * pushes the whole document sideways on a narrow screen. No `min-w` —
+                   * this table is only reachable with live data, so there is nothing to
+                   * measure a sensible minimum against, and one would force a scrollbar
+                   * at widths that do not need it.
+                   */
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <tbody>
+                        {rules.map((rule) => (
+                          <tr key={rule.id} className="border-b border-border last:border-0">
+                            <td className="py-1.5 pr-2 text-ink">{humanize(rule.rule_type)}</td>
+                            <td className="py-1.5 pr-2 text-right font-mono text-ink">
+                              {rule.amount_cents !== null
+                                ? formatCents(rule.amount_cents)
+                                : formatBasisPoints(rule.rate_basis_points ?? 0)}
+                            </td>
+                            <td className="py-1.5 text-right">
+                              {editable && (
+                                <form action={deleteRule} className="inline">
+                                  <input type="hidden" name="ruleId" value={rule.id} />
+                                  <button type="submit"
+                                    className="h-7 rounded-[--radius-control] border border-border px-2 text-xs text-negative hover:bg-negative-soft">
+                                    Remove
+                                  </button>
+                                </form>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 )}
                 {editable && (
                   <div className="mt-3 border-t border-border pt-3">
@@ -172,43 +181,52 @@ export default async function CompensationPlanPage({
                       : "No tiers configured yet."}
                   </p>
                 ) : (
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="text-left text-xs uppercase tracking-wide text-ink-muted">
-                        <th className="py-1 pr-2 font-medium">Seq</th>
-                        <th className="py-1 pr-2 font-medium">Eligible revenue</th>
-                        <th className="py-1 pr-2 text-right font-medium">Rate</th>
-                        <th className="py-1 font-medium sr-only">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tiers.map((tier) => (
-                        <tr key={tier.id} className="border-b border-border last:border-0">
-                          <td className="py-1.5 pr-2 font-mono text-xs text-ink-muted">{tier.sequence}</td>
-                          <td className="py-1.5 pr-2 font-mono text-ink">
-                            {formatCents(tier.min_revenue_cents)} –{" "}
-                            {tier.max_revenue_cents !== null
-                              ? formatCents(tier.max_revenue_cents)
-                              : "∞"}
-                          </td>
-                          <td className="py-1.5 pr-2 text-right font-mono text-ink">
-                            {formatBasisPoints(tier.rate_basis_points)}
-                          </td>
-                          <td className="py-1.5 text-right">
-                            {editable && (
-                              <form action={deleteTier} className="inline">
-                                <input type="hidden" name="tierId" value={tier.id} />
-                                <button type="submit"
-                                  className="h-7 rounded-[--radius-control] border border-border px-2 text-xs text-negative hover:bg-negative-soft">
-                                  Remove
-                                </button>
-                              </form>
-                            )}
-                          </td>
+                  /*
+                   * The card scrolls, not the page: a table with no scroller of its own
+                   * pushes the whole document sideways on a narrow screen. No `min-w` —
+                   * this table is only reachable with live data, so there is nothing to
+                   * measure a sensible minimum against, and one would force a scrollbar
+                   * at widths that do not need it.
+                   */
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="text-left text-xs uppercase tracking-wide text-ink-muted">
+                          <th className="py-1 pr-2 font-medium">Seq</th>
+                          <th className="py-1 pr-2 font-medium">Eligible revenue</th>
+                          <th className="py-1 pr-2 text-right font-medium">Rate</th>
+                          <th className="py-1 font-medium sr-only">Actions</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {tiers.map((tier) => (
+                          <tr key={tier.id} className="border-b border-border last:border-0">
+                            <td className="py-1.5 pr-2 font-mono text-xs text-ink-muted">{tier.sequence}</td>
+                            <td className="py-1.5 pr-2 font-mono text-ink">
+                              {formatCents(tier.min_revenue_cents)} –{" "}
+                              {tier.max_revenue_cents !== null
+                                ? formatCents(tier.max_revenue_cents)
+                                : "∞"}
+                            </td>
+                            <td className="py-1.5 pr-2 text-right font-mono text-ink">
+                              {formatBasisPoints(tier.rate_basis_points)}
+                            </td>
+                            <td className="py-1.5 text-right">
+                              {editable && (
+                                <form action={deleteTier} className="inline">
+                                  <input type="hidden" name="tierId" value={tier.id} />
+                                  <button type="submit"
+                                    className="h-7 rounded-[--radius-control] border border-border px-2 text-xs text-negative hover:bg-negative-soft">
+                                    Remove
+                                  </button>
+                                </form>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 )}
                 {editable && version.tier_behavior !== "not_applicable" && (
                   <div className="mt-3 border-t border-border pt-3">

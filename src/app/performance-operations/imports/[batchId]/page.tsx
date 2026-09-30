@@ -247,29 +247,38 @@ export default async function ImportBatchPage({
           {issueByCode.size === 0 ? (
             <p className="text-sm text-ink-muted">No issues recorded.</p>
           ) : (
-            <table className="w-full text-sm">
-              <tbody>
-                {[...issueByCode.entries()]
-                  .sort((a, b) => b[1].open - a[1].open)
-                  .map(([code, entry]) => (
-                    <tr key={code} className="border-b border-border last:border-0">
-                      <td className="py-1.5 pr-2 font-mono text-xs text-ink">{code}</td>
-                      <td className="py-1.5 pr-2">
-                        <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
-                          entry.severity === "blocking" ? "bg-negative-soft text-negative"
-                            : entry.severity === "warning" ? "bg-warning-soft text-warning"
-                              : "bg-surface-sunken text-ink-secondary"
-                        }`}>
-                          {entry.severity}
-                        </span>
-                      </td>
-                      <td className="py-1.5 text-right font-mono text-xs text-ink-muted">
-                        {entry.open} open / {entry.total}
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
+            /*
+             * The card scrolls, not the page: a table with no scroller of its own
+             * pushes the whole document sideways on a narrow screen. No `min-w` —
+             * this table is only reachable with live data, so there is nothing to
+             * measure a sensible minimum against, and one would force a scrollbar
+             * at widths that do not need it.
+             */
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <tbody>
+                  {[...issueByCode.entries()]
+                    .sort((a, b) => b[1].open - a[1].open)
+                    .map(([code, entry]) => (
+                      <tr key={code} className="border-b border-border last:border-0">
+                        <td className="py-1.5 pr-2 font-mono text-xs text-ink">{code}</td>
+                        <td className="py-1.5 pr-2">
+                          <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                            entry.severity === "blocking" ? "bg-negative-soft text-negative"
+                              : entry.severity === "warning" ? "bg-warning-soft text-warning"
+                                : "bg-surface-sunken text-ink-secondary"
+                          }`}>
+                            {entry.severity}
+                          </span>
+                        </td>
+                        <td className="py-1.5 text-right font-mono text-xs text-ink-muted">
+                          {entry.open} open / {entry.total}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </section>
       </div>

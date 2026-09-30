@@ -171,43 +171,52 @@ export default async function DepartmentOverviewPage({
           {trainerSessions.rows.length === 0 ? (
             <WidgetEmpty reason="No trainer activity in this department for the period." />
           ) : (
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
-                  <th className="py-1.5 pr-2 font-medium">Trainer</th>
-                  <th className="py-1.5 pr-2 text-right font-medium">Sessions</th>
-                  <th className="py-1.5 pr-2 text-right font-medium">Coaching time</th>
-                  <th className="py-1.5 text-right font-medium">Revenue</th>
-                </tr>
-              </thead>
-              <tbody>
-                {trainerSessions.rows.map((row) => (
-                  <tr key={row.key} className="border-b border-border last:border-0">
-                    <td className="py-2 pr-2">
-                      <Link
-                        href={`/performance-operations/trainers/${row.key}`}
-                        className="font-medium text-ink hover:text-accent"
-                      >
-                        {row.label}
-                      </Link>
-                    </td>
-                    <td className="py-2 pr-2 text-right font-mono text-xs">{row.value ?? "—"}</td>
-                    <td className="py-2 pr-2 text-right font-mono text-xs">
-                      {formatMetricValue(
-                        trainerMinutes.rows.find((r) => r.key === row.key)?.value ?? null,
-                        "minutes",
-                      )}
-                    </td>
-                    <td className="py-2 text-right font-mono text-xs">
-                      {formatMetricValue(
-                        trainerRevenue.rows.find((r) => r.key === row.key)?.value ?? null,
-                        "cents",
-                      )}
-                    </td>
+            /*
+             * The card scrolls, not the page: a table with no scroller of its own
+             * pushes the whole document sideways on a narrow screen. No `min-w` —
+             * this table is only reachable with live data, so there is nothing to
+             * measure a sensible minimum against, and one would force a scrollbar
+             * at widths that do not need it.
+             */
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
+                    <th className="py-1.5 pr-2 font-medium">Trainer</th>
+                    <th className="py-1.5 pr-2 text-right font-medium">Sessions</th>
+                    <th className="py-1.5 pr-2 text-right font-medium">Coaching time</th>
+                    <th className="py-1.5 text-right font-medium">Revenue</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {trainerSessions.rows.map((row) => (
+                    <tr key={row.key} className="border-b border-border last:border-0">
+                      <td className="py-2 pr-2">
+                        <Link
+                          href={`/performance-operations/trainers/${row.key}`}
+                          className="font-medium text-ink hover:text-accent"
+                        >
+                          {row.label}
+                        </Link>
+                      </td>
+                      <td className="py-2 pr-2 text-right font-mono text-xs">{row.value ?? "—"}</td>
+                      <td className="py-2 pr-2 text-right font-mono text-xs">
+                        {formatMetricValue(
+                          trainerMinutes.rows.find((r) => r.key === row.key)?.value ?? null,
+                          "minutes",
+                        )}
+                      </td>
+                      <td className="py-2 text-right font-mono text-xs">
+                        {formatMetricValue(
+                          trainerRevenue.rows.find((r) => r.key === row.key)?.value ?? null,
+                          "cents",
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </Widget>
       </section>

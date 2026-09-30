@@ -111,59 +111,68 @@ export default async function TrainerCompensationPage({
         <div className="border-b border-border px-4 py-3">
           <h2 className="text-sm font-semibold text-ink">Assignments</h2>
         </div>
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
-              <th className="px-4 py-2 font-medium">Plan version</th>
-              <th className="px-4 py-2 font-medium">Organization</th>
-              <th className="px-4 py-2 font-medium">Purpose</th>
-              <th className="px-4 py-2 font-medium">Effective</th>
-              <th className="px-4 py-2 font-medium sr-only">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {assignments.map((assignment) => (
-              <tr key={assignment.id} className="border-b border-border last:border-0">
-                <td className="px-4 py-2.5 font-medium text-ink">
-                  {assignment.compensation_plan_versions?.compensation_plans?.name}{" "}
-                  v{assignment.compensation_plan_versions?.version_number}
-                  <p className="text-xs text-ink-muted">
-                    {humanize(assignment.compensation_plan_versions?.compensation_method ?? "")}
-                  </p>
-                </td>
-                <td className="px-4 py-2.5 text-ink-secondary">{assignment.organizations?.name}</td>
-                <td className="px-4 py-2.5 text-ink-secondary">{humanize(assignment.purpose)}</td>
-                <td className="px-4 py-2.5 font-mono text-xs text-ink-muted">
-                  {assignment.effective_from} → {assignment.effective_to ?? "present"}
-                </td>
-                <td className="px-4 py-2.5 text-right">
-                  {assignment.effective_to === null &&
-                    hasPermissionInOrganization(
-                      context.memberships,
-                      assignment.organization_id,
-                      "compensation:manage"
-                    ) && (
-                      <form action={endTrainerCompensationAssignment} className="inline">
-                        <input type="hidden" name="assignmentId" value={assignment.id} />
-                        <button type="submit"
-                          className="h-8 rounded-[--radius-control] border border-border px-2.5 text-xs font-medium text-negative hover:bg-negative-soft">
-                          End
-                        </button>
-                      </form>
-                    )}
-                </td>
+        {/*
+            The card scrolls, not the page: a table with no scroller of its own
+            pushes the whole document sideways on a narrow screen. No `min-w` —
+            this table is only reachable with live data, so there is nothing to
+            measure a sensible minimum against, and one would force a scrollbar
+            at widths that do not need it.
+        */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
+                <th className="px-4 py-2 font-medium">Plan version</th>
+                <th className="px-4 py-2 font-medium">Organization</th>
+                <th className="px-4 py-2 font-medium">Purpose</th>
+                <th className="px-4 py-2 font-medium">Effective</th>
+                <th className="px-4 py-2 font-medium sr-only">Actions</th>
               </tr>
-            ))}
-            {assignments.length === 0 && (
-              <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-sm text-ink-muted">
-                  No compensation assignments yet. Payroll cannot run for this
-                  trainer until one exists.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {assignments.map((assignment) => (
+                <tr key={assignment.id} className="border-b border-border last:border-0">
+                  <td className="px-4 py-2.5 font-medium text-ink">
+                    {assignment.compensation_plan_versions?.compensation_plans?.name}{" "}
+                    v{assignment.compensation_plan_versions?.version_number}
+                    <p className="text-xs text-ink-muted">
+                      {humanize(assignment.compensation_plan_versions?.compensation_method ?? "")}
+                    </p>
+                  </td>
+                  <td className="px-4 py-2.5 text-ink-secondary">{assignment.organizations?.name}</td>
+                  <td className="px-4 py-2.5 text-ink-secondary">{humanize(assignment.purpose)}</td>
+                  <td className="px-4 py-2.5 font-mono text-xs text-ink-muted">
+                    {assignment.effective_from} → {assignment.effective_to ?? "present"}
+                  </td>
+                  <td className="px-4 py-2.5 text-right">
+                    {assignment.effective_to === null &&
+                      hasPermissionInOrganization(
+                        context.memberships,
+                        assignment.organization_id,
+                        "compensation:manage"
+                      ) && (
+                        <form action={endTrainerCompensationAssignment} className="inline">
+                          <input type="hidden" name="assignmentId" value={assignment.id} />
+                          <button type="submit"
+                            className="h-8 rounded-[--radius-control] border border-border px-2.5 text-xs font-medium text-negative hover:bg-negative-soft">
+                            End
+                          </button>
+                        </form>
+                      )}
+                  </td>
+                </tr>
+              ))}
+              {assignments.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="px-4 py-8 text-center text-sm text-ink-muted">
+                    No compensation assignments yet. Payroll cannot run for this
+                    trainer until one exists.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </section>
 
       {canManage && (

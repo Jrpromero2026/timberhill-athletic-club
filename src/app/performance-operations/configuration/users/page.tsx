@@ -165,42 +165,51 @@ export default async function UsersPage() {
               No pending invitations.
             </p>
           ) : (
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
-                  <th className="px-4 py-2 font-medium">Email</th>
-                  <th className="px-4 py-2 font-medium">Organization</th>
-                  <th className="px-4 py-2 font-medium">Role</th>
-                  <th className="px-4 py-2 font-medium">Expires</th>
-                  <th className="px-4 py-2 font-medium sr-only">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {invitations.map((invite) => (
-                  <tr key={invite.id} className="border-b border-border last:border-0">
-                    <td className="px-4 py-2.5 font-medium text-ink">{invite.email}</td>
-                    <td className="px-4 py-2.5 text-ink-secondary">
-                      {invite.organizations?.name}
-                    </td>
-                    <td className="px-4 py-2.5 text-ink-secondary">{invite.roles?.name}</td>
-                    <td className="px-4 py-2.5 font-mono text-xs text-ink-muted">
-                      {invite.expires_at.slice(0, 10)}
-                    </td>
-                    <td className="px-4 py-2.5">
-                      <form action={revokeInvitation}>
-                        <input type="hidden" name="invitationId" value={invite.id} />
-                        <button
-                          type="submit"
-                          className="h-8 rounded-[--radius-control] border border-border px-2.5 text-xs font-medium text-negative hover:bg-negative-soft"
-                        >
-                          Revoke
-                        </button>
-                      </form>
-                    </td>
+            /*
+             * The card scrolls, not the page: a table with no scroller of its own
+             * pushes the whole document sideways on a narrow screen. No `min-w` —
+             * this table is only reachable with live data, so there is nothing to
+             * measure a sensible minimum against, and one would force a scrollbar
+             * at widths that do not need it.
+             */
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
+                    <th className="px-4 py-2 font-medium">Email</th>
+                    <th className="px-4 py-2 font-medium">Organization</th>
+                    <th className="px-4 py-2 font-medium">Role</th>
+                    <th className="px-4 py-2 font-medium">Expires</th>
+                    <th className="px-4 py-2 font-medium sr-only">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {invitations.map((invite) => (
+                    <tr key={invite.id} className="border-b border-border last:border-0">
+                      <td className="px-4 py-2.5 font-medium text-ink">{invite.email}</td>
+                      <td className="px-4 py-2.5 text-ink-secondary">
+                        {invite.organizations?.name}
+                      </td>
+                      <td className="px-4 py-2.5 text-ink-secondary">{invite.roles?.name}</td>
+                      <td className="px-4 py-2.5 font-mono text-xs text-ink-muted">
+                        {invite.expires_at.slice(0, 10)}
+                      </td>
+                      <td className="px-4 py-2.5">
+                        <form action={revokeInvitation}>
+                          <input type="hidden" name="invitationId" value={invite.id} />
+                          <button
+                            type="submit"
+                            className="h-8 rounded-[--radius-control] border border-border px-2.5 text-xs font-medium text-negative hover:bg-negative-soft"
+                          >
+                            Revoke
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </section>
       </div>
@@ -350,22 +359,31 @@ export default async function UsersPage() {
               </span>
             </h2>
           </div>
-          <table className="w-full text-sm">
-            <tbody>
-              {pastMembers.map((member) => (
-                <tr key={member.id} className="border-b border-border last:border-0">
-                  <td className="px-4 py-2 text-ink-secondary">
-                    {member.profiles?.full_name || member.profiles?.email}
-                  </td>
-                  <td className="px-4 py-2 text-ink-muted">{member.organizations?.name}</td>
-                  <td className="px-4 py-2 text-ink-muted">{member.roles?.name}</td>
-                  <td className="px-4 py-2 font-mono text-xs text-ink-muted">
-                    {member.effective_from} → {member.effective_to}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {/*
+              The card scrolls, not the page: a table with no scroller of its own
+              pushes the whole document sideways on a narrow screen. No `min-w` —
+              this table is only reachable with live data, so there is nothing to
+              measure a sensible minimum against, and one would force a scrollbar
+              at widths that do not need it.
+          */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <tbody>
+                {pastMembers.map((member) => (
+                  <tr key={member.id} className="border-b border-border last:border-0">
+                    <td className="px-4 py-2 text-ink-secondary">
+                      {member.profiles?.full_name || member.profiles?.email}
+                    </td>
+                    <td className="px-4 py-2 text-ink-muted">{member.organizations?.name}</td>
+                    <td className="px-4 py-2 text-ink-muted">{member.roles?.name}</td>
+                    <td className="px-4 py-2 font-mono text-xs text-ink-muted">
+                      {member.effective_from} → {member.effective_to}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
       )}
     </div>
