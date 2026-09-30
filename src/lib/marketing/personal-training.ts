@@ -441,7 +441,7 @@ export const TRAINERS: readonly Trainer[] = [
     offersFreeSession: true,
     name: "Josiah Iwamizu",
     credentials:
-      "CPT · Corrective Exercise Specialist · Certified Nutrition Coach · Brown belt, judo and jujitsu",
+      "CPT · Specialist in Strength and Conditioning · Corrective Exercise Specialist · Certified Nutrition Coach · Brown belts in judo and jiu-jitsu",
     specialties: [
       "Martial Arts and Combat Sports",
       "Athletic Performance",
@@ -456,14 +456,36 @@ export const TRAINERS: readonly Trainer[] = [
     photo: null,
     certifications: [
       { award: "Certified Personal Trainer", abbr: "CPT" },
+      // From the certificate itself, issued 2026-09-12 and valid to
+      // 2026-09-12 + 2 years. The issuing body is read off the artwork, not
+      // off the filename. No post-nominal is recorded: the certificate states
+      // none, and inventing one would put letters after his name that no
+      // issuer awarded. The certificate number is deliberately absent — it
+      // identifies him personally and belongs nowhere on a public page.
+      {
+        award: "Specialist in Strength and Conditioning",
+        issuer: "International Sports Sciences Association",
+      },
       { award: "Corrective Exercise Specialist" },
       { award: "Certified Nutrition Coach" },
-      { award: "Brown belt, judo and jujitsu" },
+      { award: "Brown belts in judo and jiu-jitsu" },
     ],
-    // The trainer's own words, from the roster card. No long-form
-    // biography exists for them; none has been written here.
+    // His full biography, in his own words, supplied by the PT Director.
+    // One paragraph per block: a block renders as a single <p>, so two
+    // paragraphs in one body would run together.
     profile: [
-      { heading: "Approach", body: "With nearly two decades immersed in the world of sports and fitness, I bring a deep passion and wealth of experience to every training session. I've coached a wide range of clients — from kids just starting out to adults chasing personal bests — so I know how to adapt and motivate at every level." },
+      {
+        heading: "Background",
+        body: "With nearly two decades immersed in the world of sports and fitness, I bring a deep passion and wealth of experience to every training session. My journey began on the basketball court and soccer field, but it was martial arts — specifically judo and jiu-jitsu — that truly shaped my path. Over the past 15 years, I've dedicated myself to mastering these disciplines, with 10 years spent competing professionally on national and international stages.",
+      },
+      {
+        heading: "Approach",
+        body: "While I never had the chance to play collegiate or professional team sports, martial arts opened the door for me to become a professional athlete — and now, I use that experience to help others push past their limits.",
+      },
+      {
+        heading: "Who he works with",
+        body: "Whether your goal is body recomposition, improving athletic performance, or dialing in your strength and conditioning, I've got you covered. I've coached a wide range of clients — from kids just starting out to adults chasing personal bests — so I know how to adapt and motivate at every level. Let's train and unlock your full potential!",
+      },
     ],
   },
   {
