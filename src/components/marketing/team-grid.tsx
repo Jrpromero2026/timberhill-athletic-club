@@ -25,7 +25,7 @@ export function TeamGrid({ trainers }: { trainers: readonly Trainer[] }) {
   const [open, setOpen] = useState<string | null>(null);
 
   return (
-    <div className="g3">
+    <div className="g3 team-grid">
       {trainers.map((trainer) => {
         const isOpen = open === trainer.slug;
         const panelId = `phil-${trainer.slug}`;

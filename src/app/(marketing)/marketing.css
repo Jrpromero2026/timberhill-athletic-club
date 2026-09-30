@@ -276,8 +276,16 @@ separators away from the terms they divide. */
 .tac-site .spec-inline li {
   display: inline;
 }
+/* `inline-block` is load-bearing, not decoration. The separator is generated
+inside the <li>, and React renders the items adjacent with no whitespace
+between them, so "·Healthy" was a single unbreakable run and the list could
+only wrap inside a multi-word term. At full width that never showed; in a
+narrow column it overflowed the card and pushed the page 1px wider than the
+viewport. An inline-block creates a break opportunity on either side of
+itself, so a line can end after the separator. */
 .tac-site .spec-inline li + li::before {
   content: "·"; opacity: 0.45; margin: 0 7px; font-weight: 400;
+  display: inline-block;
 }
 /* The profile sets these under an H1, where the line can carry a little more. */
 .tac-site .spec-inline--lg {
@@ -747,6 +755,40 @@ Phase 3 profile. BUILD_BRIEF §6. */
   justify-content: space-between; min-height: 44px; padding: 0;
   font-size: 12px; letter-spacing: 0.08em; font-weight: 600; width: 100%;
 }
+/* The hub roster, condensed.
+
+Section 06 ran 8,023px on a phone — 36% of the page, about ten screens — and
+2,893px on a desktop, in both cases the largest block on the page. Nine cards
+stacked one per row on mobile at 869px each, of which 496px was the
+photograph: a visitor scrolled roughly 4,500px of portrait panels before
+reaching the results, the service menu or the price.
+
+The card keeps every part of its content. What changes is the shape: a square
+photograph rather than a 3:4 portrait, and on a phone the card turns on its
+side so the picture is a thumbnail beside the text rather than a full-width
+panel above it.
+
+A second column on mobile was the obvious alternative and is worse: it leaves
+about 177px per card, and the works-best-with sentence alone would run ten
+lines, so the height comes straight back.
+
+Scoped to `.team-grid`, which only the hub uses. The full roster at
+/personal-training/trainers has its own card in roster.tsx and is untouched —
+browsing the whole team is that page's job, and there the tall portrait is
+what you want. */
+.tac-site .team-grid .slot--portrait {
+  aspect-ratio: 1 / 1;
+}
+.tac-site .team-grid .trainer-body {
+  padding: 14px 16px 16px; gap: 8px;
+}
+.tac-site .team-grid .t-name {
+  font-size: 19px;
+}
+.tac-site .team-grid .t-best {
+  font-size: 13.5px;
+}
+
 /* ═══ 2 · 07 why Timberhill ═════════════════════════════════════════════ */
 .tac-site .diffs {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1342,6 +1384,33 @@ AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
   .tac-site .pillars,
 .tac-site .diffs {
     gap: 1px;
+  }
+
+  /* Photograph left, everything else right. It stops being the tallest thing
+     on the card and becomes a column beside the text.
+
+     The photograph fills the full height of its column rather than sitting
+     square at the top: a fixed square left roughly 280px of dead white down
+     the left of every card, which reads as a failed image rather than as a
+     layout. `aspect-ratio` is cleared so the grid row, not the ratio, sets
+     the height, and a real headshot dropped in here crops from its centre. */
+  .tac-site .team-grid .trainer-card {
+    display: grid;
+    grid-template-columns: 34% minmax(0, 1fr);
+    column-gap: 14px;
+    align-items: stretch;
+  }
+  .tac-site .team-grid .slot--portrait {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+  .tac-site .team-grid .trainer-body {
+    padding: 12px 14px 14px 0;
+    /* A grid item defaults to min-width: auto and will overflow its track
+       rather than shrink. `minmax(0, 1fr)` constrains the track, not the item
+       in it, so without this the specialty list runs past the card edge —
+       "HEALTHY AGING" was cut mid-word on the narrowest card. */
+    min-width: 0;
   }
   /* Uppercase at 0.06em costs real width at 390px, where a five-specialty
      line would otherwise run to four. The terms stay uppercase; only the
