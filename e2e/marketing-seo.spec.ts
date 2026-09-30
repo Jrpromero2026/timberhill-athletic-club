@@ -252,6 +252,56 @@ test.describe("answer-engine surface", () => {
     for (const trainer of TRAINERS) expect(names).toContain(trainer.name);
   });
 
+  test("every profile declares the credentials it displays", async ({
+    page,
+  }) => {
+    // This guards a regression that shipped silently: `hasCredential` was read
+    // from a profile block headed "Credentials", and no trainer has had one
+    // since credentials moved to the typed field. The property vanished from
+    // every Person on the site and nothing failed, because nothing looked.
+    //
+    // Asserted for each trainer who has credentials rather than for a named
+    // one, so a trainer added without them is not silently exempted.
+    const withCredentials = TRAINERS.filter(
+      (trainer) => trainer.profile && trainer.certifications?.length,
+    );
+    expect(withCredentials.length).toBeGreaterThan(0);
+
+    for (const trainer of withCredentials) {
+      await page.goto(`/personal-training/trainers/${trainer.slug}`);
+      const person = (
+        await page
+          .locator('script[type="application/ld+json"]')
+          .allInnerTexts()
+      )
+        .map((block) => JSON.parse(block))
+        .find((data) => data["@type"] === "Person");
+
+      expect(person, `${trainer.slug} emits a Person`).toBeDefined();
+      expect(
+        person.hasCredential,
+        `${trainer.slug} declares its credentials`,
+      ).toHaveLength(trainer.certifications!.length);
+
+      const declared = person.hasCredential.map(
+        (credential: { name: string }) => credential.name,
+      );
+      for (const credential of trainer.certifications!) {
+        expect(declared).toContain(credential.award);
+      }
+
+      // An issuer shown on the page is the body that recognises the
+      // credential, not part of its name.
+      for (const credential of trainer.certifications!) {
+        if (!credential.issuer) continue;
+        const match = person.hasCredential.find(
+          (entity: { name: string }) => entity.name === credential.award,
+        );
+        expect(match.recognizedBy?.name).toBe(credential.issuer);
+      }
+    }
+  });
+
   test("the club declares its roster, service offers and a share image", async ({
     page,
   }) => {

@@ -244,15 +244,39 @@ export function faqPage(items: readonly FaqItem[]) {
   };
 }
 
+/**
+ * Credentials as schema.org entities, read from the structured field.
+ *
+ * This used to look for a profile block headed "Credentials" and split its
+ * body on " \u00b7 ". No trainer has had such a block since credentials moved
+ * to `certifications`, so the find returned undefined and `hasCredential` was
+ * silently dropped from every Person on the site — nine trainers, roughly
+ * twenty-five credentials, none of them declared.
+ *
+ * Reading the typed field instead means the two cannot drift again: a
+ * credential shown under the photograph is the same object emitted here.
+ *
+ * `abbreviation` is not a schema.org property, so a post-nominal goes in
+ * `alternateName`. `credentialCategory` is deliberately absent: distinguishing
+ * a degree from a certification would mean inferring it from the award text,
+ * and a wrong classification is worse than none.
+ */
+function credentialEntities(trainer: Trainer) {
+  if (!trainer.certifications?.length) return undefined;
+
+  return trainer.certifications.map((credential) => ({
+    "@type": "EducationalOccupationalCredential",
+    name: credential.award,
+    ...(credential.abbr ? { alternateName: credential.abbr } : {}),
+    ...(credential.issuer
+      ? { recognizedBy: { "@type": "Organization", name: credential.issuer } }
+      : {}),
+  }));
+}
+
 /** Person, on trainer profiles only (§8, Phase 3). */
 export function person(trainer: Trainer) {
-  const credentials = trainer.profile
-    ?.find((block) => block.heading === "Credentials")
-    ?.body.split(" · ")
-    .map((name) => ({
-      "@type": "EducationalOccupationalCredential",
-      name,
-    }));
+  const credentials = credentialEntities(trainer);
 
   return {
     "@context": "https://schema.org",
