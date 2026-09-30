@@ -31,11 +31,15 @@ export function Header({
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-border bg-surface px-4 sm:px-6">
       <MobileNav />
-      <p className="lg:hidden text-sm font-semibold text-ink">
+      {/* `min-w-0` so the title yields space instead of forcing the controls
+          off-screen: a flex item defaults to min-width: auto and will not
+          shrink below its text, which is how a 412px header came to need
+          455px. */}
+      <p className="lg:hidden min-w-0 shrink-[4] truncate text-sm font-semibold text-ink">
         Performance Operations
       </p>
       <CommandPalette organizationId={organizationId} permissions={permissions} />
-      <div className="ml-auto flex items-center gap-2.5">
+      <div className="ml-auto flex min-w-0 items-center gap-2.5">
         {context.mode === "offline" && (
           <span
             className="hidden md:inline-flex items-center rounded-full bg-warning-soft px-2.5 py-1 text-[11px] font-semibold text-warning"

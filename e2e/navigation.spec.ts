@@ -53,6 +53,44 @@ test("unauthenticated state is explicit in the user menu", async ({ page }) => {
   await expect(page.getByRole("menu").getByText("Not signed in")).toBeVisible();
 });
 
+/**
+ * The header fits the viewport it is given.
+ *
+ * It did not: at 412px it wanted 455px, so the user-menu button hung 27px
+ * past the right edge and its own container intercepted the tap — on a phone
+ * you could not open the menu at all, which also meant you could not sign
+ * out. The cause was flex items refusing to shrink below their content
+ * (min-width: auto), so nothing yielded and the row simply overflowed.
+ *
+ * Asserted at several widths rather than only the two project viewports,
+ * because the failure appears between them: the tablet range was worse than
+ * the phone range, since that is where the period selector reappears.
+ */
+for (const width of [360, 390, 412, 768, 1024]) {
+  test(`header fits and the user menu opens at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/performance-operations/overview");
+
+    const header = page.locator("header");
+    const overflow = await header.evaluate(
+      (el) => el.scrollWidth - el.clientWidth,
+    );
+    expect(overflow, `header overflows its own box at ${width}px`).toBe(0);
+
+    // Reachable, not merely present: the bug left the button visible and
+    // enabled with its container on top of it at the click point.
+    const button = page.getByRole("button", { name: "User menu" });
+    const box = (await button.boundingBox())!;
+    expect(box.x + box.width, `user menu sits past the right edge`)
+      .toBeLessThanOrEqual(width);
+
+    await button.click();
+    await expect(page.getByRole("menu")).toBeVisible();
+  });
+}
+
 for (const route of ROUTES) {
   test(`route ${route.path} renders with shared layout`, async ({
     page,

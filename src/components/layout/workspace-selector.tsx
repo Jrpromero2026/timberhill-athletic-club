@@ -56,18 +56,18 @@ export function WorkspaceSelector({ options, selection, canAccessAll }: Props) {
   }
 
   return (
-    <div className="flex items-center">
+    <div className="flex min-w-0 items-center">
       <label htmlFor="workspace-selector" className="sr-only">
         Workspace
       </label>
-      <div className="relative">
+      <div className="relative min-w-0">
         <select
           id="workspace-selector"
           name="workspace"
           value={value}
           disabled={isPending || options.length === 0}
           onChange={(event) => onChange(event.target.value)}
-          className="h-9 appearance-none rounded-[--radius-control] border border-border bg-surface pl-3 pr-8 text-sm font-medium text-ink shadow-sm hover:border-border-strong focus:border-accent disabled:opacity-60 max-w-[220px] truncate"
+          className="h-9 appearance-none rounded-[--radius-control] border border-border bg-surface pl-3 pr-8 text-sm font-medium text-ink shadow-sm hover:border-border-strong focus:border-accent disabled:opacity-60 w-full min-w-0 max-w-[220px] truncate"
         >
           {options.length === 0 && <option value="">No workspaces</option>}
           {options.map((option) => (

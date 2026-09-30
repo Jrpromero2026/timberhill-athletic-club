@@ -40,7 +40,9 @@ export function UserMenu({ userName, userEmail, canSignOut }: Props) {
     .toUpperCase();
 
   return (
-    <div className="relative" ref={menuRef}>
+    // `shrink-0`: sign-out is the one control that must stay reachable at
+    // every width. Everything else in the header yields before this does.
+    <div className="relative shrink-0" ref={menuRef}>
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
