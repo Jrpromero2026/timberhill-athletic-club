@@ -872,8 +872,7 @@ export const HUB_FAQS: readonly FaqItem[] = [
   {
     question: "Do I have to be a member of the club?",
     answer:
-      "[CONFIRM — non-member eligibility for the consultation and for training packages.]",
-    unconfirmed: true,
+      "No. You do not need to be a member of Timberhill Athletic Club to book a consultation or to train with one of our trainers. Personal training is open to members and non-members alike.",
   },
   {
     // §4 forbids naming a price above section 09 and §5 forbids publishing a
@@ -923,14 +922,12 @@ export const HUB_FAQS: readonly FaqItem[] = [
   {
     question: "What if I need to cancel or reschedule?",
     answer:
-      "[CONFIRM — cancellation and rescheduling policy as configured in Setmore.]",
-    unconfirmed: true,
+      `We ask for twenty-four hours' notice. Tell your trainer or call the club on ${CLUB.phone} at least a day before the session and we will move it to a time that works.`,
   },
   {
     question: "Do you offer nutrition support?",
     answer:
-      "[CONFIRM — current nutrition coaching scope and who delivers it.]",
-    unconfirmed: true,
+      "Yes. We offer nutrition coaching in more than one form, because what somebody needs varies — from guidance alongside training to something more structured. Several of our trainers hold nutrition certifications, and the consultation is where we work out which option fits you.",
   },
 ];
 
@@ -955,8 +952,8 @@ export const CONSULTATION_FAQS: readonly FaqItem[] = [
   },
   {
     question: "Do I need to be a member?",
-    answer: "[CONFIRM — non-member eligibility.]",
-    unconfirmed: true,
+    answer:
+      "No. The consultation is open to anyone, and so is training itself — you do not have to join the club first.",
   },
   {
     question: "Will I be asked to work out?",
@@ -964,16 +961,9 @@ export const CONSULTATION_FAQS: readonly FaqItem[] = [
       "No. The thirty minutes is a conversation — nobody trains, nothing is measured, and you do not need to change or warm up. Come straight from work if that is easiest.",
   },
   {
-    question: "Will I be given prices?",
-    answer:
-      "[CONFIRM — whether rates may be published or quoted in the consultation.]",
-    unconfirmed: true,
-  },
-  {
     question: "What if I need to reschedule?",
     answer:
-      "[CONFIRM — cancellation and rescheduling policy as configured in Setmore.]",
-    unconfirmed: true,
+      `Twenty-four hours' notice is all we ask. Tell your trainer or call the club on ${CLUB.phone} and we will find another time.`,
   },
 ];
 

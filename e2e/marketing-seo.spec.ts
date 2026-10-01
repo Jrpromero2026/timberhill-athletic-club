@@ -350,13 +350,37 @@ test.describe("answer-engine surface", () => {
     expect(service.offers.priceCurrency).toBe("USD");
   });
 
-  test("no unsettled answer reaches a page or its markup", async ({ page }) => {
-    const unsettled = HUB_FAQS.filter((item) => item.unconfirmed);
-    expect(unsettled.length).toBeGreaterThan(0);
-
+  test("settled answers reach the page and unsettled ones do not", async ({
+    page,
+  }) => {
+    // This required at least one unsettled question to exist, which was true
+    // until every answer was supplied. The rule it guards does not depend on
+    // that: a `[CONFIRM` placeholder must never reach a page, whether there
+    // are six held back or none.
+    //
+    // It now asserts the other half too. With nothing held back, a test that
+    // only checks for absence passes against a page that renders no FAQ at
+    // all, which is the failure it would most need to catch.
     await page.goto("/personal-training");
     const body = await page.locator("body").innerText();
-    for (const item of unsettled) expect(body).not.toContain(item.question);
-    expect(await page.content()).not.toContain("[CONFIRM");
+    const html = await page.content();
+
+    expect(html, "a placeholder answer reached the page").not.toContain(
+      "[CONFIRM",
+    );
+
+    const settled = HUB_FAQS.filter((item) => !item.unconfirmed);
+    expect(settled.length).toBeGreaterThan(0);
+    for (const item of settled) {
+      expect(body, `settled question missing: ${item.question}`).toContain(
+        item.question,
+      );
+    }
+
+    for (const item of HUB_FAQS.filter((item) => item.unconfirmed)) {
+      expect(body, `unsettled question rendered: ${item.question}`).not.toContain(
+        item.question,
+      );
+    }
   });
 });
