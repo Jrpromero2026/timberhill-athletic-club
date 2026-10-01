@@ -378,6 +378,24 @@ test.describe("trainers index", () => {
     await expect(page.locator(".empty-card")).toHaveCount(0);
   });
 
+  test("the specialty filters are a 44px tap target", async ({ page }) => {
+    // The rule that stood here set min-height: 32px under a comment claiming
+    // "≥44px tap target … BUILD_BRIEF §9", so the requirement was documented
+    // and unmet at the same time. Asserted now rather than asserted in prose.
+    await page.goto("/personal-training/trainers");
+    const chips = page.locator(".chip");
+    const count = await chips.count();
+    expect(count).toBeGreaterThan(0);
+
+    for (let i = 0; i < count; i += 1) {
+      const box = (await chips.nth(i).boundingBox())!;
+      expect(
+        box.height,
+        `"${await chips.nth(i).textContent()}" tap target`,
+      ).toBeGreaterThanOrEqual(44);
+    }
+  });
+
   test("only trainers with a published profile link to one", async ({
     page,
   }) => {
