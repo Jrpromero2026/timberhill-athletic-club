@@ -580,13 +580,12 @@ export const TRAINERS: readonly Trainer[] = [
     slug: "tais-vega",
     offersFreeSession: true,
     name: "Tais Vega",
-    // The degree leads because the profile H1 and the page title are built
-    // from the first segment of this line. "Exercise Physiologist" first
-    // published "Tais Vega, Exercise Physiologist" on Timberhill's own site,
-    // which reads as her title here; the role is at Oregon Physical Therapy,
-    // so it keeps its employer and follows the credential.
-    credentials:
-      "B.S. Health and Exercise Science · Exercise Physiologist, Oregon Physical Therapy",
+    // The headline and the page title are built from the first segment of
+    // this line, so it holds her role and nothing else: the degree was in her
+    // name ("Tais Vega, B.S. Health and Exercise Science") and the PT Director
+    // asked for it out. It is not lost — it is in `certifications` below,
+    // under her photograph, where the other trainers' degrees sit.
+    credentials: "Exercise Physiologist",
     // All four are named in her biography: progress after physical therapy,
     // returning to exercise, athletic performance, and building strength.
     specialties: [
@@ -608,8 +607,8 @@ export const TRAINERS: readonly Trainer[] = [
     acceptingClients: false,
     photo: null,
     // The degree is the one credential on record. "Exercise Physiologist" is
-    // the role she holds at Oregon Physical Therapy, not a credential with an
-    // issuing body, so it stays in the credentials line and the prose.
+    // a role rather than a credential with an issuing body, so it stays in
+    // the credentials line and the prose rather than appearing here.
     certifications: [
       {
         award: "B.S. Health and Exercise Science, cum laude",
@@ -619,7 +618,7 @@ export const TRAINERS: readonly Trainer[] = [
     profile: [
       {
         heading: "Background",
-        body: "Tais Vega is an exercise physiologist at Oregon Physical Therapy and a cum laude graduate of Southern Oregon University, where she earned her bachelor's degree in Health and Exercise Science. An accomplished collegiate athlete, Tais competed in volleyball at the national level and helped her team earn third place at the NAIA National Volleyball Tournament.",
+        body: "Tais Vega is an exercise physiologist and a cum laude graduate of Southern Oregon University, where she earned her bachelor's degree in Health and Exercise Science. An accomplished collegiate athlete, Tais competed in volleyball at the national level and helped her team earn third place at the NAIA National Volleyball Tournament.",
       },
       {
         heading: "Approach",
