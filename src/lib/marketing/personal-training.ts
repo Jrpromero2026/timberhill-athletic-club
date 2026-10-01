@@ -812,8 +812,13 @@ export const SERVICE_FAMILIES = [
     body: "Small-group performance work on a set schedule for people who want to train hard in a room with others doing the same.",
   },
   {
+    // Described, not named. The individual programs come and go, and a name
+    // on a public page outlives the program behind it: a visitor who reads
+    // one and asks for it by name months later has been told something that
+    // is no longer true. The consultation is where what is currently open
+    // gets named.
     name: "Seasonal and Focused Programs",
-    body: "Time-boxed programs with a specific brief — Built For Her™ and Peak Ready Performance run to their own calendar.",
+    body: "Time-boxed programs built around a single focus rather than running continuously. Each has its own start date and length, and what is open changes through the year.",
   },
 ] as const;
 
