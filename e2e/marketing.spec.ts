@@ -184,6 +184,31 @@ test.describe("hub", () => {
     await expect(answers.nth(3)).toBeHidden();
   });
 
+  test("the hero keeps its breathing room on a phone", async ({ page }) => {
+    // `.hero-inner` is also a `.wrap`, and the mobile gutter rule used the
+    // `padding` shorthand, which sets all four sides. It sits after the hero's
+    // own rule, so below 760px it reset the hero's vertical padding to zero
+    // and "PERSONAL TRAINING" sat flush against the site header.
+    //
+    // Asserted either side of the breakpoint: the bug was a cliff at exactly
+    // 760px, invisible at any single width.
+    for (const width of [390, 414, 760, 761]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/personal-training");
+
+      const pad = await page.locator(".hero-inner").evaluate((el) => {
+        const style = getComputedStyle(el);
+        return {
+          top: parseFloat(style.paddingTop),
+          bottom: parseFloat(style.paddingBottom),
+        };
+      });
+
+      expect(pad.top, `hero top padding at ${width}px`).toBeGreaterThanOrEqual(40);
+      expect(pad.bottom, `hero bottom padding at ${width}px`).toBeGreaterThanOrEqual(32);
+    }
+  });
+
   test("trainer philosophy is a disclosure, one open at a time", async ({
     page,
     isMobile,

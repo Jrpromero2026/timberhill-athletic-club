@@ -1385,8 +1385,15 @@ AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
 }
 /* ═══ 3 · mobile ════════════════════════════════════════════════════════ */
 @media (max-width: 760px) {
+  /* Longhand, deliberately. The shorthand sets all four sides, and this rule
+     sits after every element that gives its own `.wrap` vertical padding, so
+     `padding: 0 var(--gutter-sm)` silently reset that padding to zero below
+     760px. The hero was the visible casualty: 53px of space above the H1 at
+     761px and none at 760px, which put "PERSONAL TRAINING" flush against the
+     bottom of the site header on every phone. */
   .tac-site .wrap {
-    padding: 0 var(--gutter-sm);
+    padding-left: var(--gutter-sm);
+    padding-right: var(--gutter-sm);
   }
   .tac-site .sec {
     padding: 44px 0;
