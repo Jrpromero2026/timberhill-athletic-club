@@ -403,8 +403,12 @@ export const TRAINERS: readonly Trainer[] = [
     slug: "becca-reeve",
     offersFreeSession: true,
     name: "Becca Reeve",
+    // A summary, not the full set — the same split JR's record uses, where the
+    // line carries three and `certifications` carries nine. The three
+    // post-nominals lead because they are compact; the awards written out in
+    // full live in the list under her photograph.
     credentials:
-      "CPT · Pregnancy and Postpartum Corrective Exercise Specialist · PN1 Nutrition Coach",
+      "CPT · MCS · WCS · Pregnancy and Postpartum Corrective Exercise Specialist · PN1 Nutrition Coach",
     specialties: [
       "Pre and Postnatal",
       "Corrective Exercise",
@@ -417,12 +421,22 @@ export const TRAINERS: readonly Trainer[] = [
       "I work with women to improve general fitness and wellness and aim to empower them to feel functionally strong and confident in their bodies.",
     acceptingClients: true,
     photo: null,
-    // Split from her credentials line. "CPT" is expanded to its standard
-    // meaning; the issuing body is not recorded anywhere, so none is stated.
-    // The other two are exactly as she wrote them.
+    // Ordered so the women's-health credentials sit together, which is what
+    // she is sought out for: the foundational certification, then pregnancy
+    // and postpartum, menopause and women's coaching, then the rest.
+    //
+    // ISSA is named as the issuer only on the Glute Specialist, because that
+    // is the only one she attributed. No issuing body is invented for the
+    // others, and the two abbreviations are the ones she gave.
     certifications: [
       { award: "Certified Personal Trainer", abbr: "CPT" },
       { award: "Pregnancy and Postpartum Corrective Exercise Specialist" },
+      { award: "Menopause Coaching Specialist", abbr: "MCS" },
+      { award: "Women's Coaching Specialist", abbr: "WCS" },
+      {
+        award: "Glute Specialist",
+        issuer: "International Sports Sciences Association",
+      },
       { award: "Nutrition Coach", abbr: "PN1" },
     ],
     // Her own words, from the roster card. This is the whole biography on
