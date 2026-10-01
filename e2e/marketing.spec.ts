@@ -186,9 +186,28 @@ test.describe("hub", () => {
 
   test("trainer philosophy is a disclosure, one open at a time", async ({
     page,
+    isMobile,
   }) => {
     await page.goto("/personal-training");
 
+    // The roster is a desktop-only section of the hub: on a phone it ran 21%
+    // of the page, so the grid gives way to a lede and a link through to
+    // /personal-training/trainers. There is no card here to disclose, and the
+    // disclosure itself is covered on the roster page.
+    //
+    // Asserted, not skipped — a silent skip would also pass if the grid
+    // vanished on desktop by accident.
+    if (isMobile) {
+      await expect(page.locator(".team-grid")).toBeHidden();
+      await expect(page.locator(".team-jump")).toBeVisible();
+      await expect(page.locator(".team-jump")).toHaveAttribute(
+        "href",
+        "/personal-training/trainers",
+      );
+      return;
+    }
+
+    await expect(page.locator(".team-jump")).toBeHidden();
     await expect(page.locator(".t-phil:visible")).toHaveCount(0);
     const toggles = page.locator(".t-toggle");
     await expect(toggles.first()).toContainText("TRAINING PHILOSOPHY");

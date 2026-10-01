@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CtaAnalytics } from "@/components/marketing/cta-analytics";
 import { Faq } from "@/components/marketing/faq";
 import {
@@ -279,7 +280,7 @@ export default function PersonalTrainingHub() {
                   "some" and the copy states both numbers. Both are
                   interpolated — typing either by hand is how the old count
                   survived two departures. */}
-              <p className="lede lede--tight">
+              <p className="lede lede--tight team-lede--wide">
                 {TRAINERS.length} of our {CLUB.trainerCount} trainers, with
                 profiles published. A card answers one question: would this
                 person understand me? You do not have to choose one from a page
@@ -287,8 +288,23 @@ export default function PersonalTrainingHub() {
                 the consultation, based on your goal, your history, your
                 schedule and the kind of coaching that actually works for you.
               </p>
+              {/* The phone replacement. The lede above answers "would this
+                  person understand me?" by pointing at the card beneath it,
+                  and on a phone there is no card to point at — so this says
+                  what the team covers instead, and the link below carries a
+                  reader who wants faces to the page built for browsing them. */}
+              <p className="lede lede--tight team-lede--narrow">
+                {TRAINERS.length} of our {CLUB.trainerCount} trainers have a
+                published profile, covering strength, pre and postnatal,
+                martial arts, healthy aging and more. You do not have to pick
+                one yourself — matching you to the right trainer is part of the
+                consultation.
+              </p>
             </SectionHead>
             <TeamGrid trainers={TRAINERS} />
+            <Link className="btn btn-ghost f-link team-jump" href="/personal-training/trainers">
+              See the whole team ›
+            </Link>
           </div>
         </section>
 

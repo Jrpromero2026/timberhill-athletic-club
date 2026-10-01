@@ -789,6 +789,26 @@ what you want. */
   font-size: 13.5px;
 }
 
+/* Section 06 on a phone shows the heading, a lede and a way through to the
+roster — not nine cards.
+
+Condensed, the section still ran 3,952px on a phone: 21% of the page, and the
+largest block on it, sitting between how the system works and everything that
+sells — the results, the service menu, the price, the questions. Desktop has
+the room and keeps all nine.
+
+The alternative was hiding section 06 outright on a phone, which saves about
+350px more and costs the whole section on the device most visitors use. This
+keeps the section in the hub order, keeps what the team covers on the page,
+and sends a reader who wants faces to /personal-training/trainers, which is
+the page built for browsing and filtering them. */
+.tac-site .team-lede--narrow {
+  display: none;
+}
+.tac-site .team-jump {
+  display: none;
+}
+
 /* ═══ 2 · 07 why Timberhill ═════════════════════════════════════════════ */
 .tac-site .diffs {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1411,6 +1431,22 @@ AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
        in it, so without this the specialty list runs past the card edge —
        "HEALTHY AGING" was cut mid-word on the narrowest card. */
     min-width: 0;
+  }
+
+  /* The swap. The card rules above are inert while this holds — they are kept
+     rather than deleted because restoring the condensed card on a phone is
+     then one declaration, not a rewrite. */
+  .tac-site .team-grid {
+    display: none;
+  }
+  .tac-site .team-lede--wide {
+    display: none;
+  }
+  .tac-site .team-lede--narrow {
+    display: block;
+  }
+  .tac-site .team-jump {
+    display: inline-flex;
   }
   /* Uppercase at 0.06em costs real width at 390px, where a five-specialty
      line would otherwise run to four. The terms stay uppercase; only the
