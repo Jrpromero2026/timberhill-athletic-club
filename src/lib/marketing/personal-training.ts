@@ -166,7 +166,7 @@ export const CLUB = {
   founded: "1980",
   squareFeet: "65,000",
   /**
-   * Staff count: the nine in TRAINERS plus the two in ROSTER_PENDING.
+   * Staff count: the ten in TRAINERS plus the one in ROSTER_PENDING.
    *
    * Confirmed 2026-09-29. It was twelve, built from a roster that carried two
    * people who have since left; adding Tais Vega and removing them lands on
@@ -630,6 +630,56 @@ export const TRAINERS: readonly Trainer[] = [
       },
     ],
   },
+  {
+    slug: "amanda-knight",
+    offersFreeSession: true,
+    name: "Amanda Knight",
+    credentials: "CPT \u00b7 Bodybuilding Specialist \u00b7 Nutrition Coach",
+    // Her own list, mapped onto the closed vocabulary: active aging,
+    // bodybuilding, weight loss, strength training and nutrition. "Women's
+    // fitness" is the one thing she names that has no term in SPECIALTIES, so
+    // it is carried by her biography rather than by the filter.
+    specialties: [
+      "Healthy Aging",
+      "Muscle Building",
+      "Fat Loss",
+      "Strength",
+      "Nutrition Coaching",
+    ],
+    worksBestWith:
+      "You are a woman who wants to build strength \u2014 through menopause, through weight loss, or simply to feel better in your everyday life.",
+    philosophy:
+      "I believe success is built through encouragement, accountability, consistency, and a willingness to take ownership of your progress. My role is to provide the guidance, support, and expertise needed to help you move forward with confidence.",
+    // Not stated when her biography was supplied. False shows no badge and
+    // makes no claim either way; flip it to true once confirmed.
+    acceptingClients: false,
+    photo: null,
+    // All three are ISSA, named as the issuer because she attributed them.
+    //
+    // Her Girls Gone Strong Menopause Coaching Specialist is deliberately
+    // absent: she wrote "currently pursuing". `certifications` feeds
+    // `hasCredential` in the Person schema, which is a claim to hold a
+    // credential, and she does not hold this one yet. Her nine years in
+    // medical dispatch are experience rather than a certification and are in
+    // the biography, where they read as the story they are.
+    certifications: [
+      { award: "Certified Personal Trainer", issuer: "International Sports Sciences Association", abbr: "CPT" },
+      { award: "Bodybuilding Specialist", issuer: "International Sports Sciences Association" },
+      { award: "Nutrition Coach", issuer: "International Sports Sciences Association" },
+    ],
+    // Her biography as supplied, one paragraph per block. The professional
+    // blocks come first and the personal ones after, which is the order she
+    // wrote them in.
+    profile: [
+      { heading: "Approach", body: "Fitness has been a lifelong passion of mine, and I am dedicated to helping women become the strongest, healthiest, and most confident versions of themselves through every stage of life. My coaching focuses on active aging, women's fitness, nutrition, strength training, bodybuilding, weight loss, and sustainable lifestyle change." },
+      { heading: "Background", body: "My journey into health and fitness is backed by both professional experience and personal commitment. Before moving to the United States, I spent nine years working as a medical dispatcher in Western Australia, developing a strong foundation in anatomy, physiology, and emergency care. My passion for understanding the human body eventually led me to competitive fitness, where I experienced firsthand the discipline, resilience, and confidence that come from pursuing challenging goals." },
+      { heading: "How she coaches", body: "Today, I combine science-based training with practical, personalized coaching to help my clients achieve results that fit their bodies, lifestyles, and long-term goals. I believe success is built through encouragement, accountability, consistency, and a willingness to take ownership of your progress. My role is to provide the guidance, support, and expertise needed to help you move forward with confidence." },
+      { heading: "Who she works with", body: "One of the most rewarding parts of coaching is watching clients discover strength they never knew they had and accomplish goals they once thought were out of reach. Whether your goal is to build muscle, lose weight, improve mobility, navigate menopause, or simply feel better in your everyday life, I am committed to helping you succeed." },
+      { heading: "Away from the gym", body: "Outside of coaching, I enjoy spending time outdoors and staying active in ways that bring balance to my life. Horse riding has been a longtime passion of mine, and I love exploring local trails on foot whenever I can. In the summer months you will often find me at the ballpark as the on-field Public Address Announcer for the Corvallis Knights baseball team." },
+      { heading: "Family", body: "Family is also at the center of my life. I am happily married and part of a large blended family that includes four children and a growing number of grandchildren. Although I now live in the United States, my roots remain firmly connected to Australia, and I regularly travel home to stay connected with family and friends." },
+      { heading: "Favourite exercise", body: "The Deficit Sumo Goblet Squat is one of my favourite exercises because it targets the glutes, inner thighs, and quads while allowing for a greater range of motion. I love the challenge and the way it engages the lower body from start to finish." },
+    ],
+  },
 ];
 
 /** §6 roster status. Not rendered as trainers — recorded so the gap is
@@ -644,7 +694,6 @@ export const TRAINERS: readonly Trainer[] = [
  * a departure; he is on staff, and it was the bio that was missing, not him.
  */
 export const ROSTER_PENDING = [
-  { name: "Amanda Knight", status: "On staff", blockedOn: "Bio, credentials, specialties." },
   { name: "Steve Sackmann", status: "On staff", blockedOn: "Bio, credentials, specialties." },
 ] as const;
 

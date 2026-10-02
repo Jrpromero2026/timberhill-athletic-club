@@ -2,6 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 import {
   HUB_FAQS,
   RECOGNITION,
+  ROSTER_PENDING,
   SETMORE,
   SPECIALTIES,
   TRAINERS,
@@ -506,13 +507,22 @@ test.describe("trainer profile", () => {
   });
 
   test("a slug with no published profile 404s", async ({ page }) => {
-    // Named jess-caze until she got a profile, at which point the test failed
-    // for the best possible reason. Take whoever currently has no profile; if
-    // everyone on the roster has one, a slug that is not a trainer at all has
-    // to 404 rather than render an empty page. Amanda Knight is on staff and
-    // deliberately not on the roster, so it is a URL somebody really might try.
-    const withoutProfile = TRAINERS.find((t) => !t.profile);
-    const slug = withoutProfile ? withoutProfile.slug : "amanda-knight";
+    // This has now gone stale twice for the best possible reason: it named
+    // jess-caze until she got a profile, then fell back to amanda-knight
+    // until she did too. So it names nobody. Take whoever currently has no
+    // profile; failing that, take someone on staff but off the roster, whose
+    // URL a visitor really might try; failing that, a slug belonging to no
+    // one. Each is derived, so the next trainer to get a page cannot break it.
+    const withoutProfile = TRAINERS.find((trainer) => !trainer.profile);
+    const published = new Set(TRAINERS.map((trainer) => trainer.slug));
+    const offRoster = ROSTER_PENDING.map((person) =>
+      person.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    ).find((candidate) => !published.has(candidate));
+
+    const slug = withoutProfile?.slug ?? offRoster ?? "not-a-trainer";
+    expect(published.has(slug), `${slug} is on the roster`).toBe(
+      Boolean(withoutProfile),
+    );
 
     const response = await page.goto(
       `/personal-training/trainers/${slug}`,
