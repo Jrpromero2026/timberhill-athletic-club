@@ -219,6 +219,7 @@ export const SPECIALTIES = [
   "Returning to Fitness",
   "Healthy Aging",
   "Injury and Rehabilitation",
+  "Women's Fitness",
   "Pre and Postnatal",
   "Athletic Performance",
   "Youth Athletes",
@@ -410,6 +411,7 @@ export const TRAINERS: readonly Trainer[] = [
     credentials:
       "CPT · MCS · WCS · Pregnancy and Postpartum Corrective Exercise Specialist · PN1 Nutrition Coach",
     specialties: [
+      "Women's Fitness",
       "Pre and Postnatal",
       "Corrective Exercise",
       "Nutrition Coaching",
@@ -640,6 +642,7 @@ export const TRAINERS: readonly Trainer[] = [
     // fitness" is the one thing she names that has no term in SPECIALTIES, so
     // it is carried by her biography rather than by the filter.
     specialties: [
+      "Women's Fitness",
       "Healthy Aging",
       "Muscle Building",
       "Fat Loss",
