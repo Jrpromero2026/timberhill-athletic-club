@@ -298,12 +298,18 @@ export const TRAINERS: readonly Trainer[] = [
     slug: "jr-romero",
     name: "JR Romero",
     credentials: "CSCS · Head Trainer · B.S. Exercise and Sport Science, OSU",
+    // Women's Fitness at the end rather than the front: it is one of several
+    // things he coaches, where for Becca Reeve and Amanda Knight it is the
+    // whole practice. Claimed on the Director's own instruction — the Built
+    // For Her™ block on this page is his coaching system for women's physique
+    // and performance.
     specialties: [
       "Fat Loss",
       "Muscle Building",
       "Strength",
       "Nutrition Coaching",
       "Athletic Performance",
+      "Women's Fitness",
     ],
     worksBestWith:
       "You want a structured, measurable plan for body composition, muscle and strength — and you want the standard held.",
