@@ -392,6 +392,7 @@ export const TRAINERS: readonly Trainer[] = [
     credentials: "CSCS · Kinesiology, Oregon State University",
     specialties: [
       "Athletic Performance",
+      "Endurance and Events",
       "Youth Athletes",
       "Strength",
       "Beginners",
@@ -617,10 +618,8 @@ export const TRAINERS: readonly Trainer[] = [
     // first person would be inventing a quotation.
     philosophy:
       "Tais brings the discipline, teamwork, and performance-focused mindset of a competitive athlete to every client interaction. Her education and athletic background have given her a strong understanding of human movement, exercise programming, and the physical demands required to achieve individual health and performance goals.",
-    // Not stated when her biography was supplied. False shows no badge and
-    // makes no claim either way, which is the honest default; flip it to true
-    // once confirmed.
-    acceptingClients: false,
+    // Confirmed by the Director.
+    acceptingClients: true,
     photo: null,
     // The degree is the one credential on record. "Exercise Physiologist" is
     // a role rather than a credential with an issuing body, so it stays in
