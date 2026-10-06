@@ -267,10 +267,20 @@ one editorial line sit with the section numbering and the stat labels instead.
 `word-spacing: normal` is defensive: the tracking below is applied per
 character, and a host stylesheet that also sets word-spacing would pull the
 separators away from the terms they divide. */
+/* Sentence case, not capitals.
+
+All-caps is this site's idiom for a LABEL — "CREDENTIALS", "BACKGROUND", a
+section number — which is one or two words you read as a shape. A trainer's
+specialties are content, and six of them set in caps at weight 600 in accent
+blue carried four emphasis signals at once: it became the loudest thing on the
+card after the name, and a reader had to work through it letter by letter.
+
+Sentence case at weight 500 reads at a glance and still sits apart from the
+body text, which is what the colour is for. */
 .tac-site .spec-inline {
   list-style: none; margin: 0; padding: 0;
-  font-size: 12px; line-height: 1.7; font-weight: 600;
-  letter-spacing: 0.06em; text-transform: uppercase; word-spacing: normal;
+  font-size: 13px; line-height: 1.65; font-weight: 500;
+  letter-spacing: 0; word-spacing: normal;
   color: var(--color-accent); text-wrap: pretty;
 }
 .tac-site .spec-inline li {
@@ -289,7 +299,7 @@ itself, so a line can end after the separator. */
 }
 /* The profile sets these under an H1, where the line can carry a little more. */
 .tac-site .spec-inline--lg {
-  font-size: 13px; letter-spacing: 0.07em;
+  font-size: 14.5px;
 }
 /* ═══ 2 · layout ════════════════════════════════════════════════════════ */
 .tac-site .pg {
@@ -1479,9 +1489,6 @@ AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
   /* Uppercase at 0.06em costs real width at 390px, where a five-specialty
      line would otherwise run to four. The terms stay uppercase; only the
      tracking and the separator gutters give way. */
-  .tac-site .spec-inline {
-    letter-spacing: 0.04em;
-  }
   /* The count-sized grids collapse with everything else below 760px. */
   .tac-site .review-row--n1,
 .tac-site .review-row--n2 {

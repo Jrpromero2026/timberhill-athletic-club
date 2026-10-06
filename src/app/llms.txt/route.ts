@@ -28,7 +28,7 @@ export function GET() {
 
   const trainers = TRAINERS.map(
     (trainer) =>
-      `- **${trainer.name}** (${trainer.credentials}) — ${trainer.specialties.join(", ")}.${
+      `- **${trainer.name}**${trainer.credentials ? ` (${trainer.credentials})` : ""} — ${trainer.specialties.join(", ")}.${
         trainer.profile
           ? ` Profile: ${canonicalUrl(`/personal-training/trainers/${trainer.slug}`)}`
           : ""

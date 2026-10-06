@@ -46,8 +46,10 @@ export async function generateMetadata({
   const trainer = trainerBySlug(slug);
   if (!trainer?.profile) return {};
 
-  const suffix = trainer.credentials.split(" · ")[0];
-  const headline = `${trainer.name}, ${suffix} — Personal Trainer in Corvallis`;
+  // A trainer with no post-nominals is titled by name alone; appending a bare
+  // comma would be worse than the suffix being absent.
+  const suffix = trainer.credentials?.split(" · ")[0];
+  const headline = `${suffix ? `${trainer.name}, ${suffix}` : trainer.name} — Personal Trainer in Corvallis`;
   // The page description has to fit a snippet (~160 chars); the schema one
   // does not, so the full works-best-with sentence lives there instead.
   const description = `${trainer.name} at ${CLUB.name} in Corvallis, OR. ${trainer.specialties.slice(0, 3).join(", ")}. Book a free 30-minute consultation.`;
@@ -192,7 +194,9 @@ export default async function TrainerProfile({
                   </span>
                 ) : null}
                 <h1 className="profile-h1">
-                  {trainer.name}, {trainer.credentials.split(" · ")[0]}
+                  {trainer.credentials
+                    ? `${trainer.name}, ${trainer.credentials.split(" · ")[0]}`
+                    : trainer.name}
                 </h1>
                 {trainer.jobTitles ? (
                   <div className="profile-role">

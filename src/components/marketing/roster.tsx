@@ -104,7 +104,9 @@ export function Roster({ trainers }: { trainers: readonly Trainer[] }) {
                         </span>
                       ) : null}
                     </div>
-                    <div className="t-cred">{trainer.credentials}</div>
+                    {/* No credentials line here either, matching the hub.
+                        A card says who somebody is for; the post-nominals are
+                        the evidence, and they are on the profile. */}
                     <SpecialtyList specialties={trainer.specialties} />
                     <p className="t-best">{trainer.worksBestWith}</p>
                     {trainer.profile ? (

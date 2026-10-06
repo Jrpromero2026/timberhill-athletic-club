@@ -37,8 +37,8 @@ export function TeamGrid({ trainers }: { trainers: readonly Trainer[] }) {
                   understand me?", and a string of post-nominals is not that
                   answer — it is the evidence a reader wants once they are
                   already interested, which is what the profile page is for.
-                  `trainer.credentials` is untouched and still renders there,
-                  on the roster index, and as this page's own heading. */}
+                  `trainer.credentials` is untouched and still builds each
+                  profile's headline and page title. */}
               <h3 className="t-name">{trainer.name}</h3>
               <SpecialtyList specialties={trainer.specialties} />
               <p className="t-best">{trainer.worksBestWith}</p>

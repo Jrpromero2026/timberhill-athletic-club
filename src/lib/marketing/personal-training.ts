@@ -236,7 +236,13 @@ export type Specialty = (typeof SPECIALTIES)[number];
 export type Trainer = {
   slug: string;
   name: string;
-  credentials: string;
+  /**
+   * The post-nominals that follow the name in the profile headline, most
+   * significant first. Optional: a trainer whose standing is a role rather
+   * than a qualification carries it in `jobTitles` instead, and their
+   * headline is their name alone.
+   */
+  credentials?: string;
   specialties: readonly Specialty[];
   /** One sentence, second person. */
   worksBestWith: string;
@@ -588,12 +594,14 @@ export const TRAINERS: readonly Trainer[] = [
     slug: "tais-vega",
     offersFreeSession: true,
     name: "Tais Vega",
-    // The headline and the page title are built from the first segment of
-    // this line, so it holds her role and nothing else: the degree was in her
-    // name ("Tais Vega, B.S. Health and Exercise Science") and the PT Director
-    // asked for it out. It is not lost — it is in `certifications` below,
-    // under her photograph, where the other trainers' degrees sit.
-    credentials: "Exercise Physiologist",
+    // No `credentials`, so her headline is her name alone. Exercise
+    // Physiologist is a role, not a post-nominal, and it reads below the name
+    // in `jobTitles` the way JR Romero's Head Trainer does — the PT
+    // Director's call, after it twice ended up inside her name instead.
+    //
+    // Her degree is in `certifications` below, under her photograph, where
+    // the other trainers' degrees sit.
+    jobTitles: ["Exercise Physiologist"],
     // All four are named in her biography: progress after physical therapy,
     // returning to exercise, athletic performance, and building strength.
     specialties: [
