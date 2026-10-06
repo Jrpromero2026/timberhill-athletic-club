@@ -33,10 +33,13 @@ export function TeamGrid({ trainers }: { trainers: readonly Trainer[] }) {
           <article className="blueprint trainer-card" key={trainer.slug}>
             <AssetSlot spec={HEADSHOT_SPEC} shape="portrait" />
             <div className="trainer-body">
-              <div>
-                <h3 className="t-name">{trainer.name}</h3>
-                <div className="t-cred">{trainer.credentials}</div>
-              </div>
+              {/* No credentials line. The hub card answers "would this person
+                  understand me?", and a string of post-nominals is not that
+                  answer — it is the evidence a reader wants once they are
+                  already interested, which is what the profile page is for.
+                  `trainer.credentials` is untouched and still renders there,
+                  on the roster index, and as this page's own heading. */}
+              <h3 className="t-name">{trainer.name}</h3>
               <SpecialtyList specialties={trainer.specialties} />
               <p className="t-best">{trainer.worksBestWith}</p>
               <p className="t-phil" id={panelId} hidden={!isOpen}>
