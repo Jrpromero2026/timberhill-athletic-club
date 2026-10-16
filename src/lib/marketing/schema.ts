@@ -289,6 +289,7 @@ export function person(trainer: Trainer) {
     hasCredential: credentials,
     knowsAbout: [...trainer.specialties],
     description: trainer.worksBestWith,
+    ...(trainer.website ? { sameAs: [trainer.website.url] } : {}),
   };
 }
 
