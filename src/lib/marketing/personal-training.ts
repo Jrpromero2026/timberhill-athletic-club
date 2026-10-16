@@ -297,6 +297,12 @@ export type Trainer = {
    * a bracket for any other reason.
    */
   certifications?: readonly { award: string; issuer?: string; abbr?: string }[];
+  /**
+   * The trainer's own website, where one exists. Shown as a line under the
+   * biography and declared as `sameAs` on the profile's Person schema, so the
+   * club page and the trainer's site are read as the same person.
+   */
+  website?: { url: string; label: string; text: string };
 };
 
 export const TRAINERS: readonly Trainer[] = [
@@ -323,6 +329,11 @@ export const TRAINERS: readonly Trainer[] = [
       "His coaching philosophy is rooted in biomechanics, exercise science, behavior change, and progressive overload. He believes lasting success is built through consistency, accountability, and a commitment to continual improvement. The Standard is the product.",
     acceptingClients: true,
     photo: null,
+    website: {
+      url: "https://www.jrstrengthandfitness.com/",
+      label: "jrstrengthandfitness.com",
+      text: "JR's online coaching, writing and all of his client reviews are at",
+    },
     // Unresolved Phase 2 gate: the Drive bio heading says Head Trainer, the
     // body says Director of Training. Both are carried until one is picked.
     jobTitles: ["Head Trainer", "Director of Training"],
@@ -345,7 +356,7 @@ export const TRAINERS: readonly Trainer[] = [
     profile: [
       {
         heading: "Approach",
-        body: "JR Romero serves as the Director of Training at Timberhill Athletic Club and Director of Performance at G3 Performance. With more than 15,000 hours of hands-on coaching experience, he has spent over a decade helping clients build stronger bodies, improve their health, enhance performance, and achieve lasting physical transformation. His coaching philosophy is rooted in biomechanics, exercise science, behavior change, and progressive overload. He believes lasting success is built through consistency, accountability, and a commitment to continual improvement. The Standard is the product.",
+        body: "JR Romero serves as the Director of Training at Timberhill Athletic Club and Director of Performance at G3 Performance. With about 20,000 hours of hands-on coaching experience, he has spent over a decade helping clients build stronger bodies, improve their health, enhance performance, and achieve lasting physical transformation. His coaching philosophy is rooted in biomechanics, exercise science, behavior change, and progressive overload. He believes lasting success is built through consistency, accountability, and a commitment to continual improvement. The Standard is the product.",
       },
       {
         heading: "Who he works with",

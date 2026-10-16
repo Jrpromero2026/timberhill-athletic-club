@@ -217,6 +217,15 @@ export default async function TrainerProfile({
                     </div>
                   ))}
                 </div>
+                {trainer.website ? (
+                  <p className="block-d profile-site" style={{ marginBottom: 28 }}>
+                    {trainer.website.text}{" "}
+                    <a href={trainer.website.url} rel="noopener">
+                      {trainer.website.label}
+                    </a>
+                    .
+                  </p>
+                ) : null}
 
                 {/* §12: the consultation is the primary action here as it is
                     everywhere — starting must not require choosing a trainer.
