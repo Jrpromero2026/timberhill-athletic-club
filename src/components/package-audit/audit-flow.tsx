@@ -31,7 +31,7 @@ export function AuditFlow({ steps }: { steps: readonly FlowStep[] }) {
         {steps.map((step, index) => (
           <li key={step.label} className="relative bg-surface p-5">
             <p className="eyebrow text-accent">
-              {String(index + 1).padStart(2, "0")} · {step.label}
+              {step.label}
             </p>
             <p className="mt-3 font-mono text-2xl font-semibold text-ink">
               {step.value}

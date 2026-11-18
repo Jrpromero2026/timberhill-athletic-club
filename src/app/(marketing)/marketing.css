@@ -370,13 +370,6 @@ stock imagery: BUILD_BRIEF §15. */
 .tac-site .sec-head--tight {
   margin-bottom: 10px;
 }
-.tac-site .sec-num {
-  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
-  color: var(--color-accent); flex: none;
-}
-.tac-site .sec--navy .sec-num {
-  color: var(--color-accent-2);
-}
 .tac-site .sec-title {
   font-family: var(--font-heading); font-weight: 700;
   font-size: clamp(28px, 4.2vw, 44px); line-height: 1.02;
@@ -637,10 +630,6 @@ to be read. BUILD_BRIEF §9. */
 .tac-site .rec-card {
   padding: 18px 18px 20px; display: flex; gap: 12px; align-items: flex-start;
 }
-.tac-site .rec-n {
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
-  color: var(--color-accent); padding-top: 3px; flex: none;
-}
 .tac-site .rec-t {
   font-size: 15px; line-height: 1.5; text-wrap: pretty;
 }
@@ -717,14 +706,6 @@ arrow glyphs. */
 .tac-site .step {
   display: flex; gap: 26px; flex-wrap: wrap; padding: 24px 0;
   border-top: 1px solid var(--color-divider); align-items: baseline;
-}
-/* Decorative ordinals — the order is carried by the list itself, so these are
-aria-hidden and exempt from the contrast minimum. Deepen to
---color-accent-500 if they should read as content. */
-.tac-site .step-n {
-  font-family: var(--font-heading); font-weight: 700;
-  font-size: 38px; line-height: 0.9;
-  color: var(--color-accent-300); min-width: 64px;
 }
 .tac-site .step-body {
   flex: 1; min-width: 0;
@@ -1378,9 +1359,6 @@ AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
 .tac-site .agenda-row {
   display: flex; gap: 16px; padding: 16px 0; border-top: 1px solid var(--color-divider);
 }
-.tac-site .agenda-n {
-  font-family: var(--font-mono); font-size: 11px; color: var(--color-accent); padding-top: 4px; flex: none;
-}
 .tac-site .agenda-t {
   font-family: var(--font-heading); font-weight: 600; font-size: 18px; margin-bottom: 4px;
 }
@@ -1588,9 +1566,6 @@ AA for body text. --color-neutral-700 is 6.5:1 and visually equivalent. */
   }
   .tac-site .step {
     gap: 10px;
-  }
-  .tac-site .step-n {
-    min-width: 0; font-size: 32px;
   }
   .tac-site .footer-base {
     flex-direction: column; gap: 8px;
