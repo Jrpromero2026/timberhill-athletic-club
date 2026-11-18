@@ -85,7 +85,7 @@ test("root redirects to the public site, not the operations app", async ({
 
 test("the operations app is still reachable at /overview", async ({ page }) => {
   await page.goto("/performance-operations/overview");
-  await expect(page).toHaveTitle(/Overview · Performance Operations/);
+  await expect(page).toHaveTitle(/Overview · Timberhill Hub/);
 });
 
 test("overview renders workspace data and honest KPI placeholders", async ({
@@ -219,5 +219,5 @@ test("/performance-operations is the named entrance to the platform", async ({
 }) => {
   await page.goto("/performance-operations");
   await page.waitForURL("**/overview");
-  await expect(page).toHaveTitle(/Overview · Performance Operations/);
+  await expect(page).toHaveTitle(/Overview · Timberhill Hub/);
 });

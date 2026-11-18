@@ -26,7 +26,7 @@ export function StaffLink({ className = "" }: { className?: string }) {
       href="/performance-operations"
       rel="nofollow"
     >
-      Performance Operations
+      Timberhill Hub
       <span aria-hidden="true"> →</span>
     </Link>
   );

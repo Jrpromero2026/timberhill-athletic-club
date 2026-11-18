@@ -30,15 +30,15 @@ export function Sidebar({ initialCollapsed }: { initialCollapsed: boolean }) {
         }`}
       >
         <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded bg-accent text-[13px] font-bold text-white">
-          PO
+          TH
         </div>
         {!collapsed && (
           <div className="leading-tight">
             <p className="text-[13px] font-semibold text-nav-fg">
-              Performance Operations
+              Timberhill Hub
             </p>
             <p className="text-[10px] uppercase tracking-wider text-nav-muted">
-              Operations Center
+              Personal Training
             </p>
           </div>
         )}

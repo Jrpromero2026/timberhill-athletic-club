@@ -29,7 +29,7 @@ export default async function SetupPage() {
       <WizardProgress currentStep={1} completedSteps={[]} />
 
       <header className="mb-8">
-        <h1 className="text-2xl font-semibold text-ink">Welcome to Performance Operations.</h1>
+        <h1 className="text-2xl font-semibold text-ink">Welcome to Timberhill Hub.</h1>
         <p className="mt-2 text-ink-secondary">
           Let&rsquo;s get your organization ready. Most gyms finish in 10&ndash;15 minutes.
         </p>

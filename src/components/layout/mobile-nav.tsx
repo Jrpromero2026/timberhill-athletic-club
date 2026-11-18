@@ -39,10 +39,10 @@ export function MobileNav() {
             <div className="flex h-14 items-center justify-between border-b border-nav-border px-5">
               <div className="flex items-center gap-2.5">
                 <div className="flex h-7 w-7 items-center justify-center rounded bg-accent text-[13px] font-bold text-white">
-                  PO
+                  TH
                 </div>
                 <p className="text-[13px] font-semibold text-nav-fg">
-                  Performance Operations
+                  Timberhill Hub
                 </p>
               </div>
               <button
