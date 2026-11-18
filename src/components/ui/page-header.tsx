@@ -12,11 +12,12 @@ export function PageHeader({
   return (
     <div className="flex flex-wrap items-start justify-between gap-3">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight text-ink">
+        <span className="bar mb-3" aria-hidden />
+        <h1 className="text-2xl text-ink sm:text-3xl">
           {title}
         </h1>
         {description && (
-          <p className="mt-1 max-w-2xl text-sm text-ink-secondary">
+          <p className="mt-2 max-w-2xl text-[15px] text-ink-secondary">
             {description}
           </p>
         )}

@@ -83,7 +83,7 @@ export default async function AppLayout({
   }
 
   return (
-    <div className="flex min-h-dvh">
+    <div className="hub flex min-h-dvh">
       <Sidebar initialCollapsed={sidebarCollapsed} />
       <div className="flex min-w-0 flex-1 flex-col">
         <Header
@@ -103,7 +103,7 @@ export default async function AppLayout({
 
 function SetupRequired() {
   return (
-    <div className="flex min-h-dvh items-center justify-center bg-surface-subtle px-6">
+    <div className="hub flex min-h-dvh items-center justify-center bg-surface-subtle px-6">
       <div className="w-full max-w-lg rounded-[--radius-card] border border-border bg-surface p-8 shadow-sm">
         <h1 className="text-lg font-semibold text-ink">
           Environment not configured

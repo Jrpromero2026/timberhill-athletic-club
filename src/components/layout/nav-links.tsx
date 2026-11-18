@@ -27,7 +27,7 @@ export function NavLinks({
                 aria-hidden
               />
             ) : (
-              <p className="px-3 pb-1 pt-4 text-[10px] font-semibold uppercase tracking-wider text-nav-muted">
+              <p className="eyebrow px-3 pb-1.5 pt-5 !text-[10px] text-nav-accent">
                 {group.title}
               </p>
             ))}
@@ -40,11 +40,11 @@ export function NavLinks({
                 onClick={onNavigate}
                 aria-current={active ? "page" : undefined}
                 title={collapsed ? item.label : undefined}
-                className={`group flex items-center gap-3 rounded-[--radius-control] py-2 text-sm font-medium transition-colors ${
+                className={`group flex items-center gap-3 rounded-[--radius-control] py-2 text-[12px] font-semibold uppercase tracking-[0.1em] transition-colors ${
                   collapsed ? "justify-center px-0" : "px-3"
                 } ${
                   active
-                    ? "bg-nav-raised text-nav-fg shadow-[inset_2px_0_0_0_var(--color-accent)]"
+                    ? "bg-nav-raised text-nav-fg shadow-[inset_3px_0_0_0_var(--color-nav-accent)]"
                     : "text-nav-muted hover:bg-nav-raised/60 hover:text-nav-fg"
                 }`}
               >
@@ -57,7 +57,7 @@ export function NavLinks({
                   strokeLinejoin="round"
                   className={`h-[18px] w-[18px] shrink-0 ${
                     active
-                      ? "text-accent"
+                      ? "text-nav-accent"
                       : "text-nav-muted group-hover:text-nav-fg"
                   }`}
                   aria-hidden

@@ -35,7 +35,7 @@ export function Header({
           off-screen: a flex item defaults to min-width: auto and will not
           shrink below its text, which is how a 412px header came to need
           455px. */}
-      <p className="lg:hidden min-w-0 shrink-[4] truncate text-sm font-semibold text-ink">
+      <p className="lg:hidden min-w-0 shrink-[4] truncate text-sm font-extrabold uppercase tracking-wider text-ink">
         Timberhill Hub
       </p>
       <CommandPalette organizationId={organizationId} permissions={permissions} />
