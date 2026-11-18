@@ -27,8 +27,8 @@ export const ADMIN_ROUTES = [
 ] as const;
 
 /**
- * The sidebar, grouped by the five areas of the hub plan: Payroll, Trainers,
- * Projects & upgrades, Marketing, Reports. Everything that only feeds those
+ * The sidebar, grouped by the areas of the hub plan: Payroll, Trainers,
+ * Projects & upgrades, Marketing. Everything that only feeds those
  * areas (imports, sync, settings, audit log) sits behind one Admin item.
  */
 export const NAV_GROUPS: NavGroup[] = [
@@ -98,33 +98,6 @@ export const NAV_GROUPS: NavGroup[] = [
         href: "/performance-operations/marketing",
         label: "Marketing",
         iconPath: "M4 10v4h3l6 4V6l-6 4H4Zm13-1a4 4 0 0 1 0 6",
-      },
-    ],
-  },
-  {
-    title: "Reports",
-    items: [
-      {
-        href: "/performance-operations/reports",
-        label: "Reports",
-        iconPath:
-          "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6ZM14 2v6h6M9 15h6M9 11h2",
-      },
-      {
-        href: "/performance-operations/analytics",
-        label: "Analytics",
-        iconPath: "M3 3v18h18M7 14l4-4 3 3 5-6",
-      },
-      {
-        href: "/performance-operations/snapshots",
-        label: "Club snapshots",
-        iconPath: "M4 7h16M4 12h16M4 17h10M18 15v6m3-3h-6",
-      },
-      {
-        href: "/performance-operations/director",
-        label: "Director view",
-        iconPath:
-          "M12 2a7 7 0 0 0-7 7c0 2.4 1.2 4.5 3 5.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3c1.8-1.2 3-3.3 3-5.7a7 7 0 0 0-7-7ZM10 21h4",
       },
     ],
   },
