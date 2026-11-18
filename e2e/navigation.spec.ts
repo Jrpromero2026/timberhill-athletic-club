@@ -24,6 +24,7 @@ const ROUTES: Array<{ path: string; heading: string; nav?: string }> = [
   { path: "/performance-operations/sops", heading: "SOPs" },
   { path: "/performance-operations/projects", heading: "Projects" },
   { path: "/performance-operations/marketing", heading: "Marketing" },
+  { path: "/performance-operations/reports", heading: "Reports" },
   { path: "/performance-operations/admin", heading: ADMIN },
   {
     path: "/performance-operations/configuration",
@@ -223,9 +224,9 @@ test("mobile drawer opens, navigates, and closes", async ({
   await page.getByRole("button", { name: "Open navigation" }).click();
   await page
     .getByRole("navigation", { name: "Main navigation" })
-    .getByRole("link", { name: "Trainers" })
+    .getByRole("link", { name: "Reports" })
     .click();
-  await page.waitForURL("**/trainers");
+  await page.waitForURL("**/reports");
   await expect(
     page.getByRole("navigation", { name: "Main navigation" }),
   ).toBeHidden();

@@ -9,13 +9,14 @@ import {
 const item = (label: string) => NAV_ITEMS.find((i) => i.label === label)!;
 
 describe("sidebar navigation", () => {
-  it("is grouped by the hub areas, with Admin last", () => {
+  it("is grouped by the five hub areas, with Admin last", () => {
     expect(NAV_GROUPS.map((g) => g.title)).toEqual([
       null,
       "Payroll",
       "Trainers",
       "Projects & upgrades",
       "Marketing",
+      "Reports",
       "Admin",
     ]);
   });
