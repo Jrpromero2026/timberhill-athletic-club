@@ -21,7 +21,6 @@ const ROUTES: Array<{ path: string; heading: string; nav?: string }> = [
   },
   { path: "/performance-operations/payroll", heading: "Payroll" },
   { path: "/performance-operations/trainers", heading: "Trainers" },
-  { path: "/performance-operations/clients", heading: "Clients" },
   { path: "/performance-operations/sops", heading: "SOPs" },
   { path: "/performance-operations/projects", heading: "Projects" },
   { path: "/performance-operations/marketing", heading: "Marketing" },

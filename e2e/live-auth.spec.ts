@@ -105,8 +105,8 @@ test("configuration hub shows readiness without claiming payroll-ready", async (
   page,
 }) => {
   await page.goto("/performance-operations/configuration");
-  await expect(page.getByText("Setup readiness by organization")).toBeVisible();
-  await expect(page.getByText("Not payroll-ready", { exact: false }).first()).toBeVisible();
+  await expect(page.getByText("Setup checklist")).toBeVisible();
+  await expect(page.getByText(/of \d+ done/).first()).toBeVisible();
 });
 
 test("audit viewer lists events with filters", async ({ page }) => {

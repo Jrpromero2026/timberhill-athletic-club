@@ -60,12 +60,12 @@ export default async function PayrollPage({
       <div className="space-y-6">
         <PageHeader
           title="My payroll statements"
-          description="Your finalized payroll preparation statements (gross compensation, before taxes and withholdings)."
+          description="Your pay statements, before taxes and withholdings."
         />
         {rows.length === 0 || !trainer ? (
           <EmptyState
             title="No posted statements yet"
-            description="Statements appear here once a payroll run including you is posted."
+            description="Statements show here once payroll is posted."
           />
         ) : (
           <div className="overflow-x-auto rounded-[--radius-card] border border-border bg-surface shadow-sm">
@@ -146,7 +146,7 @@ export default async function PayrollPage({
     <div className="space-y-6">
       <PageHeader
         title="Payroll"
-        description="Payroll preparation runs: calculate → review → approve → post → lock. Totals here are TRAINER PAY before taxes — not department revenue."
+        description="Trainer pay before taxes, by pay period."
         actions={
           <div className="flex items-center gap-2">
             <Link
@@ -196,7 +196,7 @@ export default async function PayrollPage({
           description={
             canCreate
               ? "Create a run for an organization and reporting period to begin payroll preparation."
-              : "No runs are visible for your access in this workspace."
+              : "No payroll runs to show."
           }
         />
       ) : (

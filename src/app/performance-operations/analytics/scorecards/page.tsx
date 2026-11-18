@@ -43,7 +43,7 @@ export default async function ScorecardsPage({
         <PageHeader title="Scorecards" description="Select a reporting period first." />
         <EmptyState
           title="Select a reporting period"
-          description="Scorecards are computed for the selected reporting period."
+          description="Pick a reporting period to see scorecards."
         />
       </div>
     );
@@ -163,7 +163,7 @@ export default async function ScorecardsPage({
       {needsScope ? (
         <EmptyState
           title={card === "department" ? "Choose a department" : "Choose a trainer"}
-          description="Pick a scope above to compose its scorecard. Access is enforced per metric — you only see what your role allows."
+          description="Pick a scope above."
         />
       ) : scorecard ? (
         <div className="space-y-4" data-testid="scorecard-view">

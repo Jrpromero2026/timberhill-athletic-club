@@ -33,7 +33,7 @@ function Bar({ valueBp }: { valueBp: number | null }) {
 /** Readiness scorecard — engine readiness results with deep links. */
 export function ReadinessCard({
   results,
-  title = "Workspace readiness",
+  title = "Setup checklist",
   testId,
 }: {
   results: MetricResult[];

@@ -50,7 +50,7 @@ export default async function NewServicePage() {
     <div className="space-y-6">
       <PageHeader
         title="Add service"
-        description="Define the internal service; add its Setmore/Acuity aliases afterward from the service page."
+        description="Add the service, then add its Setmore names from the service page."
       />
       <ServiceForm
         action={createService}

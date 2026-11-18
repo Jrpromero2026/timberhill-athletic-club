@@ -4,13 +4,10 @@ import type { ReactNode } from "react";
 export function EmptyState({
   title,
   description,
-  phase,
   children,
 }: {
   title: string;
   description: string;
-  /** Which roadmap phase delivers this capability. */
-  phase?: string;
   children?: ReactNode;
 }) {
   return (
@@ -31,11 +28,6 @@ export function EmptyState({
       </div>
       <h2 className="mt-4 text-base font-semibold text-ink">{title}</h2>
       <p className="mt-1.5 max-w-md text-sm text-ink-secondary">{description}</p>
-      {phase && (
-        <span className="mt-4 inline-flex items-center eyebrow bg-surface-sunken px-3 py-1.5 !text-[10px] text-ink-secondary">
-          Planned for {phase}
-        </span>
-      )}
       {children}
     </div>
   );

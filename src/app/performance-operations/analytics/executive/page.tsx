@@ -36,7 +36,7 @@ export default async function ExecutiveAnalyticsPage() {
       <div className="space-y-6">
         <PageHeader
           title="Executive analytics"
-          description="Select a reporting period in the header — analytics are computed per period."
+          description="Pick a reporting period in the header."
         />
         <EmptyState
           title="Select a reporting period"

@@ -68,7 +68,7 @@ export default async function SnapshotsPage() {
     <div className="space-y-6">
       <PageHeader
         title="Club snapshots"
-        description="Aggregate values read from external club systems and entered by hand. Every entry is a permanent, dated observation with its own provenance — nothing is overwritten, so month-over-month and year-over-year comparison stays possible."
+        description="Club-wide monthly figures, entered by hand. Entries are kept, so months can be compared."
       />
 
       {organizations.length > 0 && (
@@ -96,7 +96,7 @@ export default async function SnapshotsPage() {
         {snapshots.length === 0 ? (
           <EmptyState
             title="No snapshots recorded yet"
-            description="Enter the club figures for the most recent completed month to start the history. A single month is enough to make the current period reportable; comparisons become available from the second snapshot onward."
+            description="Enter last month's club figures to start. Comparisons begin with the second month."
           />
         ) : (
           <div className="space-y-3">

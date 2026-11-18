@@ -52,7 +52,7 @@ export default async function IntegrationsConfigPage() {
     <div className="space-y-6">
       <PageHeader
         title="Integrations"
-        description="Provider connections feed the EXISTING import pipeline — synced data always goes through staging, review, and approval before posting."
+        description="Synced data is reviewed and approved before it counts."
         actions={
           canCreate ? (
             <Link
@@ -69,7 +69,7 @@ export default async function IntegrationsConfigPage() {
         {(connections ?? []).length === 0 ? (
           <EmptyState
             title="No connections yet"
-            description="Create a connection to a provider. Blocked providers show their setup checklist."
+            description="Connect Setmore or another provider."
           />
         ) : (
           <ul className="divide-y divide-border">

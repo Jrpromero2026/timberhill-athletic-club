@@ -22,7 +22,7 @@ export default async function NewCompensationPlanPage() {
     <div className="space-y-6">
       <PageHeader
         title="New compensation plan"
-        description="Creates the plan container and a draft version 1. Configure rules and tiers before publishing."
+        description="Creates a draft plan. Set its rates before publishing."
       />
       <PlanForm
         organizations={manageableOrgs}

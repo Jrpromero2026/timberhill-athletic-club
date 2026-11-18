@@ -81,7 +81,7 @@ export default async function DepartmentOverviewPage({
         <PageHeader title={department.name} description="Department overview" />
         <EmptyState
           title="Select a reporting period"
-          description="Department metrics are computed for the selected reporting period."
+          description="Pick a reporting period to see department numbers."
         />
       </div>
     );

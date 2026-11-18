@@ -35,7 +35,7 @@ export default async function CloseManifestPage({
         <PageHeader title="Close manifest" description={period?.label ?? ""} />
         <EmptyState
           title="No manifest yet"
-          description="The manifest is created atomically when the close executes."
+          description="Created when the close runs."
         />
       </div>
     );

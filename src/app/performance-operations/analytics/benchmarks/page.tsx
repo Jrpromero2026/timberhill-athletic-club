@@ -37,7 +37,7 @@ export default async function BenchmarksPage() {
         <PageHeader title="Benchmarks" description="Select a reporting period first." />
         <EmptyState
           title="Select a reporting period"
-          description="Benchmark comparisons are evaluated against the selected period."
+          description="Pick a reporting period to see benchmarks."
         />
       </div>
     );
@@ -108,7 +108,7 @@ export default async function BenchmarksPage() {
       {rows.length === 0 ? (
         <EmptyState
           title="No benchmarks"
-          description="Create one from organization history or an approved standard — never from invented industry numbers."
+          description="Add one from your own history or a published standard."
         />
       ) : (
         <ul className="space-y-3" data-testid="benchmark-list">

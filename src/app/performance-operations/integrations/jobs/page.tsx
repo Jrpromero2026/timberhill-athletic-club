@@ -35,7 +35,7 @@ export default async function JobQueuePage() {
     <div className="space-y-6">
       <PageHeader
         title="Background jobs"
-        description="Atomic claiming, lease recovery, exponential backoff, dead-letter. All manual actions are audited."
+        description="Background jobs and retries."
         actions={
           <Link
             href="/performance-operations/integrations"
@@ -46,7 +46,7 @@ export default async function JobQueuePage() {
         }
       />
       {(jobs ?? []).length === 0 ? (
-        <EmptyState title="No jobs yet" description="Jobs appear when syncs, schedules, or deliveries run." />
+        <EmptyState title="No jobs yet" description="Jobs show here when a sync or delivery runs." />
       ) : (
         <div className="overflow-x-auto rounded-[--radius-card] border border-border bg-surface shadow-sm">
           <table className="w-full min-w-[980px] text-sm" data-testid="job-table">

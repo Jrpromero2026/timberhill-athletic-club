@@ -133,7 +133,7 @@ export default async function ConnectionDetailPage({
           <p className="mb-2 text-xs text-ink-secondary">
             {connection.secret_fingerprint
               ? `Stored: ${connection.secret_fingerprint} (version ${connection.secret_version}, rotated ${connection.secret_rotated_at?.slice(0, 16).replace("T", " ") ?? "—"}). Submitting again rotates it.`
-              : "No credential stored. Secrets go directly to Supabase Vault and are never displayed after submission."}
+              : "No credential stored. Once saved, it is never shown again."}
           </p>
           {connection.status !== "revoked" || true ? (
             <CredentialForm connectionId={connectionId} />

@@ -67,7 +67,7 @@ export default async function CloseReportsPage({
     <div className="space-y-6">
       <PageHeader
         title={`Report packages: ${period?.label ?? "?"}`}
-        description="Versioned, hash-frozen packages. Regeneration creates a new version; the close finalizes exactly one executive package version."
+        description="Month-end report packages. Regenerating one creates a new version."
         actions={
           <Link
             href={`/performance-operations/period-close/${run.id}`}

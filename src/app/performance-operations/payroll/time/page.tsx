@@ -26,8 +26,8 @@ export default async function ManualTimePage() {
   if (context.selection.kind !== "organization") {
     return (
       <div className="space-y-6">
-        <PageHeader title="Manual time entries" description="Select a single workspace first." />
-        <EmptyState title="Choose a workspace" description="Time entries are managed per organization." />
+        <PageHeader title="Manual time entries" description="Not available." />
+        <EmptyState title="Not available" description="Not available." />
       </div>
     );
   }
@@ -82,7 +82,7 @@ export default async function ManualTimePage() {
     <div className="space-y-6">
       <PageHeader
         title="Manual time entries"
-        description="Non-session work (admin, programming, meetings…) submitted by trainers and approved before payroll can pay it."
+        description="Hours outside sessions, such as admin and meetings. Approved hours are paid in the next payroll."
         actions={
           <Link
             href="/performance-operations/payroll"
@@ -114,7 +114,7 @@ export default async function ManualTimePage() {
           {(entries ?? []).length === 0 ? (
             <EmptyState
               title="No time entries in this period"
-              description="Submitted entries appear here for approval; approved entries are picked up by the next payroll calculation."
+              description="Submitted hours wait here for approval, then go into the next payroll."
             />
           ) : (
             <div className="overflow-x-auto rounded-[--radius-card] border border-border bg-surface shadow-sm">

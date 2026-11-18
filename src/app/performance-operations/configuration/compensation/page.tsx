@@ -59,7 +59,7 @@ export default async function CompensationPage() {
     <div className="space-y-6">
       <PageHeader
         title="Compensation plans"
-        description="Versioned compensation configuration. Rates are stored as basis points, money as integer cents. No payroll is calculated in this phase."
+        description="Pay plans and their rates."
         actions={
           canManage ? (
             <Link href="/performance-operations/configuration/compensation/new"
@@ -82,7 +82,7 @@ export default async function CompensationPage() {
       {plans.length === 0 ? (
         <EmptyState
           title="No compensation plans yet"
-          description="Create plans once compensation rules are confirmed (docs/INPUTS_REQUIRED.md #8). Unresolved questions — cliff vs marginal tiers, commission-eligible revenue, cancellation pay — are tracked in docs/DECISION_LOG.md."
+          description="Add a pay plan to get started."
         />
       ) : (
         <div className="overflow-x-auto rounded-[--radius-card] border border-border bg-surface shadow-sm">

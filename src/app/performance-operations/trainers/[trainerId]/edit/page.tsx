@@ -43,7 +43,7 @@ export default async function EditTrainerPage({
     <div className="space-y-6">
       <PageHeader
         title={`Edit ${trainer.display_name}`}
-        description="Material changes are audited. Deactivate rather than delete — trainers with history are never removed."
+        description="Deactivate a trainer instead of deleting, so their history stays."
       />
       <TrainerForm
         action={updateTrainer}

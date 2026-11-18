@@ -35,7 +35,7 @@ export default async function AccessPage() {
     <div className="space-y-6">
       <PageHeader
         title="Roles & Permissions"
-        description="The platform's deny-by-default authorization catalog. Roles are granted per organization through memberships; nothing not listed here is permitted."
+        description="What each role is allowed to do."
       />
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">

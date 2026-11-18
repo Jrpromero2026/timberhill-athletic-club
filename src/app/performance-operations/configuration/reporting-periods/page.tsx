@@ -52,7 +52,7 @@ export default async function ReportingPeriodsPage() {
     <div className="space-y-6">
       <PageHeader
         title="Reporting periods"
-        description="Monthly reporting and semi-monthly/biweekly payroll windows per organization. Same-type periods never overlap; locked periods require platform-admin authorization to change."
+        description="Reporting and payroll periods. Periods of the same type cannot overlap."
         actions={
           canManage ? (
             <Link href="/performance-operations/configuration/reporting-periods/new"
@@ -65,7 +65,7 @@ export default async function ReportingPeriodsPage() {
       {periods.length === 0 ? (
         <EmptyState
           title="No reporting periods yet"
-          description="Create the first reporting period once the payroll schedule rules are confirmed (docs/INPUTS_REQUIRED.md #11). The header period selector activates as soon as periods exist."
+          description="Create the first reporting period to get started."
         />
       ) : (
         <div className="overflow-x-auto rounded-[--radius-card] border border-border bg-surface shadow-sm">

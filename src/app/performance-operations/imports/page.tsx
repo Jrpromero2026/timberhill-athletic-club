@@ -91,7 +91,7 @@ export default async function ImportsPage({
     <div className="space-y-6">
       <PageHeader
         title="Imports"
-        description="Staged appointment imports: upload → review → approval → transactional posting to the canonical ledger."
+        description="Upload a file, review it, approve it."
         actions={
           canUpload ? (
             <Link href="/performance-operations/imports/new"
@@ -129,7 +129,7 @@ export default async function ImportsPage({
           description={
             canUpload
               ? "Upload a Setmore CSV export (save the .xlsx report as CSV first) or a manual CSV to begin."
-              : "No batches are visible for your access in this workspace."
+              : "No imports to show."
           }
         />
       ) : (

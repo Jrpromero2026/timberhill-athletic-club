@@ -43,7 +43,7 @@ export default async function ConnectionMappingPage({
     <div className="space-y-6">
       <PageHeader
         title={`Mapping: ${connection.name}`}
-        description="Adapter field mapping is versioned in code; identity matching (trainers, services, clients) uses the existing import review workflow and its learned aliases."
+        description="Trainer, service and client matching happens in import review."
         actions={
           <Link
             href={`/performance-operations/configuration/integrations/${connectionId}`}

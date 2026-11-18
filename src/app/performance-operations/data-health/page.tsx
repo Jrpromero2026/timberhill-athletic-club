@@ -45,7 +45,7 @@ export default async function DataHealthPage() {
     <div className="space-y-6">
       <PageHeader
         title="Data health"
-        description="Where Timberhill PT data comes from, how current each source is, and what is currently keeping data out of reports."
+        description="Where the data comes from, how current it is, and what is holding it up."
       />
 
       <p

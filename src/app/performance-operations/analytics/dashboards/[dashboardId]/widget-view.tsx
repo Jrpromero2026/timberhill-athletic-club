@@ -79,7 +79,7 @@ function WidgetBody({ view }: { view: WidgetView }) {
       return (
         <ChartShell
           title={view.label}
-          description="Engine values per rolling reporting period."
+          description="By reporting period."
           unit={view.series.unit}
           points={points}
         >

@@ -32,9 +32,9 @@ export default async function AppointmentsPage({
   if (context.mode !== "live") {
     return (
       <div className="space-y-6">
-        <PageHeader title="Appointments" description="Canonical appointment ledger." />
+        <PageHeader title="Appointments" />
         <EmptyState title="Appointments require a live environment"
-          description="Connect and sign in to view the ledger." />
+          description="Sign in to see sessions." />
       </div>
     );
   }
@@ -121,7 +121,7 @@ export default async function AppointmentsPage({
     <div className="space-y-6">
       <PageHeader
         title="Appointments"
-        description="Canonical posted ledger. Source amounts are source-provided facts — not recognized revenue. Records change only through audited corrections; reversals never delete."
+        description="Every imported session. Corrections are logged; nothing is deleted."
       />
 
       <form method="get" className="flex flex-wrap items-end gap-2">
@@ -163,7 +163,7 @@ export default async function AppointmentsPage({
       {appointments.length === 0 ? (
         <EmptyState
           title="No posted appointments match"
-          description="Appointments appear here after an import batch is reviewed, approved, and posted. Nothing is fabricated — the ledger only ever contains posted source data."
+          description="Sessions show here after an import is approved."
         />
       ) : (
         <div className="overflow-x-auto rounded-[--radius-card] border border-border bg-surface shadow-sm">

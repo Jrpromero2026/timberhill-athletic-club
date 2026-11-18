@@ -26,10 +26,10 @@ export default async function PeriodClosePage() {
   if (context.selection.kind !== "organization") {
     return (
       <div className="space-y-6">
-        <PageHeader title="Period close" description="Select a single workspace first." />
+        <PageHeader title="Period close" description="Not available." />
         <EmptyState
-          title="Choose a workspace"
-          description="Period close operates per organization."
+          title="Not available"
+          description="Not available."
         />
       </div>
     );

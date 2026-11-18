@@ -1,19 +1,17 @@
 import { EmptyState } from "./empty-state";
 import { PageHeader } from "./page-header";
 
-/** Polished placeholder used by routes whose functionality lands in a later phase. */
+/** Page with a title and an empty state. */
 export function PlaceholderPage({
   title,
   description,
   emptyTitle,
   emptyDescription,
-  phase,
 }: {
   title: string;
-  description: string;
+  description?: string;
   emptyTitle: string;
   emptyDescription: string;
-  phase: string;
 }) {
   return (
     <div className="space-y-6">
@@ -21,7 +19,6 @@ export function PlaceholderPage({
       <EmptyState
         title={emptyTitle}
         description={emptyDescription}
-        phase={phase}
       />
     </div>
   );

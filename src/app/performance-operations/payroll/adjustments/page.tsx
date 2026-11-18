@@ -31,8 +31,8 @@ export default async function PayrollAdjustmentsPage() {
   if (context.selection.kind !== "organization") {
     return (
       <div className="space-y-6">
-        <PageHeader title="Payroll adjustments" description="Select a single workspace first." />
-        <EmptyState title="Choose a workspace" description="Adjustments are managed per organization." />
+        <PageHeader title="Payroll adjustments" description="Not available." />
+        <EmptyState title="Not available" description="Not available." />
       </div>
     );
   }
@@ -81,7 +81,7 @@ export default async function PayrollAdjustmentsPage() {
     <div className="space-y-6">
       <PageHeader
         title="Payroll adjustments"
-        description="Bonuses, deductions, corrections, reimbursements, and carry-forwards — every one needs a reason and independent approval."
+        description="Bonuses, deductions and corrections. Each needs a reason and an approval."
         actions={
           <Link
             href="/performance-operations/payroll"

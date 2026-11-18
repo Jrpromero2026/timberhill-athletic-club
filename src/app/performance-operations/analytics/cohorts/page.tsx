@@ -36,7 +36,7 @@ export default async function CohortsPage({
         <PageHeader title="Cohorts" description="Select a reporting period first." />
         <EmptyState
           title="Select a reporting period"
-          description="Cohorts are anchored to the month of the selected reporting period."
+          description="Pick a reporting period to see cohorts."
         />
       </div>
     );
@@ -138,7 +138,7 @@ export default async function CohortsPage({
       {table.totalClients === 0 ? (
         <EmptyState
           title="No client activity in this window"
-          description="Cohorts appear once completed appointments with identified clients exist."
+          description="Cohorts show here once sessions are imported."
         />
       ) : (
         <div className="rounded-[--radius-card] border border-border bg-surface p-4 shadow-sm">
