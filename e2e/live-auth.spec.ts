@@ -83,14 +83,6 @@ test("overview renders the operations center with honest data states", async ({
   await expect(page.getByTestId("overview-alerts")).toBeVisible();
 });
 
-test("workspace switching rescopes live data and persists", async ({ page }) => {
-  await page.goto("/performance-operations/overview");
-  await page.getByLabel("Workspace").selectOption({ label: "G3 Sports & Fitness" });
-  await expect(page.getByRole("heading", { name: "G3 Sports & Fitness" })).toBeVisible();
-  await page.reload();
-  await expect(page.getByRole("heading", { name: "G3 Sports & Fitness" })).toBeVisible();
-});
-
 test("admin can create and revoke an invitation (net-zero mutation)", async ({
   page,
 }) => {

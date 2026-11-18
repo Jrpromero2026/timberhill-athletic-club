@@ -48,11 +48,14 @@ export function Header({
             Offline preview
           </span>
         )}
-        <WorkspaceSelector
-          options={context.options}
-          selection={context.selection}
-          canAccessAll={context.canAccessAll}
-        />
+        {/* One organization: nothing to switch between, so no control. */}
+        {context.options.length > 1 && (
+          <WorkspaceSelector
+            options={context.options}
+            selection={context.selection}
+            canAccessAll={context.canAccessAll}
+          />
+        )}
         <PeriodSelector
           options={periods.options}
           selectedId={periods.selected?.id ?? null}

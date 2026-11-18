@@ -31,3 +31,9 @@ export const BOOTSTRAP_WORKSPACES = [
     ],
   },
 ] as const;
+
+/**
+ * The hub serves one organization. The database can hold others, but nothing
+ * outside this organization is offered, selectable, or aggregated here.
+ */
+export const HUB_ORGANIZATION_SLUG = "timberhill-athletic-club";

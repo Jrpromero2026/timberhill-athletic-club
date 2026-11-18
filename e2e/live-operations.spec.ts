@@ -162,25 +162,6 @@ test("6. report center: tabs, saved view CRUD, export history", async ({ page })
   await expect(page.getByText("metric_report").first()).toBeVisible();
 });
 
-test("7. workspace switching rescopes the operations center", async ({ page }) => {
-  await page.goto("/performance-operations/overview");
-  await page.waitForLoadState("networkidle");
-  await page.getByLabel("Workspace").selectOption({ label: "G3 Sports & Fitness" });
-  await page.waitForTimeout(2000);
-  await page.goto("/performance-operations/overview");
-  // G3 has no reporting period selected → honest empty/no-period widget,
-  // and no Timberhill pipeline rows leak across.
-  await expect(
-    page.getByRole("heading", { name: "G3 Sports & Fitness" }),
-  ).toBeVisible({ timeout: 15_000 });
-  await expect(page.getByText(/Select a reporting period in the header/)).toBeVisible();
-  await expect(page.getByText("E2E Payroll Window")).toHaveCount(0);
-
-  await page.waitForLoadState("networkidle");
-  await page.getByLabel("Workspace").selectOption({ label: "Timberhill Athletic Club" });
-  await page.waitForTimeout(2000);
-});
-
 test("8. responsive shell: sidebar collapses and mobile drawer works", async ({ page }) => {
   await page.goto("/performance-operations/overview");
   await page.waitForLoadState("networkidle");
