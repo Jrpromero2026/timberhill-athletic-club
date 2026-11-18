@@ -42,6 +42,11 @@ export const NAV_ITEMS: NavItem[] = [
     iconPath: "M12 8v8m3-6.5c0-1-1.3-1.5-3-1.5s-3 .5-3 1.5 1 1.5 3 2 3 1 3 2-1.3 1.5-3 1.5-3-.5-3-1.5M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0Z",
   },
   {
+    href: "/performance-operations/package-audit",
+    label: "Package audit",
+    iconPath: "M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4",
+  },
+  {
     href: "/performance-operations/period-close",
     label: "Period close",
     iconPath: "M9 12l2 2 4-4m5 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z",

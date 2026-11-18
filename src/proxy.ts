@@ -25,26 +25,19 @@ function isPublic(pathname: string): boolean {
 }
 
 /**
- * Public marketing routes — the Personal Training hub and everything beneath
- * it, served by the `(marketing)` route group.
+ * Marketing routes — the Personal Training pages served by the `(marketing)`
+ * route group.
  *
- * These are the ONLY paths in this application open to the world. They are
- * matched by exact segment rather than loose prefix, so a path such as
- * `/personal-training-internal` can never fall through as public.
- *
- * They are answered before any Supabase work below, for two reasons: they need
- * no session at all, and they are statically prerendered pages whose hero
- * image is the LCP element — a `getUser()` round trip on every request would
- * be pure latency against the < 2.5s target in the build brief §9.
+ * LOCKED. This deployment is a private hub: the marketing pages are a working
+ * preview of the public website, not the public website itself, so they
+ * require a session like everything else. The list is kept, empty, so that
+ * re-opening a route is a deliberate one-line change here plus a case in
+ * `e2e/live-marketing.spec.ts` — never an accident. Prefixes match by whole
+ * segment, so `/personal-training-internal` could never ride along.
  */
-const PUBLIC_MARKETING_PREFIXES = ["/personal-training"] as const;
+const PUBLIC_MARKETING_PREFIXES: readonly string[] = [];
 
 function isPublicMarketing(pathname: string): boolean {
-  // The root is public because it is the public front door: it redirects to
-  // the marketing hub, and an anonymous visitor must reach that redirect
-  // rather than being bounced to /login on the way.
-  if (pathname === "/") return true;
-
   return PUBLIC_MARKETING_PREFIXES.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
   );

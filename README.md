@@ -7,7 +7,7 @@ operations platform, and the public website.
 | Path | What it is |
 |---|---|
 | `src/app/performance-operations/` + `src/lib/`, `supabase/`, `tests/`, `e2e/`, `docs/` | **Performance Operations** — payroll, revenue, KPI and department analytics, served under `/performance-operations`. Private; every route requires a session. Documented below. |
-| `src/app/(marketing)/` | **Public website** — the Personal Training hub, trainers index, consultation page and trainer profiles, served under `/personal-training`. Open to the world, and `/` redirects here. |
+| `src/app/(marketing)/` | **Website preview** — the Personal Training hub, trainers index, consultation page and trainer profiles, served under `/personal-training`. **Locked:** requires a session like everything else (the allow-list in `src/proxy.ts` is empty). `/` redirects here. |
 
 Both are served by the one Next.js application, from one deployment, on one
 domain. The seam between them is enforced in three places, and all three matter:
@@ -17,10 +17,10 @@ domain. The seam between them is enforced in three places, and all three matter:
   root until the two were merged, so `next.config.ts` permanently redirects
   every old top-level segment — `/payroll/:path*` and the rest — into the
   namespace, keeping staff bookmarks and pre-move notification links alive.
-- **Access.** `src/proxy.ts` protects everything by default. The marketing
-  prefixes are the single explicit exception, matched by whole segment, and
-  answered before any Supabase work — those pages need no session and must not
-  pay for one. `e2e/live-marketing.spec.ts` is the regression test.
+- **Access.** `src/proxy.ts` protects everything, the marketing pages
+  included: `PUBLIC_MARKETING_PREFIXES` is empty, so the whole deployment is
+  private. Re-opening a route means adding its prefix there, matched by whole
+  segment. `e2e/live-marketing.spec.ts` is the regression test.
 - **Design tokens.** The marketing design system and the application both
   define `--color-accent` and `--color-surface` with different values. The
   marketing tokens live on `.tac-site`, never `:root`; on `:root` they would
