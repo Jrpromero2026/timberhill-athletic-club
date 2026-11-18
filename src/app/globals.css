@@ -3,8 +3,9 @@
 /* ============================================================================
    Timberhill Hub — design tokens
    Layout and type follow jrstrengthandfitness.com: near-black navigation,
-   off-white canvas, square corners, hairline borders, Jost with heavy
-   uppercase headings and tracked labels. The colour stays Timberhill's:
+   off-white canvas, square corners, hairline borders, heavy uppercase
+   headings and tracked labels. Type is Timberhill's: League Spartan for
+   headings, Inter for the rest. The colour stays Timberhill's:
    Royal Blue #1F4E95 is the only accent.
    ========================================================================== */
 
@@ -47,7 +48,8 @@
   --color-info-soft: #e8f0fd;
 
   /* Typography */
-  --font-sans: var(--font-jost), Futura, ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-league-spartan), var(--font-inter), sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
   /* Radii — square, as on the website */
@@ -70,8 +72,11 @@ body {
 
 /* ---------- Hub type: applies inside the app shell and sign-in pages only,
    so the website preview keeps its own styles ---------- */
-.hub {
-  letter-spacing: 0.01em;
+.hub h1,
+.hub h2,
+.hub h3,
+.hub .display {
+  font-family: var(--font-display);
 }
 .hub h1 {
   font-weight: 800;

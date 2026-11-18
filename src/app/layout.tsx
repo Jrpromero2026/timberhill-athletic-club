@@ -3,18 +3,20 @@ import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-// Jost, self-hosted: the typeface of jrstrengthandfitness.com, so the hub
-// reads as part of the same family of sites.
-const jost = localFont({
-  variable: "--font-jost",
+// Timberhill's own typefaces, self-hosted: League Spartan for headings and
+// Inter for everything else, as on the brand style sheet and the website.
+const inter = localFont({
+  variable: "--font-inter",
   display: "swap",
-  src: [
-    { path: "./fonts/jost-latin-400-normal.woff2", weight: "400" },
-    { path: "./fonts/jost-latin-500-normal.woff2", weight: "500" },
-    { path: "./fonts/jost-latin-600-normal.woff2", weight: "600" },
-    { path: "./fonts/jost-latin-700-normal.woff2", weight: "700" },
-    { path: "./fonts/jost-latin-800-normal.woff2", weight: "800" },
-  ],
+  weight: "100 900",
+  src: "./fonts/inter-latin-wght-normal.woff2",
+});
+
+const leagueSpartan = localFont({
+  variable: "--font-league-spartan",
+  display: "swap",
+  weight: "100 900",
+  src: "./fonts/league-spartan-latin-wght-normal.woff2",
 });
 
 const geistMono = Geist_Mono({
@@ -39,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jost.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${leagueSpartan.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full">{children}</body>
     </html>

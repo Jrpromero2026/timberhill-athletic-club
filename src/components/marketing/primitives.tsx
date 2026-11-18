@@ -147,10 +147,11 @@ export function SectionHead({
 }) {
   return (
     <>
-      <div className={`sec-head${tight ? " sec-head--tight" : ""}`}>
-        <span className="sec-num" aria-hidden="true">
-          {number}
-        </span>
+      {/* The section number is kept as data for ordering checks; it is not shown. */}
+      <div
+        className={`sec-head${tight ? " sec-head--tight" : ""}`}
+        data-section={number}
+      >
         <h2 className="sec-title" id={id}>
           {title}
         </h2>

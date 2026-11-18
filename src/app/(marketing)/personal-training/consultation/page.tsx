@@ -136,11 +136,8 @@ export default function ConsultationPage() {
                   What happens in the free consultation?
                 </h2>
                 <div className="agenda">
-                  {CONSULTATION_AGENDA.map((item, index) => (
+                  {CONSULTATION_AGENDA.map((item) => (
                     <div className="agenda-row" key={item.title}>
-                      <span className="agenda-n" aria-hidden="true">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
                       <div>
                         <h3 className="agenda-t">{item.title}</h3>
                         <p className="agenda-d">{item.body}</p>

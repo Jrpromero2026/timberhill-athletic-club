@@ -169,11 +169,8 @@ export default function PersonalTrainingHub() {
               </p>
             </SectionHead>
             <ul className="g3" style={{ listStyle: "none", margin: 0, padding: 0 }}>
-              {RECOGNITION.map((situation, index) => (
+              {RECOGNITION.map((situation) => (
                 <li className="blueprint rec-card" key={situation}>
-                  <span className="rec-n" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
                   <span className="rec-t">{situation}</span>
                 </li>
               ))}
@@ -245,12 +242,8 @@ export default function PersonalTrainingHub() {
               ))}
             </ol>
             <ol className="steps" style={{ listStyle: "none", margin: 0, padding: 0 }}>
-              {STEPS.map((step, index) => (
+              {STEPS.map((step) => (
                 <li className="step" key={step.title}>
-                  {/* Decorative ordinal — the list carries the order. */}
-                  <span className="step-n" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
                   <div className="step-body">
                     <h3 className="step-t">{step.title}</h3>
                     <p className="step-d">{step.body}</p>

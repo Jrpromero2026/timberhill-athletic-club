@@ -78,8 +78,10 @@ test.describe("hub", () => {
   }) => {
     await page.goto("/personal-training");
 
-    const numbers = await page.locator("main .sec-num").allInnerTexts();
-    expect(numbers.map((n) => n.trim())).toEqual([
+    const numbers = await page
+      .locator("main [data-section]")
+      .evaluateAll((els) => els.map((el) => el.getAttribute("data-section") ?? ""));
+    expect(numbers).toEqual([
       "03",
       "04",
       "05",
@@ -92,9 +94,7 @@ test.describe("hub", () => {
     ]);
 
     const aboveNine = await page.evaluate(() => {
-      const nine = [...document.querySelectorAll(".sec-num")].find(
-        (el) => el.textContent?.trim() === "09",
-      );
+      const nine = document.querySelector('[data-section="09"]');
       const stop = nine?.closest("section");
       let text = "";
       for (const section of document.querySelectorAll("main > section")) {
