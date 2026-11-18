@@ -54,10 +54,10 @@ export function Sidebar({ initialCollapsed }: { initialCollapsed: boolean }) {
             collapsed ? "justify-center px-0" : "px-0"
           }`}
           href="/personal-training"
-          title="View the public site"
+          title="Website preview"
         >
           <span aria-hidden="true">←</span>
-          {!collapsed && <span>View public site</span>}
+          {!collapsed && <span>Website preview</span>}
         </a>
       </div>
       <div className={`border-t border-nav-border py-3 ${collapsed ? "px-2" : "px-5"}`}>
