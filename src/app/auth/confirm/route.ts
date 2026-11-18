@@ -27,12 +27,25 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(url);
   };
 
-  if (!tokenHash || !type) {
+  // Supabase's stock email templates do not carry a token_hash: they verify
+  // on Supabase's side and come back here with a one-time `code` instead.
+  // Accept both, so a reset works whichever template the project sends.
+  const code = searchParams.get("code");
+
+  if ((!tokenHash || !type) && !code) {
     return redirectTo("/login", { notice: "invalid_link" });
   }
 
   const supabase = await createSupabaseServerClient();
   if (!supabase) return redirectTo("/login", { notice: "not_configured" });
+
+  if (!tokenHash || !type) {
+    const { error } = await supabase.auth.exchangeCodeForSession(code!);
+    if (error) return redirectTo("/login", { notice: "expired_link" });
+    if (next === "/reset-password") return redirectTo("/reset-password");
+    await completePendingInvite();
+    return redirectTo(next);
+  }
 
   const { error } = await supabase.auth.verifyOtp({
     type,
