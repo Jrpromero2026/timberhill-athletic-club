@@ -51,7 +51,6 @@ export default async function NotificationsPage({
     <div className="space-y-6">
       <PageHeader
         title="Notifications"
-        description="In-app notifications from payroll, imports, configuration, and reporting workflows."
       />
       <div className="flex gap-1.5" data-testid="notification-tabs">
         {TABS.map(([key, label]) => (
@@ -72,7 +71,7 @@ export default async function NotificationsPage({
       {(notifications ?? []).length === 0 ? (
         <EmptyState
           title={`No ${tab === "all" ? "" : tab + " "}notifications`}
-          description="Workflow events (imports posted, payroll approved/posted/reopened, statements ready) appear here."
+          description="Updates on imports, payroll and statements show here."
         />
       ) : (
         <ul className="divide-y divide-border rounded-[--radius-card] border border-border bg-surface shadow-sm">

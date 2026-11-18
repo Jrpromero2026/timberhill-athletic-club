@@ -20,7 +20,7 @@ export default async function NewImportPage() {
     <div className="space-y-6">
       <PageHeader
         title="Upload import"
-        description="The server parses, validates, and normalizes the file; nothing posts to the ledger until reviewed and approved."
+        description="Nothing is saved until you review and approve the file."
       />
       <UploadForm
         organizations={uploadableOrgs}

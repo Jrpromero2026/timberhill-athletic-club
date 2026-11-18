@@ -67,7 +67,7 @@ export default async function ServicesPage() {
     <div className="space-y-6">
       <PageHeader
         title="Services"
-        description="Normalized appointment and revenue categories. Future Setmore/Acuity imports match rows to services through their source aliases."
+        description="Services and the Setmore names that match them."
         actions={
           canManage ? (
             <Link
@@ -82,7 +82,7 @@ export default async function ServicesPage() {
       {services.length === 0 ? (
         <EmptyState
           title="No services configured yet"
-          description="Create services from the real service list (docs/INPUTS_REQUIRED.md #7). Each service needs source aliases before imports can match appointments to it."
+          description="Add your services. Each needs its Setmore name before sessions can match to it."
         />
       ) : (
         <div className="overflow-x-auto rounded-[--radius-card] border border-border bg-surface shadow-sm">

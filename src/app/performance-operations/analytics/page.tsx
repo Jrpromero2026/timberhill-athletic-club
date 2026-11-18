@@ -19,46 +19,46 @@ const SECTIONS: {
   {
     href: "/performance-operations/analytics/executive",
     title: "Executive analytics",
-    description: "Organization scorecard, multi-period trends, department comparison.",
+    description: "Scorecard, trends and department comparison.",
   },
   {
     href: "/performance-operations/analytics/scorecards",
     title: "Scorecards",
-    description: "Organization, department, trainer, payroll, close, and integration scorecards.",
+    description: "Scorecards for the department, trainers and payroll.",
   },
   {
     href: "/performance-operations/analytics/goals",
     title: "Goals",
-    description: "Governed targets against catalog metrics with approval and progress.",
+    description: "Targets and progress.",
     permission: "goal:read",
   },
   {
     href: "/performance-operations/analytics/benchmarks",
     title: "Benchmarks",
-    description: "Evidence-backed reference values — internal history or approved standards.",
+    description: "Reference values to compare against.",
     permission: "benchmark:read",
   },
   {
     href: "/performance-operations/analytics/cohorts",
     title: "Cohorts",
-    description: "First-visit client cohorts and monthly activity (counts only).",
+    description: "New clients by month and how many stay.",
     permission: "cohort:read",
   },
   {
     href: "/performance-operations/analytics/dashboards",
     title: "Dashboards",
-    description: "Personal and shared dashboards built from governed widgets.",
+    description: "Saved dashboards.",
   },
   {
     href: "/performance-operations/analytics/presentation",
     title: "Presentation",
-    description: "Full-screen, print-ready executive view of the selected period.",
+    description: "Full-screen view for presenting.",
     permission: "analytics:presentation",
   },
   {
     href: "/performance-operations/analytics/datasets",
     title: "Datasets",
-    description: "Forecast-ready historical dataset exports (no projected values).",
+    description: "Export the history.",
     permission: "analytics_dataset:export",
   },
 ];
@@ -74,11 +74,10 @@ export default async function AnalyticsPage() {
       <div className="space-y-6">
         <PageHeader
           title="Analytics"
-          description="Business intelligence over the Performance Intelligence Engine."
         />
         <EmptyState
           title="Select a reporting period"
-          description="Choose a reporting period in the header — every analytics surface is computed for that window."
+          description="Pick a reporting period in the header."
         />
       </div>
     );

@@ -98,7 +98,7 @@ export default async function TrainerCompensationPage({
     <div className="space-y-6">
       <PageHeader
         title={`Compensation — ${trainer.display_name}`}
-        description="Effective-dated assignments to published plan versions. Overlaps per organization and purpose are rejected; history is never mutated."
+        description="Which trainer is on which pay plan, and from when."
         actions={
           <Link href={`/performance-operations/trainers/${trainer.id}`}
             className="inline-flex h-9 items-center rounded-[--radius-control] border border-border bg-surface px-3.5 text-sm font-medium text-ink hover:border-border-strong">

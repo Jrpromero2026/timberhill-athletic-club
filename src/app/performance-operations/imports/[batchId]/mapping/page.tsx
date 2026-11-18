@@ -56,7 +56,7 @@ export default async function MappingPage({
     <div className="space-y-6">
       <PageHeader
         title="Column mapping"
-        description={`${batch.original_filename} — map source columns to canonical fields. The saved mapping is versioned, audited, and reused for files with this exact header signature.`}
+        description={`${batch.original_filename}: match each column to a field. The mapping is reused for files with the same columns.`}
       />
       {sensitive.length > 0 && (
         <p className="rounded-[--radius-card] border border-warning/30 bg-warning-soft px-4 py-3 text-sm text-warning">

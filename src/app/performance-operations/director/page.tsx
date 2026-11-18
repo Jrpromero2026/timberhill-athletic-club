@@ -23,7 +23,7 @@ export default async function DirectorPage() {
     <div className="space-y-6">
       <PageHeader
         title="PT Director"
-        description="Ask questions about the department in plain English. Read-only: the Director reports and recommends, and every number it quotes names its source and freshness."
+        description="Ask about the department in plain English. Every number names its source."
       />
       {!isDirectorConfigured() ? (
         <p className="rounded-[--radius-control] bg-warning-soft px-3 py-2 text-sm text-warning">

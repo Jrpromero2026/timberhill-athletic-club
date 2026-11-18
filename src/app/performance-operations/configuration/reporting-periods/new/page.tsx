@@ -23,7 +23,7 @@ export default async function NewPeriodPage() {
     <div className="space-y-6">
       <PageHeader
         title="Add reporting period"
-        description="New periods open immediately. Close a period at its end; lock it once payroll is final."
+        description="Close a period when it ends. Lock it once payroll is final."
       />
       <PeriodForm
         action={createPeriod}

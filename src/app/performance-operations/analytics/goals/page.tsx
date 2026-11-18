@@ -31,7 +31,7 @@ export default async function GoalsPage() {
         <PageHeader title="Goals" description="Select a reporting period first." />
         <EmptyState
           title="Select a reporting period"
-          description="Goal progress is evaluated against the selected period's engine results."
+          description="Pick a reporting period to see goal progress."
         />
       </div>
     );

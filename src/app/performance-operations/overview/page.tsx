@@ -30,12 +30,12 @@ export const metadata: Metadata = { title: "Overview" };
  */
 
 const FINANCIAL_KPIS = [
-  { label: "Revenue", hint: "Awaiting Import Center" },
-  { label: "Payroll", hint: "Not yet calculated" },
-  { label: "Sessions", hint: "No imported data" },
-  { label: "Active Clients", hint: "No imported data" },
-  { label: "Revenue per Session", hint: "Awaiting Import Center" },
-  { label: "Payroll Percentage", hint: "Not yet calculated" },
+  { label: "Revenue" },
+  { label: "Payroll" },
+  { label: "Sessions" },
+  { label: "Active Clients" },
+  { label: "Revenue per Session" },
+  { label: "Payroll Percentage" },
 ];
 
 const BATCH_BADGE: Record<string, string> = {
@@ -72,7 +72,7 @@ export default async function OverviewPage() {
   const workspaceName =
     context.selection.kind === "all"
       ? "All Workspaces"
-      : (context.selected?.name ?? "No workspace");
+      : (context.selected?.name ?? "Timberhill Athletic Club");
 
   const periodChip = periods.selected ? (
     <span className="inline-flex h-9 items-center gap-2 rounded-[--radius-control] border border-border bg-surface px-3 text-sm font-medium text-ink">
@@ -92,24 +92,18 @@ export default async function OverviewPage() {
       <div className="space-y-6">
         <PageHeader
           title={workspaceName}
-          description={
-            context.selection.kind === "all"
-              ? "Cross-organization view. Select a single workspace for the full operations center."
-              : "Operational overview for the selected workspace."
-          }
           actions={periodChip}
         />
         {context.mode === "offline" && (
           <div className="rounded-[--radius-card] border border-warning/30 bg-warning-soft px-4 py-3 text-sm text-warning">
-            <strong className="font-semibold">Offline preview.</strong> Explicit
-            development mode with no Supabase connection — structure only, no
+            <strong className="font-semibold">Offline preview.</strong> No
             real data.
           </div>
         )}
         <section aria-label="Financial indicators">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {FINANCIAL_KPIS.map((kpi) => (
-              <KpiCard key={kpi.label} label={kpi.label} hint={kpi.hint} />
+              <KpiCard key={kpi.label} label={kpi.label} />
             ))}
           </div>
         </section>
@@ -232,7 +226,6 @@ export default async function OverviewPage() {
       <div className="space-y-6">
         <PageHeader
           title={`${workspaceName} · Departments`}
-          description="Your department operations."
           actions={periodChip}
         />
         {!session && (
@@ -303,7 +296,6 @@ export default async function OverviewPage() {
     <div className="space-y-6">
       <PageHeader
         title={workspaceName}
-        description="Executive operations center — live pipeline status, readiness, and engine metrics."
         actions={periodChip}
       />
 

@@ -15,10 +15,10 @@ export default async function TrainersPage() {
   if (context.mode !== "live") {
     return (
       <div className="space-y-6">
-        <PageHeader title="Trainers" description="Trainer registry with per-organization roles and effective-dated assignments." />
+        <PageHeader title="Trainers" description="The trainer roster." />
         <EmptyState
           title="Trainers require a live environment"
-          description="Connect and sign in to the dedicated Supabase project to manage the trainer roster."
+          description="Sign in to manage trainers."
         />
       </div>
     );
@@ -108,7 +108,7 @@ export default async function TrainersPage() {
     <div className="space-y-6">
       <PageHeader
         title="Trainers"
-        description="Trainer registry scoped to the selected workspace. Assignments are effective-dated; history is preserved."
+        description="The trainer roster."
         actions={
           canManage ? (
             <Link
@@ -122,11 +122,11 @@ export default async function TrainersPage() {
       />
       {rows.length === 0 ? (
         <EmptyState
-          title="No trainers in this workspace yet"
+          title="No trainers yet"
           description={
             canManage
-              ? "Add your first trainer, or provide the trainer roster listed in docs/INPUTS_REQUIRED.md to load the real team."
-              : "No trainers are visible for your access level in this workspace."
+              ? "Add your first trainer."
+              : "No trainers to show."
           }
         />
       ) : (

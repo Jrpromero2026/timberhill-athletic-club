@@ -7,10 +7,9 @@ export default function RevenuePage() {
   return (
     <PlaceholderPage
       title="Revenue"
-      description="Revenue reporting by organization, department, service, and trainer."
+      description="Revenue by department, service and trainer."
       emptyTitle="Waiting for imported data"
-      emptyDescription="Revenue is calculated from posted appointments and the revenue-recognition rules in docs/INPUTS_REQUIRED.md. No figures are shown until real data is imported and approved."
-      phase="Phase 5 · Analytics"
+      emptyDescription="Revenue shows here once sessions are imported."
     />
   );
 }

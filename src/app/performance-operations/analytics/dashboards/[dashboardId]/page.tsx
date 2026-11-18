@@ -37,7 +37,7 @@ export default async function DashboardDetailPage({
         <PageHeader title="Dashboard" description="Select a reporting period first." />
         <EmptyState
           title="Select a reporting period"
-          description="Dashboards render their widgets for the selected reporting period."
+          description="Pick a reporting period to see dashboards."
         />
       </div>
     );
@@ -116,7 +116,7 @@ export default async function DashboardDetailPage({
           title="No widgets yet"
           description={
             isOwner
-              ? "Add widgets above — metrics, comparisons, trends, goals, and benchmarks from the governed catalog."
+              ? "Add widgets above."
               : "The owner has not added widgets to this dashboard yet."
           }
         />

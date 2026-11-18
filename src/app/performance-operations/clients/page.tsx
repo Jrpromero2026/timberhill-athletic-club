@@ -7,10 +7,8 @@ export default function ClientsPage() {
   return (
     <PlaceholderPage
       title="Clients"
-      description="Client registry scoped to the selected workspace."
       emptyTitle="No client data yet"
-      emptyDescription="Clients are created in the Configuration phase and matched automatically during imports. Nothing is displayed until real client records exist."
-      phase="Phase 2 · Configuration"
+      emptyDescription="Clients show here once sessions are imported."
     />
   );
 }

@@ -19,7 +19,7 @@ export default async function NewDashboardPage() {
         <PageHeader title="New dashboard" description="Select a reporting period first." />
         <EmptyState
           title="Select a reporting period"
-          description="Dashboards render for the selected reporting period."
+          description="Pick a reporting period to see dashboards."
         />
       </div>
     );
@@ -31,7 +31,7 @@ export default async function NewDashboardPage() {
     <div className="space-y-6">
       <PageHeader
         title="New dashboard"
-        description="Dashboards are governed compositions — widgets reference catalog metrics, goals, and benchmarks; there is no formula editor."
+        description="Dashboards are built from the existing metrics, goals and benchmarks."
       />
       <NewDashboardForm organizationId={context.organizationId} />
     </div>

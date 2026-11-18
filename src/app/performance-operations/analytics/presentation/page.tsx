@@ -36,7 +36,7 @@ export default async function PresentationPage() {
       <div className="space-y-6 p-8">
         <EmptyState
           title="Select a reporting period"
-          description="Presentation mode renders the executive scorecard for the selected period."
+          description="Pick a reporting period to present."
         />
         <Link href="/performance-operations/analytics" className="text-sm text-accent hover:text-accent-strong">
           ← Back to analytics

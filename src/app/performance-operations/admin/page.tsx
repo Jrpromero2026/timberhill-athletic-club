@@ -17,7 +17,7 @@ const CARDS: LinkCard[] = [
   },
   {
     title: "Appointments",
-    description: "The session-by-session ledger behind every number.",
+    description: "Every imported session.",
     href: "/performance-operations/appointments",
   },
   {
@@ -27,7 +27,7 @@ const CARDS: LinkCard[] = [
   },
   {
     title: "Configuration",
-    description: "Services, reporting periods, pay plans, users and access.",
+    description: "Services, periods, pay plans and access.",
     href: "/performance-operations/configuration",
   },
   {
@@ -40,10 +40,7 @@ const CARDS: LinkCard[] = [
 export default function AdminPage() {
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="Data & settings"
-        description="The plumbing behind Payroll, Trainers and Reports. You only need these when setting something up or tracking down a number."
-      />
+      <PageHeader title="Data & settings" />
       <LinkCards cards={CARDS} />
     </div>
   );

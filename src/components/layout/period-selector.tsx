@@ -24,9 +24,9 @@ export function PeriodSelector({
     return (
       <span
         className="hidden sm:flex h-9 items-center rounded-[--radius-control] border border-dashed border-border-strong bg-surface-subtle px-3 text-sm text-ink-muted"
-        title="Select a single workspace to choose a reporting period — organization periods are never applied globally."
+        title="No reporting period available."
       >
-        Period: n/a in All Workspaces
+        No reporting period
       </span>
     );
   }

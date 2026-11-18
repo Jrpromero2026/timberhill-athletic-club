@@ -40,7 +40,7 @@ export default async function NewTrainerPage() {
     <div className="space-y-6">
       <PageHeader
         title="Add trainer"
-        description="Creates the trainer identity plus an effective-dated assignment in the selected organization. Duplicates are detected by email and scheduling-system IDs."
+        description="Adds the trainer. Duplicates are caught by email and Setmore ID."
       />
       <TrainerForm
         action={createTrainer}

@@ -66,10 +66,10 @@ export default async function ReportsPage({
   if (context.selection.kind !== "organization") {
     return (
       <div className="space-y-6">
-        <PageHeader title="Reports" description="Select a single workspace first." />
+        <PageHeader title="Reports" description="Not available." />
         <EmptyState
-          title="Choose a workspace"
-          description="Reports are computed per organization by the Performance Intelligence Engine."
+          title="Not available"
+          description="Not available."
         />
       </div>
     );
@@ -126,11 +126,10 @@ export default async function ReportsPage({
       <div className="space-y-6">
         <PageHeader
           title="Report Center"
-          description="Operational reports from the Performance Intelligence Engine."
         />
         <EmptyState
           title="Select a reporting period"
-          description="Choose a reporting period in the header — every report is computed for that window. Tip: mark a saved view as default and it will apply automatically."
+          description="Pick a reporting period in the header."
         />
       </div>
     );
@@ -313,7 +312,7 @@ export default async function ReportsPage({
           {(savedViews ?? []).length === 0 ? (
             <EmptyState
               title="No saved views yet"
-              description="Save the current report with a name to find it here; pin your favorites, share with the organization, or mark one as your default."
+              description="Save a report to find it here. You can pin it, share it, or make it your default."
             />
           ) : (
             <ul className="divide-y divide-border rounded-[--radius-card] border border-border bg-surface shadow-sm">

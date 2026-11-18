@@ -75,12 +75,6 @@ export const NAV_GROUPS: NavGroup[] = [
           "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm13 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75",
       },
       {
-        href: "/performance-operations/clients",
-        label: "Clients",
-        iconPath:
-          "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z",
-      },
-      {
         href: "/performance-operations/sops",
         label: "SOPs",
         iconPath: "M6 3h9l4 4v14H6V3Zm9 0v4h4M9 12h7M9 16h7",

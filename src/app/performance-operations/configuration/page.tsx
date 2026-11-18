@@ -8,7 +8,6 @@ import {
   getConfigStats,
   readinessChecklist,
 } from "@/lib/data/config-stats";
-import { isSupabaseConfigured } from "@/lib/env";
 import { getWorkspaceContext } from "@/lib/workspace/server";
 
 export const metadata: Metadata = { title: "Configuration" };
@@ -45,67 +44,46 @@ export default async function ConfigurationPage() {
   const anyOrgId = orgs[0]?.id ?? "";
   const sections = [
     {
-      title: "Organizations",
-      count: `${orgs.length}`,
-      status: "Seeded",
-      href: null,
-      note: "Organizations are managed by platform admins; both initial organizations exist.",
-    },
-    {
-      title: "Departments",
-      count: `${totals.departments}`,
-      status: totals.departments > 0 ? "Configured" : "Missing",
-      href: null,
-      note: "All nine seeded departments are active.",
-    },
-    {
       title: "Users & Access",
       count: `${totals.members} members · ${totals.invitations} pending invites`,
       status: totals.members > 0 ? "Active" : "Needs setup",
       href: "/performance-operations/configuration/users",
-      note: "Invite users, manage roles, memberships, and department scoping.",
+      note: "Who can sign in and what they can do.",
     },
     {
       title: "Trainers",
       count: `${totals.trainers} active`,
       status: totals.trainers > 0 ? "In progress" : "Awaiting roster",
       href: "/performance-operations/trainers",
-      note: "Trainer roster with effective-dated organization and department assignments.",
+      note: "The trainer roster.",
     },
     {
       title: "Services",
       count: `${totals.services} active`,
       status: totals.services > 0 ? "In progress" : "Awaiting service list",
       href: "/performance-operations/configuration/services",
-      note: "Normalized services and their Setmore/Acuity aliases for import matching.",
+      note: "Services and the Setmore names that match them.",
     },
     {
       title: "Reporting Periods",
       count: `${totals.periods}`,
       status: totals.periods > 0 ? "Configured" : "Awaiting schedule rules",
       href: "/performance-operations/configuration/reporting-periods",
-      note: "Monthly reporting and payroll windows; powers the header period selector.",
+      note: "Monthly reporting and payroll periods.",
     },
     {
       title: "Compensation Plans",
       count: `${totals.plans}`,
       status: totals.plans > 0 ? "In progress" : "Awaiting comp rules",
       href: "/performance-operations/configuration/compensation",
-      note: "Versioned plans, tiers in basis points, effective-dated trainer assignments.",
+      note: "Pay plans and which trainers are on them.",
     },
     {
       title: "Audit Log",
       count: "Live",
       status: "Recording",
       href: "/performance-operations/audit",
-      note: "Append-only trail of every governed configuration change.",
-    },
-    {
-      title: "Environment",
-      count: isSupabaseConfigured() ? "Connected" : "Not configured",
-      status: isSupabaseConfigured() ? "performance-operations-dev" : "Setup required",
-      href: null,
-      note: "Dedicated Supabase development project; migrations and seed applied.",
+      note: "Every settings change, with who made it.",
     },
   ];
 
@@ -119,7 +97,7 @@ export default async function ConfigurationPage() {
     <div className="space-y-6">
       <PageHeader
         title="Configuration"
-        description="Business configuration hub. Complete each organization's checklist before the Import Center and payroll phases can operate on real data."
+        description="Services, periods, pay plans and access."
       />
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -145,7 +123,7 @@ export default async function ConfigurationPage() {
       </div>
 
       <section aria-label="Setup readiness" className="space-y-4">
-        <h2 className="text-base font-semibold text-ink">Setup readiness by organization</h2>
+        <h2 className="text-base font-semibold text-ink">Setup checklist</h2>
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
           {stats.map((orgStats) => {
             const checklist = readinessChecklist(orgStats);
@@ -160,8 +138,8 @@ export default async function ConfigurationPage() {
                     ready ? "bg-positive-soft text-positive" : "bg-warning-soft text-warning"
                   }`}>
                     {ready
-                      ? "Payroll-ready configuration"
-                      : `Not payroll-ready · ${doneCount}/${checklist.length}`}
+                      ? "Ready for payroll"
+                      : `${doneCount} of ${checklist.length} done`}
                   </span>
                 </div>
                 <ul className="px-4 py-3 space-y-1.5">

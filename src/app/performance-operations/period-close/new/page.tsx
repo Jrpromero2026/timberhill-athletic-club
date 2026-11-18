@@ -33,7 +33,7 @@ export default async function NewPeriodClosePage() {
     <div className="space-y-6">
       <PageHeader
         title="Start period close"
-        description="Creates a close run in review — nothing closes until readiness passes, warnings are acknowledged, and the close is approved and executed."
+        description="Starts a close for review. Nothing closes until you approve it."
       />
       {(periods ?? []).length === 0 ? (
         <EmptyState

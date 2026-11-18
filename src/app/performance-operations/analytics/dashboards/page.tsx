@@ -29,7 +29,7 @@ export default async function DashboardsPage({
         <PageHeader title="Dashboards" description="Select a reporting period first." />
         <EmptyState
           title="Select a reporting period"
-          description="Dashboards render their widgets for the selected reporting period."
+          description="Pick a reporting period to see dashboards."
         />
       </div>
     );
@@ -59,7 +59,7 @@ export default async function DashboardsPage({
     <div className="space-y-6">
       <PageHeader
         title="Dashboards"
-        description="Governed compositions of catalog metrics, comparisons, goals, and benchmarks. Shared dashboards never bypass live permissions."
+        description="Saved dashboards."
         actions={
           <Link
             href={`/performance-operations/analytics/dashboards?show=${showArchived ? "active" : "archived"}`}
@@ -80,7 +80,7 @@ export default async function DashboardsPage({
           description={
             showArchived
               ? "Archived dashboards keep their history for report packages."
-              : "Create a personal dashboard and add widgets from the governed catalog."
+              : "Create a dashboard and add widgets."
           }
         />
       ) : (

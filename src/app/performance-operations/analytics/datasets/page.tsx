@@ -27,7 +27,7 @@ export default async function DatasetsPage() {
         <PageHeader title="Analytics datasets" description="Select a reporting period first." />
         <EmptyState
           title="Select a reporting period"
-          description="Dataset exports cover the selected period and its rolling history."
+          description="Exports cover the selected period and earlier ones."
         />
       </div>
     );

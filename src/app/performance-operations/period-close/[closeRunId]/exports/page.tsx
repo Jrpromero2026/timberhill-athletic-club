@@ -38,7 +38,7 @@ export default async function CloseExportsPage({
     <div className="space-y-6">
       <PageHeader
         title={`Exports: ${period?.label ?? "?"}`}
-        description="Accounting-friendly exports generated from frozen sources. Every file's identity (name, version, hash, rows) is recorded in the export manifest; downloads regenerate and VERIFY the hash."
+        description="Exports for accounting from the closed period."
         actions={
           <Link
             href={`/performance-operations/period-close/${run.id}`}

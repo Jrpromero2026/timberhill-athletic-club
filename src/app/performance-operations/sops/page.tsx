@@ -4,40 +4,22 @@ import { PageHeader } from "@/components/ui/page-header";
 
 export const metadata: Metadata = { title: "SOPs" };
 
-const NOT_YET = "Not in the hub yet";
-
 const CARDS: LinkCard[] = [
   {
-    title: "Trainer SOPs",
-    description: "The written procedures trainers work from.",
-    status: NOT_YET,
-  },
-  {
-    title: "Split levels and reviews",
-    description:
-      "Each trainer's split, the SOP 2.1 brackets, and review dates.",
-    status: NOT_YET,
-  },
-  {
-    title: "Goals",
-    description: "Monthly and quarterly targets per trainer.",
-    status: NOT_YET,
-  },
-  {
     title: "Client balances",
-    description: "Sessions left on every client package, by trainer.",
+    description: "Sessions left on each client package.",
     href: "/performance-operations/package-audit",
   },
 ];
 
-export default function SopsPage() {
+export default function Page() {
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="SOPs"
-        description="Procedures, split levels, and goals for the training team."
-      />
+      <PageHeader title="SOPs" />
       <LinkCards cards={CARDS} />
+      <p className="text-sm text-ink-muted">
+        Next: trainer SOPs, split levels and reviews, goals.
+      </p>
     </div>
   );
 }

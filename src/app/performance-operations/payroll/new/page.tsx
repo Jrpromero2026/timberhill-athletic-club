@@ -15,10 +15,10 @@ export default async function NewPayrollRunPage() {
   if (context.selection.kind !== "organization") {
     return (
       <div className="space-y-6">
-        <PageHeader title="New payroll run" description="Select a single workspace first." />
+        <PageHeader title="New payroll run" description="Not available." />
         <EmptyState
-          title="Choose a workspace"
-          description="Payroll runs are created per organization. Pick an organization in the workspace selector."
+          title="Not available"
+          description="Not available."
         />
       </div>
     );
@@ -42,12 +42,12 @@ export default async function NewPayrollRunPage() {
     <div className="space-y-6">
       <PageHeader
         title="New payroll run"
-        description="A draft run for one organization and reporting period. Calculation reads only the canonical appointment ledger."
+        description="Starts a draft payroll run for one reporting period."
       />
       {(periods ?? []).length === 0 ? (
         <EmptyState
           title="No usable reporting periods"
-          description="Create a reporting period in Configuration first (locked periods cannot receive payroll runs)."
+          description="Create a reporting period in Configuration first."
         />
       ) : (
         <NewRunForm

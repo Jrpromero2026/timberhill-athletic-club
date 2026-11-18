@@ -42,7 +42,7 @@ export default async function ConnectionHistoryPage({
     <div className="space-y-6">
       <PageHeader
         title={`Sync history: ${connection.name}`}
-        description="Every run with its cursor movement, page/record statistics, and resulting import batch."
+        description="Every sync, with what it brought in."
         actions={
           <Link
             href={`/performance-operations/configuration/integrations/${connectionId}`}

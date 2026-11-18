@@ -123,7 +123,7 @@ export default async function UsersPage() {
     <div className="space-y-6">
       <PageHeader
         title="Users & Access"
-        description="Invite users, manage organization memberships, roles, and department scoping. Every change is audited; deactivation preserves history."
+        description="Who can sign in and what they can do."
       />
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">

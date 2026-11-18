@@ -124,7 +124,7 @@ export default async function AuditPage({
     <div className="space-y-6">
       <PageHeader
         title="Audit"
-        description="Append-only audit trail scoped to your accessible organizations. Records are immutable; sensitive payloads are never stored."
+        description="Who changed what, and when."
       />
 
       <form method="get" className="flex flex-wrap items-end gap-2 rounded-[--radius-card] border border-border bg-surface p-3 shadow-sm">

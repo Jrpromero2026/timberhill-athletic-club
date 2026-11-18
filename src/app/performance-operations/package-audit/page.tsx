@@ -16,7 +16,7 @@ import { getWorkspaceContext } from "@/lib/workspace/server";
 export const metadata: Metadata = { title: "Package audit" };
 
 const DESCRIPTION =
-  "Sessions delivered in Setmore against packages bought in GMS, per paying account and session length.";
+  "Sessions used in Setmore against packages bought in GMS.";
 
 const STATUS_CLASS: Record<PackageStatus, string> = {
   held: "bg-negative-soft text-negative",
@@ -54,8 +54,8 @@ export default async function PackageAuditPage() {
       <div className="space-y-6">
         <PageHeader title="Package audit" description={DESCRIPTION} />
         <EmptyState
-          title="The package audit requires a live environment"
-          description="Connect and sign in to the dedicated Supabase project to see client package balances."
+          title="Sign in to see the package audit"
+          description="Balances need a signed-in session."
         />
       </div>
     );
@@ -127,8 +127,8 @@ export default async function PackageAuditPage() {
 
       {rows.length === 0 ? (
         <EmptyState
-          title="No package activity in this workspace"
-          description="Balances appear once Setmore sessions have synced and a GMS invoice export has been imported."
+          title="No package activity yet"
+          description="Balances show once Setmore has synced and a GMS export is imported."
         />
       ) : (
         <>
