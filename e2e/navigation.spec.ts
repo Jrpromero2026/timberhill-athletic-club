@@ -6,16 +6,33 @@ import { expect, test } from "@playwright/test";
  * shared layout, and never crash or leak an error page.
  */
 
-const ROUTES: Array<{ path: string; heading: string }> = [
-  { path: "/performance-operations/imports", heading: "Imports" },
-  { path: "/performance-operations/appointments", heading: "Appointments" },
-  { path: "/performance-operations/revenue", heading: "Revenue" },
+const ADMIN = "Data & settings";
+
+/**
+ * `nav` is the sidebar item that stays highlighted on the route: the page's
+ * own item, or "Data & settings" for the pages that item leads to.
+ */
+const ROUTES: Array<{ path: string; heading: string; nav?: string }> = [
+  { path: "/performance-operations/imports", heading: "Imports", nav: ADMIN },
+  {
+    path: "/performance-operations/appointments",
+    heading: "Appointments",
+    nav: ADMIN,
+  },
   { path: "/performance-operations/payroll", heading: "Payroll" },
   { path: "/performance-operations/trainers", heading: "Trainers" },
   { path: "/performance-operations/clients", heading: "Clients" },
+  { path: "/performance-operations/sops", heading: "SOPs" },
+  { path: "/performance-operations/projects", heading: "Projects" },
+  { path: "/performance-operations/marketing", heading: "Marketing" },
   { path: "/performance-operations/reports", heading: "Reports" },
-  { path: "/performance-operations/configuration", heading: "Configuration" },
-  { path: "/performance-operations/audit", heading: "Audit" },
+  { path: "/performance-operations/admin", heading: ADMIN },
+  {
+    path: "/performance-operations/configuration",
+    heading: "Configuration",
+    nav: ADMIN,
+  },
+  { path: "/performance-operations/audit", heading: "Audit", nav: ADMIN },
 ];
 
 /**
@@ -59,9 +76,13 @@ for (const width of [320, 360]) {
           if (box.width === 0 || box.right <= root.clientWidth + 0.5) continue;
           let scrolled = false;
           for (let p = el.parentElement; p; p = p.parentElement) {
-            if (getComputedStyle(p).overflowX !== "visible") { scrolled = true; break; }
+            if (getComputedStyle(p).overflowX !== "visible") {
+              scrolled = true;
+              break;
+            }
           }
-          if (!scrolled) culprits.push(`${el.tagName}.${String(el.className).slice(0, 40)}`);
+          if (!scrolled)
+            culprits.push(`${el.tagName}.${String(el.className).slice(0, 40)}`);
         }
         return { overflow, culprits };
       });
@@ -94,12 +115,14 @@ test("overview renders workspace data and honest KPI placeholders", async ({
   await page.goto("/performance-operations/overview");
   // Default workspace resolves to the first seeded organization.
   await expect(
-    page.getByRole("heading", { name: "Timberhill Athletic Club" })
+    page.getByRole("heading", { name: "Timberhill Athletic Club" }),
   ).toBeVisible();
   // KPI cards must show the awaiting-data state, never fabricated numbers.
   await expect(page.getByText("Waiting for imported data")).toHaveCount(6);
   // Department summary shows the workspace's departments.
-  await expect(page.getByRole("cell", { name: "Personal Training" })).toBeVisible();
+  await expect(
+    page.getByRole("cell", { name: "Personal Training" }),
+  ).toBeVisible();
   await expect(page.getByRole("cell", { name: "PACK Training" })).toBeVisible();
 });
 
@@ -139,8 +162,10 @@ for (const width of [360, 390, 412, 768, 1024]) {
     // enabled with its container on top of it at the click point.
     const button = page.getByRole("button", { name: "User menu" });
     const box = (await button.boundingBox())!;
-    expect(box.x + box.width, `user menu sits past the right edge`)
-      .toBeLessThanOrEqual(width);
+    expect(
+      box.x + box.width,
+      `user menu sits past the right edge`,
+    ).toBeLessThanOrEqual(width);
 
     await button.click();
     await expect(page.getByRole("menu")).toBeVisible();
@@ -154,21 +179,23 @@ for (const route of ROUTES) {
   }) => {
     await page.goto(route.path);
     await expect(
-      page.getByRole("heading", { name: route.heading, exact: true })
+      page.getByRole("heading", { name: route.heading, exact: true }),
     ).toBeVisible();
     if (isMobile) {
       // Mobile: navigation lives in the drawer.
       await page.getByRole("button", { name: "Open navigation" }).click();
       await expect(
-        page.getByRole("navigation", { name: "Main navigation" })
+        page.getByRole("navigation", { name: "Main navigation" }),
       ).toBeVisible();
     } else {
       // Desktop: persistent sidebar with the current item marked active.
       const nav = page.getByRole("navigation", { name: "Main navigation" });
-      await expect(nav.getByRole("link", { name: route.heading })).toHaveAttribute(
-        "aria-current",
-        "page"
-      );
+      await expect(
+        nav.getByRole("link", {
+          name: route.nav ?? route.heading,
+          exact: true,
+        }),
+      ).toHaveAttribute("aria-current", "page");
     }
   });
 }
@@ -185,7 +212,7 @@ test("sidebar navigation moves between routes without full reloads", async ({
     .click();
   await page.waitForURL("**/payroll");
   await expect(
-    page.getByRole("heading", { name: "Payroll", exact: true })
+    page.getByRole("heading", { name: "Payroll", exact: true }),
   ).toBeVisible();
 });
 
@@ -202,7 +229,7 @@ test("mobile drawer opens, navigates, and closes", async ({
     .click();
   await page.waitForURL("**/reports");
   await expect(
-    page.getByRole("navigation", { name: "Main navigation" })
+    page.getByRole("navigation", { name: "Main navigation" }),
   ).toBeHidden();
 });
 
@@ -210,7 +237,7 @@ test("unknown routes show the not-found page", async ({ page }) => {
   await page.goto("/this-route-does-not-exist");
   await expect(page.getByText("Page not found")).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Back to Overview" })
+    page.getByRole("link", { name: "Back to Overview" }),
   ).toBeVisible();
 });
 
