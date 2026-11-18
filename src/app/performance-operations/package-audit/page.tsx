@@ -11,6 +11,20 @@ import {
   type PackageBalanceRow,
   type PackageStatus,
 } from "@/lib/package-audit/balances";
+import {
+  currentPeriodMonth,
+  holdsAreLive,
+  holdsByTrainer,
+  statusBreakdown,
+  type HoldRow,
+} from "@/lib/package-audit/flow";
+import { HubLibrary } from "@/components/hub/hub-library";
+import {
+  AuditFlow,
+  StatusBar,
+  TrainerHoldBars,
+  type FlowStep,
+} from "@/components/package-audit/audit-flow";
 import { getWorkspaceContext } from "@/lib/workspace/server";
 
 export const metadata: Metadata = { title: "Package audit" };
@@ -37,15 +51,13 @@ function shortDate(value: string | null): string {
   return value ? SHORT_DATE.format(new Date(value)) : "";
 }
 
-function Tile({ label, value, hint }: { label: string; value: number; hint: string }) {
-  return (
-    <div className="rounded-[--radius-card] border border-border bg-surface p-4 shadow-sm">
-      <p className="text-xs uppercase tracking-wide text-ink-muted">{label}</p>
-      <p className="mt-1 font-mono text-lg font-semibold text-ink">{value}</p>
-      <p className="mt-1 text-[11px] leading-4 text-ink-muted">{hint}</p>
-    </div>
-  );
-}
+const NUMBER = new Intl.NumberFormat("en-US");
+
+const MONTH_LABEL = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+});
 
 export default async function PackageAuditPage() {
   const context = await getWorkspaceContext();
@@ -76,7 +88,22 @@ export default async function PackageAuditPage() {
   // The pkg_* views are not in the generated Database types yet; the row
   // shape is declared in @/lib/package-audit/balances and RLS (payroll:read)
   // scopes what comes back.
-  const [balancesRes, syncRes] = await Promise.all([
+  const periodMonth = currentPeriodMonth();
+  const count = (table: string) =>
+    actor.supabase
+      .from(table as never)
+      .select("*", { count: "exact", head: true })
+      .in("organization_id", readable);
+
+  const [
+    balancesRes,
+    syncRes,
+    sessionsRes,
+    purchasesRes,
+    accountsRes,
+    holdsRes,
+    settingsRes,
+  ] = await Promise.all([
     actor.supabase
       .from("v_pkg_balances" as never)
       .select(
@@ -88,6 +115,19 @@ export default async function PackageAuditPage() {
       .select("status, started_at")
       .in("organization_id", readable)
       .order("started_at", { ascending: false })
+      .limit(1),
+    count("pkg_setmore_sessions"),
+    count("pkg_purchases"),
+    count("pkg_billing_accounts"),
+    actor.supabase
+      .from("v_pkg_payroll_holds" as never)
+      .select("trainer, cost")
+      .in("organization_id", readable)
+      .eq("period_month", periodMonth),
+    actor.supabase
+      .from("pkg_settings" as never)
+      .select("hold_grace_sessions, holds_live_from")
+      .in("organization_id", readable)
       .limit(1),
   ]);
 
@@ -113,16 +153,54 @@ export default async function PackageAuditPage() {
   const lastSync = (syncRes.data ?? [])[0] as
     | { status: string; started_at: string }
     | undefined;
+  const settings = (settingsRes.data ?? [])[0] as
+    | { hold_grace_sessions: number; holds_live_from: string | null }
+    | undefined;
+  const grace = settings?.hold_grace_sessions ?? 2;
+  const trainerHolds = holdsByTrainer(
+    (holdsRes.data ?? []) as unknown as HoldRow[],
+  );
+  const heldSessions = trainerHolds.reduce((sum, t) => sum + t.sessions, 0);
+  const live = holdsAreLive(settings?.holds_live_from ?? null, periodMonth);
+  const monthLabel = MONTH_LABEL.format(new Date(`${periodMonth}T00:00:00Z`));
+  const shown = (res: { count: number | null }) =>
+    res.count === null ? "—" : NUMBER.format(res.count);
+
+  const steps: FlowStep[] = [
+    {
+      label: "Setmore",
+      value: shown(sessionsRes),
+      detail: lastSync
+        ? `Sessions synced. Last sync ${shortDate(lastSync.started_at)} (${lastSync.status}).`
+        : "Sessions synced nightly.",
+    },
+    {
+      label: "GMS",
+      value: shown(purchasesRes),
+      detail: "Package purchases imported from the GMS export.",
+    },
+    {
+      label: "Match",
+      value: shown(accountsRes),
+      detail: "Paying accounts, with their Setmore clients linked by name.",
+    },
+    {
+      label: "Balance",
+      value: NUMBER.format(rows.length),
+      detail: "Bought minus used, per account and session length.",
+    },
+    {
+      label: "Payroll",
+      value: NUMBER.format(heldSessions),
+      detail: `Sessions held in ${monthLabel}: more than ${grace} past the package.`,
+    },
+  ];
 
   return (
     <div className="space-y-6">
       <PageHeader
         title="Package audit"
-        description={
-          lastSync
-            ? `${DESCRIPTION} Setmore last synced ${shortDate(lastSync.started_at)} (${lastSync.status}).`
-            : DESCRIPTION
-        }
+        description={DESCRIPTION}
       />
 
       {rows.length === 0 ? (
@@ -132,16 +210,26 @@ export default async function PackageAuditPage() {
         />
       ) : (
         <>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
-            <Tile label="On hold" value={summary.held} hint="Past package + grace" />
-            <Tile label="Likely real overdraws" value={summary.heldWithPackage} hint="Bought, then used more" />
-            <Tile label="No package linked" value={summary.heldNoPackage} hint="Name mismatch or older package" />
-            <Tile label="Wrong length" value={summary.lengthMismatch} hint="Credit on another length" />
-            <Tile label="Negative" value={summary.negative} hint="Within the grace" />
-            <Tile label="Low" value={summary.low} hint="Renewal due" />
+          <AuditFlow steps={steps} />
+
+          <div className="grid gap-3 xl:grid-cols-2">
+            <StatusBar
+              slices={statusBreakdown(rows)}
+              total={rows.length}
+              note={
+                summary.held > 0
+                  ? `Of ${summary.held} on hold: ${summary.heldWithPackage} bought a package and used more, ${summary.heldNoPackage} have no package linked (name mismatch or older package).`
+                  : undefined
+              }
+            />
+            <TrainerHoldBars
+              rows={trainerHolds}
+              monthLabel={monthLabel}
+              live={live}
+            />
           </div>
 
-          <div className="overflow-x-auto rounded-[--radius-card] border border-border bg-surface shadow-sm">
+          <div className="overflow-x-auto border border-border bg-surface">
             <table className="w-full min-w-[960px] text-left text-sm">
               <thead className="border-b border-border text-xs uppercase tracking-wide text-ink-muted">
                 <tr>
@@ -194,6 +282,8 @@ export default async function PackageAuditPage() {
           </div>
         </>
       )}
+
+      <HubLibrary section="audit" />
     </div>
   );
 }
