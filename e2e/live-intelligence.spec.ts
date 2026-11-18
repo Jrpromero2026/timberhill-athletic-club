@@ -186,32 +186,6 @@ test("4. trainer breakdown, readiness, and executive summary render", async ({ p
   await expect(summary.locator('[data-summary="top_revenue_department"]')).toBeVisible();
 });
 
-test("5. workspace switching rescopes reports", async ({ page }) => {
-  await page.goto("/performance-operations/reports");
-  await selectPeriod(page);
-  await page.goto("/performance-operations/reports");
-  await page.getByTestId("report-org-metrics").waitFor({ timeout: 20_000 });
-
-  // Switch to G3 — a different organization with its own (empty) periods.
-  await page.waitForLoadState("networkidle");
-  await page.getByLabel("Workspace").selectOption({ label: "G3 Sports & Fitness" });
-  await page.waitForTimeout(2000);
-  await page.goto("/performance-operations/reports");
-  // No Timberhill metrics may leak: either the period prompt or G3's own
-  // (import-waiting) metrics appear — never $164.00.
-  await expect(page.getByText("$164.00")).toHaveCount(0);
-  await expect(
-    page
-      .getByText(/Select a reporting period|Waiting for imports/)
-      .first(),
-  ).toBeVisible({ timeout: 15_000 });
-
-  // Switch back for the remaining tests.
-  await page.waitForLoadState("networkidle");
-  await page.getByLabel("Workspace").selectOption({ label: "Timberhill Athletic Club" });
-  await page.waitForTimeout(2000);
-});
-
 test("6. reverse the batch (cleanup) and metrics react", async ({ page }) => {
   await page.goto(batchUrl);
   await page.getByRole("button", { name: "Reverse batch…" }).click();

@@ -77,3 +77,20 @@ export function selectionToCookieValue(selection: WorkspaceSelection): string | 
       return null;
   }
 }
+
+/**
+ * Narrow the selectable workspaces to the hub's own organization.
+ *
+ * Returns only that organization when the user can access it. When they
+ * cannot, the list is returned unchanged, so nobody is ever moved into an
+ * organization they have no access to and nobody is locked out.
+ */
+export function pinToHubOrganization<T extends { slug: string }>(
+  options: readonly T[],
+  hubSlug: string
+): { options: T[]; pinned: boolean } {
+  const hub = options.find((option) => option.slug === hubSlug);
+  return hub
+    ? { options: [hub], pinned: true }
+    : { options: [...options], pinned: false };
+}

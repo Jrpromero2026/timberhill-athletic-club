@@ -6,9 +6,11 @@ import type { RoleKey } from "@/lib/authz/permissions";
 import {
   ALL_WORKSPACES,
   BOOTSTRAP_WORKSPACES,
+  HUB_ORGANIZATION_SLUG,
   WORKSPACE_COOKIE,
 } from "./constants";
 import {
+  pinToHubOrganization,
   resolveWorkspaceSelection,
   type WorkspaceSelection,
 } from "./resolver";
@@ -118,7 +120,7 @@ export async function getWorkspaceContext(): Promise<WorkspaceContext> {
     }
   }
 
-  const canAccessAll = canAccessAllWorkspaces(memberships);
+  let canAccessAll = canAccessAllWorkspaces(memberships);
 
   // Platform admins may select any active organization.
   if (canAccessAll) {
@@ -132,7 +134,12 @@ export async function getWorkspaceContext(): Promise<WorkspaceContext> {
     }
   }
 
-  const optionList = [...options.values()];
+  // This hub is Timberhill's alone: offer only that organization, and no
+  // cross-organization view. Memberships are left as loaded, so permissions
+  // inside Timberhill are unchanged.
+  const hub = pinToHubOrganization([...options.values()], HUB_ORGANIZATION_SLUG);
+  const optionList = hub.options;
+  if (hub.pinned) canAccessAll = false;
   const selection = resolveWorkspaceSelection(requested, {
     organizationIds: optionList.map((o) => o.id),
     defaultOrganizationId,
@@ -182,21 +189,22 @@ function emptyContext(mode: AppMode, userId: string | null = null): WorkspaceCon
  * mirroring the seed. Never active when Supabase is configured.
  */
 function offlineContext(requested: string | null): WorkspaceContext {
-  const options = BOOTSTRAP_WORKSPACES.map((w) => ({
-    id: w.id,
-    slug: w.slug,
-    name: w.name,
-  }));
+  const hub = pinToHubOrganization(
+    BOOTSTRAP_WORKSPACES.map((w) => ({ id: w.id, slug: w.slug, name: w.name })),
+    HUB_ORGANIZATION_SLUG
+  );
+  const options = hub.options;
+  const canAccessAll = !hub.pinned;
   const selection = resolveWorkspaceSelection(requested, {
     organizationIds: options.map((o) => o.id),
     defaultOrganizationId: options[0]?.id ?? null,
-    canAccessAll: true,
+    canAccessAll,
   });
   return {
     mode: "offline",
     userId: null,
     options,
-    canAccessAll: true,
+    canAccessAll,
     selection,
     selected:
       selection.kind === "organization"
