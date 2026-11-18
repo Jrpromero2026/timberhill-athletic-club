@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AuditPayroll } from "@/components/payroll/audit-payroll";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PageHeader } from "@/components/ui/page-header";
 import { PermissionDenied } from "@/components/ui/permission-denied";
@@ -34,6 +35,16 @@ export default async function PayrollPage({
     hasPermissionInOrganization(context.memberships, orgId, "payroll:read_self"),
   );
   if (!canRead && !canReadSelf) return <PermissionDenied title="Payroll" />;
+
+  // The director's Payroll is this month so far, from the package audit.
+  if (canRead && context.selection.kind === "organization") {
+    return (
+      <AuditPayroll
+        actor={actor}
+        organizationId={context.selection.organizationId}
+      />
+    );
+  }
 
   // Trainer self-service: posted/locked statements only.
   if (!canRead) {
