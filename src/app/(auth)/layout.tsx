@@ -8,14 +8,14 @@ export default function AuthLayout({
     <div className="flex min-h-dvh flex-col items-center justify-center bg-surface-subtle px-4 py-10">
       <div className="mb-6 flex items-center gap-2.5">
         <div className="flex h-9 w-9 items-center justify-center rounded bg-accent text-[15px] font-bold text-white">
-          PO
+          TH
         </div>
         <div className="leading-tight">
           <p className="text-[15px] font-semibold text-ink">
-            Performance Operations
+            Timberhill Hub
           </p>
           <p className="text-[11px] uppercase tracking-wider text-ink-muted">
-            Internal Platform
+            Personal Training
           </p>
         </div>
       </div>

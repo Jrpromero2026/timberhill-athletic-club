@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 /* ============================================================================
-   Performance Operations — design tokens
-   Premium professional operations aesthetic: dark charcoal navigation, white
-   and light-gray data surfaces, controlled G3 red accent, strong typography,
+   Timberhill Hub — design tokens
+   Timberhill Athletic Club brand: Charcoal #2A2A2A navigation, white and
+   Light Gray data surfaces, Royal Blue #1F4E95 accent, Inter typography,
    dense but readable layouts. Minimal decoration.
    ========================================================================== */
 
 @theme {
   /* Navigation (dark charcoal) */
-  --color-nav: #1b1d21;
-  --color-nav-raised: #24272c;
-  --color-nav-border: #33373d;
+  --color-nav: #2a2a2a;
+  --color-nav-raised: #353535;
+  --color-nav-border: #444444;
   --color-nav-fg: #e6e8ea;
   --color-nav-muted: #9ba1a8;
 
   /* Data surfaces (light) */
   --color-surface: #ffffff;
-  --color-surface-subtle: #f5f6f7;
+  --color-surface-subtle: #f2f4f7;
   --color-surface-sunken: #eef0f2;
   --color-border: #e0e3e6;
   --color-border-strong: #c6cbd1;
@@ -28,10 +28,10 @@
   --color-ink-muted: #7c828a;
   --color-ink-faint: #a8adb4;
 
-  /* Accent — controlled G3 red, reserved for primary actions and emphasis */
-  --color-accent: #c8102e;
-  --color-accent-strong: #a30d26;
-  --color-accent-soft: #fbeaed;
+  /* Accent — Timberhill Royal Blue, reserved for primary actions and emphasis */
+  --color-accent: #1f4e95;
+  --color-accent-strong: #1a4179;
+  --color-accent-soft: #eaf0fa;
 
   /* Status */
   --color-positive: #1a7f4e;
@@ -44,7 +44,7 @@
   --color-info-soft: #e8f0fd;
 
   /* Typography */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
   /* Radii — restrained, operational */

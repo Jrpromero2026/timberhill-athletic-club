@@ -36,7 +36,7 @@ export function Header({
           shrink below its text, which is how a 412px header came to need
           455px. */}
       <p className="lg:hidden min-w-0 shrink-[4] truncate text-sm font-semibold text-ink">
-        Performance Operations
+        Timberhill Hub
       </p>
       <CommandPalette organizationId={organizationId} permissions={permissions} />
       <div className="ml-auto flex min-w-0 items-center gap-2.5">
