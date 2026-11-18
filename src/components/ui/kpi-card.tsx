@@ -14,7 +14,7 @@ export function KpiCard({
 }) {
   return (
     <div className="rounded-[--radius-card] border border-border bg-surface p-4 shadow-sm">
-      <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">
+      <p className="eyebrow text-ink-muted">
         {label}
       </p>
       {value !== undefined ? (

@@ -38,10 +38,10 @@ export function MobileNav() {
           <div className="absolute inset-y-0 left-0 flex w-72 flex-col bg-nav shadow-xl">
             <div className="flex h-14 items-center justify-between border-b border-nav-border px-5">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-7 w-7 items-center justify-center rounded bg-accent text-[13px] font-bold text-white">
+                <div className="flex h-7 w-7 items-center justify-center bg-accent text-[13px] font-extrabold text-white">
                   TH
                 </div>
-                <p className="text-[13px] font-semibold text-nav-fg">
+                <p className="text-[13px] font-extrabold uppercase tracking-[0.08em] text-nav-fg">
                   Timberhill Hub
                 </p>
               </div>

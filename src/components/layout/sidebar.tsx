@@ -29,15 +29,15 @@ export function Sidebar({ initialCollapsed }: { initialCollapsed: boolean }) {
           collapsed ? "justify-center px-0" : "px-5"
         }`}
       >
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded bg-accent text-[13px] font-bold text-white">
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center bg-accent text-[13px] font-extrabold text-white">
           TH
         </div>
         {!collapsed && (
           <div className="leading-tight">
-            <p className="text-[13px] font-semibold text-nav-fg">
+            <p className="text-[13px] font-extrabold uppercase tracking-[0.08em] text-nav-fg">
               Timberhill Hub
             </p>
-            <p className="text-[10px] uppercase tracking-wider text-nav-muted">
+            <p className="eyebrow !text-[9px] text-nav-accent">
               Personal Training
             </p>
           </div>

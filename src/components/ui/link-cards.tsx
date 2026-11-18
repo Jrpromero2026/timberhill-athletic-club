@@ -16,10 +16,11 @@ export function LinkCards({ cards }: { cards: readonly LinkCard[] }) {
       {cards.map((card) => {
         const body = (
           <>
+            <span className="bar mb-3" aria-hidden />
             <div className="flex items-start justify-between gap-3">
               <h2 className="text-sm font-semibold text-ink">{card.title}</h2>
               {card.status && (
-                <span className="shrink-0 rounded-full bg-surface-sunken px-2.5 py-0.5 text-[11px] font-medium text-ink-secondary">
+                <span className="shrink-0 eyebrow bg-surface-sunken px-2 py-1 !text-[10px] !tracking-[0.14em] text-ink-secondary">
                   {card.status}
                 </span>
               )}
@@ -30,13 +31,13 @@ export function LinkCards({ cards }: { cards: readonly LinkCard[] }) {
           </>
         );
         const box =
-          "block h-full rounded-[--radius-card] border border-border bg-surface p-4";
+          "block h-full border border-border bg-surface p-6";
         return (
           <li key={card.title}>
             {card.href ? (
               <Link
                 href={card.href}
-                className={`${box} transition-colors hover:border-accent`}
+                className={`${box} transition-colors hover:border-ink`}
               >
                 {body}
               </Link>

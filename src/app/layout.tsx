@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Inter } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+// Jost, self-hosted: the typeface of jrstrengthandfitness.com, so the hub
+// reads as part of the same family of sites.
+const jost = localFont({
+  variable: "--font-jost",
+  display: "swap",
+  src: [
+    { path: "./fonts/jost-latin-400-normal.woff2", weight: "400" },
+    { path: "./fonts/jost-latin-500-normal.woff2", weight: "500" },
+    { path: "./fonts/jost-latin-600-normal.woff2", weight: "600" },
+    { path: "./fonts/jost-latin-700-normal.woff2", weight: "700" },
+    { path: "./fonts/jost-latin-800-normal.woff2", weight: "800" },
+  ],
 });
 
 const geistMono = Geist_Mono({
@@ -29,7 +39,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${jost.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full">{children}</body>
     </html>
