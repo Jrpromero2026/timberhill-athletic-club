@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PageHeader } from "@/components/ui/page-header";
 import { PermissionDenied } from "@/components/ui/permission-denied";
@@ -59,7 +60,12 @@ const MONTH_LABEL = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
 });
 
-export default async function PackageAuditPage() {
+export default async function PackageAuditPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ status?: string }>;
+}) {
+  const { status: requestedStatus } = await searchParams;
   const context = await getWorkspaceContext();
   if (context.mode !== "live") {
     return (
@@ -150,6 +156,13 @@ export default async function PackageAuditPage() {
       a.account_name.localeCompare(b.account_name),
   );
   const summary = summarize(rows);
+  // Home links here with ?status=held and the like; the visuals above the
+  // table always show every account.
+  const filter =
+    requestedStatus && requestedStatus in STATUS_ORDER
+      ? (requestedStatus as PackageStatus)
+      : null;
+  const tableRows = filter ? rows.filter((row) => row.status === filter) : rows;
   const lastSync = (syncRes.data ?? [])[0] as
     | { status: string; started_at: string }
     | undefined;
@@ -229,6 +242,19 @@ export default async function PackageAuditPage() {
             />
           </div>
 
+          {filter && (
+            <p className="text-sm text-ink-secondary">
+              Showing {tableRows.length} with status{" "}
+              <span className="font-semibold text-ink">{STATUS_LABEL[filter]}</span>.{" "}
+              <Link
+                href="/performance-operations/package-audit"
+                className="font-medium text-accent hover:text-accent-strong"
+              >
+                Show all
+              </Link>
+            </p>
+          )}
+
           <div className="overflow-x-auto border border-border bg-surface">
             <table className="w-full min-w-[960px] text-left text-sm">
               <thead className="border-b border-border text-xs uppercase tracking-wide text-ink-muted">
@@ -247,7 +273,7 @@ export default async function PackageAuditPage() {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row) => (
+                {tableRows.map((row) => (
                   <tr
                     key={`${row.billing_account_id}:${row.minutes}`}
                     className="border-b border-border last:border-0"

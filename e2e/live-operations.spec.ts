@@ -30,25 +30,13 @@ async function selectPeriod(page: Page): Promise<void> {
   await page.waitForTimeout(2000);
 }
 
-test("1. executive overview renders role-aware operations widgets", async ({ page }) => {
+test("1. the director's Home shows the package audit", async ({ page }) => {
   await page.goto("/performance-operations/overview");
-  await selectPeriod(page);
-  await page.goto("/performance-operations/overview");
-  await page.getByTestId("overview-status").waitFor({ timeout: 20_000 });
-
-  // Engine-driven status cards with health attributes.
-  await expect(page.locator('[data-metric="appointments_completed"]').first()).toBeVisible();
-  await expect(page.locator('[data-metric="payroll_gross_cents"]').first()).toBeVisible();
-  // Pipeline + governance widgets.
-  await expect(page.getByTestId("overview-payroll")).toBeVisible();
-  await expect(page.getByTestId("overview-imports")).toBeVisible();
-  await expect(page.getByTestId("overview-alerts")).toBeVisible();
-  await expect(page.getByTestId("overview-readiness")).toBeVisible();
-  await expect(page.getByTestId("overview-timeline")).toBeVisible();
-  await expect(page.getByTestId("overview-summary")).toBeVisible();
-  await expect(
-    page.getByTestId("overview-readiness").locator('[data-metric="organization_readiness_bp"]'),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Home", exact: true })).toBeVisible();
+  await expect(page.getByTestId("home-numbers")).toBeVisible();
+  await expect(page.getByTestId("home-needs-you")).toBeVisible();
+  await expect(page.getByTestId("home-coming-up")).toBeVisible();
+  await expect(page.getByTestId("home-freshness")).toBeVisible();
 });
 
 test("2. command palette searches pages, actions, and entities", async ({ page }) => {

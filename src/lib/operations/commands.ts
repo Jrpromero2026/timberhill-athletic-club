@@ -19,7 +19,7 @@ export interface CommandEntry {
 
 export const COMMANDS: CommandEntry[] = [
   // Pages
-  { id: "page-overview", group: "Pages", label: "Overview", href: "/performance-operations/overview", keywords: "home dashboard executive", permission: null },
+  { id: "page-overview", group: "Pages", label: "Home", href: "/performance-operations/overview", keywords: "home dashboard executive", permission: null },
   { id: "page-imports", group: "Pages", label: "Imports", href: "/performance-operations/imports", keywords: "batches csv upload", permission: "import:read" },
   { id: "page-appointments", group: "Pages", label: "Appointments", href: "/performance-operations/appointments", keywords: "ledger sessions", permission: "appointment:read" },
   { id: "page-payroll", group: "Pages", label: "Payroll", href: "/performance-operations/payroll", keywords: "runs compensation pay", permission: "payroll:read" },

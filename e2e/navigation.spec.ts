@@ -105,7 +105,7 @@ test("root redirects to the public site, not the operations app", async ({
 
 test("the operations app is still reachable at /overview", async ({ page }) => {
   await page.goto("/performance-operations/overview");
-  await expect(page).toHaveTitle(/Overview · Timberhill Hub/);
+  await expect(page).toHaveTitle(/Home · Timberhill Hub/);
 });
 
 test("overview renders workspace data and honest KPI placeholders", async ({
@@ -236,7 +236,7 @@ test("unknown routes show the not-found page", async ({ page }) => {
   await page.goto("/this-route-does-not-exist");
   await expect(page.getByText("Page not found")).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Back to Overview" }),
+    page.getByRole("link", { name: "Back to Home" }),
   ).toBeVisible();
 });
 
@@ -245,5 +245,5 @@ test("/performance-operations is the named entrance to the platform", async ({
 }) => {
   await page.goto("/performance-operations");
   await page.waitForURL("**/overview");
-  await expect(page).toHaveTitle(/Overview · Timberhill Hub/);
+  await expect(page).toHaveTitle(/Home · Timberhill Hub/);
 });
