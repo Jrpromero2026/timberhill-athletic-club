@@ -74,13 +74,8 @@ test("overview renders the operations center with honest data states", async ({
   page,
 }) => {
   await page.goto("/performance-operations/overview");
-  await expect(
-    page.getByRole("heading", { name: "Timberhill Athletic Club" })
-  ).toBeVisible();
-  // Operations widgets render; metrics never fake numbers (either engine
-  // cards with health attributes or the explicit period prompt).
-  await expect(page.getByTestId("overview-status")).toBeVisible();
-  await expect(page.getByTestId("overview-alerts")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Home", exact: true })).toBeVisible();
+  await expect(page.getByTestId("home-numbers")).toBeVisible();
 });
 
 test("admin can create and revoke an invitation (net-zero mutation)", async ({

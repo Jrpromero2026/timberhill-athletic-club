@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { KpiCard } from "@/components/ui/kpi-card";
+import { AuditHome } from "@/components/home/audit-home";
 import { PageHeader } from "@/components/ui/page-header";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { AlertListCard } from "@/components/widgets/alert-list";
@@ -20,7 +21,7 @@ import { getPeriodContext } from "@/lib/period/server";
 import { getWorkspaceContext } from "@/lib/workspace/server";
 import { RUN_BADGE } from "../payroll/run-badge";
 
-export const metadata: Metadata = { title: "Overview" };
+export const metadata: Metadata = { title: "Home" };
 
 /**
  * Executive Operations Center. ONE role-aware page: sections render by
@@ -168,6 +169,11 @@ export default async function OverviewPage() {
     .flatMap((m) => m.departmentIds ?? []);
   const isDeptManager = can("appointment:read") && deptScopedIds.length > 0 && !context.canAccessAll;
   const isTrainerSelf = !can("appointment:read") && can("trainer:read_self");
+
+  // The director's Home is the package audit: what needs attention today.
+  if (!isTrainerSelf && !isDeptManager && can("payroll:read")) {
+    return <AuditHome actor={actor} organizationId={organizationId} />;
+  }
 
   const snapshot = await loadOperationsSnapshot(
     actor,

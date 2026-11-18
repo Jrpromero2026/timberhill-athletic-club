@@ -20,27 +20,8 @@ export function PeriodSelector({
   const formRef = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
 
-  if (!selectable) {
-    return (
-      <span
-        className="hidden sm:flex h-9 items-center rounded-[--radius-control] border border-dashed border-border-strong bg-surface-subtle px-3 text-sm text-ink-muted"
-        title="No reporting period available."
-      >
-        No reporting period
-      </span>
-    );
-  }
-
-  if (options.length === 0) {
-    return (
-      <span
-        className="hidden sm:flex h-9 items-center rounded-[--radius-control] border border-dashed border-border-strong bg-surface-subtle px-3 text-sm text-ink-muted"
-        title="Create reporting periods under Configuration."
-      >
-        No reporting periods
-      </span>
-    );
-  }
+  // Nothing to choose from: show nothing rather than an empty control.
+  if (!selectable || options.length === 0) return null;
 
   return (
     <form ref={formRef} action={switchPeriod} className="hidden sm:flex items-center">
