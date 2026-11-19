@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AuditClose } from "@/components/package-audit/audit-close";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PageHeader } from "@/components/ui/page-header";
 import { PermissionDenied } from "@/components/ui/permission-denied";
@@ -13,7 +14,7 @@ import { getWorkspaceContext } from "@/lib/workspace/server";
 import { CLOSE_STATUS_LABEL, type CloseStatus } from "@/lib/close/transitions";
 import { CLOSE_BADGE } from "./run-shell";
 
-export const metadata: Metadata = { title: "Period close" };
+export const metadata: Metadata = { title: "Month-end close" };
 
 /**
  * Close dashboard: run inventory, period states, and outstanding
@@ -40,6 +41,12 @@ export default async function PeriodClosePage() {
   }
   const actor = await getActorContext();
   if (!actor) return <PermissionDenied title="Period close" />;
+
+  // The director's close is the package audit's month-end: readiness, what
+  // will freeze, and closed months.
+  if (hasPermissionInOrganization(context.memberships, organizationId, "payroll:read")) {
+    return <AuditClose actor={actor} organizationId={organizationId} />;
+  }
   const canCreate = hasPermissionInOrganization(
     context.memberships,
     organizationId,

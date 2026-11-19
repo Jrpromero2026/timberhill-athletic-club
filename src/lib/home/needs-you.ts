@@ -60,7 +60,7 @@ export function needsYou(input: NeedsYouInput): NeedsYouItem[] {
   if (summary.heldNoPackage > 0) {
     items.push({
       text: `${plural(summary.heldNoPackage, "client on hold has", "clients on hold have")} no package linked. Check the name matches GMS.`,
-      href: `${AUDIT}?status=held`,
+      href: `${AUDIT}?status=unlinked`,
     });
   }
   if (summary.heldWithPackage > 0) {

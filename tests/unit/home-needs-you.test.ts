@@ -62,7 +62,8 @@ describe("needsYou", () => {
       "31 clients are more than 2 sessions past their package.",
       "1 client is booked at the wrong session length.",
     ]);
-    expect(items[0].href).toBe("/performance-operations/package-audit?status=held");
+    expect(items[0].href).toBe("/performance-operations/package-audit?status=unlinked");
+    expect(items[1].href).toBe("/performance-operations/package-audit?status=held");
     expect(items[2].href).toContain("status=length_mismatch");
   });
 });

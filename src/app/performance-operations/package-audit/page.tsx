@@ -13,6 +13,11 @@ import {
   type PackageStatus,
 } from "@/lib/package-audit/balances";
 import {
+  filterChips,
+  filterRows,
+  parseFilter,
+} from "@/lib/package-audit/ledger-filter";
+import {
   currentPeriodMonth,
   holdsAreLive,
   holdsByTrainer,
@@ -63,9 +68,9 @@ const MONTH_LABEL = new Intl.DateTimeFormat("en-US", {
 export default async function PackageAuditPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string }>;
+  searchParams: Promise<{ status?: string; q?: string }>;
 }) {
-  const { status: requestedStatus } = await searchParams;
+  const { status: requestedStatus, q: requestedQuery } = await searchParams;
   const context = await getWorkspaceContext();
   if (context.mode !== "live") {
     return (
@@ -156,13 +161,11 @@ export default async function PackageAuditPage({
       a.account_name.localeCompare(b.account_name),
   );
   const summary = summarize(rows);
-  // Home links here with ?status=held and the like; the visuals above the
-  // table always show every account.
-  const filter =
-    requestedStatus && requestedStatus in STATUS_ORDER
-      ? (requestedStatus as PackageStatus)
-      : null;
-  const tableRows = filter ? rows.filter((row) => row.status === filter) : rows;
+  // Filters apply to the table only; the visuals above it show every account.
+  const filter = parseFilter(requestedStatus);
+  const query = (requestedQuery ?? "").slice(0, 80);
+  const tableRows = filterRows(rows, filter, query);
+  const chips = filterChips(rows, query);
   const lastSync = (syncRes.data ?? [])[0] as
     | { status: string; started_at: string }
     | undefined;
@@ -242,18 +245,49 @@ export default async function PackageAuditPage({
             />
           </div>
 
-          {filter && (
-            <p className="text-sm text-ink-secondary">
-              Showing {tableRows.length} with status{" "}
-              <span className="font-semibold text-ink">{STATUS_LABEL[filter]}</span>.{" "}
-              <Link
-                href="/performance-operations/package-audit"
-                className="font-medium text-accent hover:text-accent-strong"
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <ul className="flex flex-wrap gap-2" aria-label="Filter the ledger">
+              {chips.map((chip) => {
+                const active = chip.key === (filter ?? "all");
+                return (
+                  <li key={chip.key}>
+                    <Link
+                      href={chip.href}
+                      aria-current={active ? "true" : undefined}
+                      className={`inline-flex items-center gap-2 border px-3 py-1.5 text-sm ${
+                        active
+                          ? "border-ink bg-ink text-white"
+                          : "border-border bg-surface text-ink-secondary hover:border-ink"
+                      }`}
+                    >
+                      {chip.label}
+                      <span className="font-mono text-xs">{chip.count}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+            <form method="get" className="flex items-center gap-2" role="search">
+              {filter && <input type="hidden" name="status" value={filter} />}
+              <label htmlFor="ledger-search" className="sr-only">
+                Search clients or trainers
+              </label>
+              <input
+                id="ledger-search"
+                name="q"
+                type="search"
+                defaultValue={query}
+                placeholder="Search client or trainer"
+                className="h-9 w-56 border border-border bg-surface px-3 text-sm text-ink placeholder:text-ink-faint focus:border-accent"
+              />
+              <button
+                type="submit"
+                className="h-9 border border-ink bg-ink px-3 text-sm font-medium text-white"
               >
-                Show all
-              </Link>
-            </p>
-          )}
+                Search
+              </button>
+            </form>
+          </div>
 
           <div className="overflow-x-auto border border-border bg-surface">
             <table className="w-full min-w-[960px] text-left text-sm">
@@ -273,6 +307,13 @@ export default async function PackageAuditPage({
                 </tr>
               </thead>
               <tbody>
+                {tableRows.length === 0 && (
+                  <tr>
+                    <td colSpan={11} className="px-3 py-6 text-center text-ink-secondary">
+                      No accounts match.
+                    </td>
+                  </tr>
+                )}
                 {tableRows.map((row) => (
                   <tr
                     key={`${row.billing_account_id}:${row.minutes}`}
