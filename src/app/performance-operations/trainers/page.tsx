@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AuditRoster } from "@/components/roster/audit-roster";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PageHeader } from "@/components/ui/page-header";
 import { PermissionDenied } from "@/components/ui/permission-denied";
@@ -36,6 +37,20 @@ export default async function TrainersPage() {
 
   const actor = await getActorContext();
   if (!actor) return <PermissionDenied title="Trainers" />;
+
+  // The director's roster is Setmore's staff list with the audit's numbers.
+  if (
+    context.selection.kind === "organization" &&
+    hasPermissionInOrganization(
+      context.memberships,
+      context.selection.organizationId,
+      "payroll:read",
+    )
+  ) {
+    return (
+      <AuditRoster actor={actor} organizationId={context.selection.organizationId} />
+    );
+  }
 
   const canManage = orgIds.some((orgId) =>
     hasPermissionInOrganization(context.memberships, orgId, "trainer:manage")
