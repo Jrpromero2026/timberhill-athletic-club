@@ -36,3 +36,6 @@ create policy hub_items_admin_write on public.hub_items for all
 
 grant select on public.hub_items to authenticated;
 grant insert, update, delete on public.hub_items to authenticated;
+
+-- A heading to file each item under within its section.
+alter table public.hub_items add column if not exists group_name text;
