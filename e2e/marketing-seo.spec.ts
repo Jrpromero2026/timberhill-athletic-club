@@ -78,60 +78,28 @@ test.describe("canonical URLs", () => {
 });
 
 test.describe("crawl directives", () => {
-  test("robots.txt allows the marketing routes and hides the application", async ({
-    request,
-  }) => {
+  test("robots.txt turns every crawler away", async ({ request }) => {
     const response = await request.get("/robots.txt");
     expect(response.status()).toBe(200);
 
+    // A private hub: one rule, no sitemap.
     const body = await response.text();
-    // No trailing slash — a Disallow is a prefix match, and the slashed form
-    // alone leaves `/performance-operations` itself crawlable. That is the URL
-    // the public staff tab links to, so the looser rule is the correct one.
-    expect(body).toContain("Disallow: /performance-operations");
-    expect(body).toContain("Disallow: /login");
-    expect(body).toContain(`Sitemap: ${SITE_ORIGIN}/sitemap.xml`);
-    // The answer engines are named explicitly so a future tightening of the
-    // wildcard cannot lock them out of the pages written for them.
-    expect(body).toContain("GPTBot");
-    expect(body).toContain("ClaudeBot");
+    expect(body).toMatch(/User-Agent: \*\s+Disallow: \/\s*$/i);
+    expect(body).not.toContain("Sitemap:");
   });
 
-  test("the sitemap lists exactly the public routes, and no others", async ({
-    request,
-  }) => {
-    const response = await request.get("/sitemap.xml");
-    expect(response.status()).toBe(200);
-
-    const body = await response.text();
-    const locs = [...body.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
-    const published = TRAINERS.filter((trainer) => trainer.profile).length;
-
-    expect(locs).toHaveLength(3 + published);
-    // A sitemap that disagrees with the canonical on the page it points at is
-    // worse than no sitemap, so assert the exact strings.
-    expect(locs).toContain(`${SITE_ORIGIN}/personal-training`);
-    expect(locs).toContain(`${SITE_ORIGIN}/personal-training/trainers`);
-    expect(locs).toContain(`${SITE_ORIGIN}/personal-training/consultation`);
-    // The staff application must never appear.
-    expect(body).not.toContain("performance-operations");
-  });
-
-  test("every sitemap URL serves a page rather than a redirect", async ({
-    request,
-  }) => {
-    // Search Console reports a redirecting sitemap entry as "Page with
-    // redirect" and indexes nothing from it, so a sitemap of redirects is the
-    // same as no sitemap. Every entry is fetched.
-    const body = await (await request.get("/sitemap.xml")).text();
-    const paths = [...body.matchAll(/<loc>(.*?)<\/loc>/g)].map(
-      (match) => new URL(match[1]).pathname,
-    );
-
-    expect(paths.length).toBeGreaterThan(0);
-    for (const path of paths) {
+  test("every response asks not to be indexed", async ({ request }) => {
+    for (const path of ["/login", "/robots.txt", "/personal-training"]) {
       const response = await request.get(path, { maxRedirects: 0 });
-      expect(response.status(), `${path} should serve directly`).toBe(200);
+      expect(response.headers()["x-robots-tag"], path).toBe(
+        "noindex, nofollow",
+      );
+    }
+  });
+
+  test("there is no sitemap and no llms.txt", async ({ request }) => {
+    for (const path of ["/sitemap.xml", "/llms.txt"]) {
+      expect((await request.get(path)).status(), path).toBe(404);
     }
   });
 
@@ -140,24 +108,6 @@ test.describe("crawl directives", () => {
     // 307 keeps the root in the index and passes nothing through.
     expect(response.status()).toBe(308);
     expect(response.headers()["location"]).toContain("/personal-training");
-  });
-
-  test("llms.txt describes the site and quotes no price", async ({
-    request,
-  }) => {
-    const response = await request.get("/llms.txt");
-    expect(response.status()).toBe(200);
-
-    const body = await response.text();
-    expect(body).toContain("Timberhill Athletic Club");
-    expect(body).toContain(`${SITE_ORIGIN}/personal-training/`);
-    // Generated from the same constants the pages render, so the roster
-    // cannot drift out of sync with it.
-    for (const trainer of TRAINERS) expect(body).toContain(trainer.name);
-    // §5: no rate is published anywhere, and a machine-readable summary is
-    // not a loophole.
-    expect(body).toMatch(/Rates are not published/);
-    expect(body).not.toMatch(/\$\d/);
   });
 });
 

@@ -39,6 +39,16 @@ const OPERATIONS_SEGMENTS = [
 ];
 
 const nextConfig: NextConfig = {
+  // A private hub: nothing here belongs in a search index. `robots.ts` asks
+  // crawlers to stay away; this header covers the ones that fetch anyway.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
+  },
   async redirects() {
     return OPERATIONS_SEGMENTS.flatMap((segment) => [
       {
