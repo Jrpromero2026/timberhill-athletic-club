@@ -110,22 +110,6 @@ export const NAV_GROUPS: NavGroup[] = [
         iconPath:
           "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6ZM14 2v6h6M9 15h6M9 11h2",
       },
-      {
-        href: "/performance-operations/analytics",
-        label: "Analytics",
-        iconPath: "M3 3v18h18M7 14l4-4 3 3 5-6",
-      },
-      {
-        href: "/performance-operations/snapshots",
-        label: "Club snapshots",
-        iconPath: "M4 7h16M4 12h16M4 17h10M18 15v6m3-3h-6",
-      },
-      {
-        href: "/performance-operations/director",
-        label: "Director view",
-        iconPath:
-          "M12 2a7 7 0 0 0-7 7c0 2.4 1.2 4.5 3 5.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3c1.8-1.2 3-3.3 3-5.7a7 7 0 0 0-7-7ZM10 21h4",
-      },
     ],
   },
   {

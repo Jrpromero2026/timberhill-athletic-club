@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { EmptyState } from "@/components/ui/empty-state";
+import { AuditReports } from "@/components/reports/audit-reports";
 import { PageHeader } from "@/components/ui/page-header";
 import { PermissionDenied } from "@/components/ui/permission-denied";
 import { MetricCard } from "@/components/widgets/metric-card";
@@ -77,6 +78,11 @@ export default async function ReportsPage({
   const organizationId = context.selection.organizationId;
   const actor = await getActorContext();
   if (!actor) return <PermissionDenied title="Reports" />;
+
+  // The director's Reports are monthly numbers straight from Setmore.
+  if (hasPermissionInOrganization(context.memberships, organizationId, "payroll:read")) {
+    return <AuditReports actor={actor} organizationId={organizationId} />;
+  }
 
   const canOrgRead = hasPermissionInOrganization(
     context.memberships,
