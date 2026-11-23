@@ -6,6 +6,7 @@ import { PermissionDenied } from "@/components/ui/permission-denied";
 import { hasPermissionInOrganization } from "@/lib/authz/authz";
 import { getActorContext } from "@/lib/actions/shared";
 import {
+  lengthLabel,
   STATUS_LABEL,
   STATUS_ORDER,
   summarize,
@@ -328,7 +329,7 @@ export default async function PackageAuditPage({
                     </td>
                     <td className="whitespace-nowrap px-3 py-2 font-medium text-ink">{row.account_name}</td>
                     <td className="px-3 py-2 text-ink-secondary">{row.clients ?? ""}</td>
-                    <td className="px-3 py-2 text-right font-mono">{row.minutes}</td>
+                    <td className="px-3 py-2 text-right font-mono">{lengthLabel(row.minutes)}</td>
                     <td className="px-3 py-2 text-right font-mono">{row.purchased}</td>
                     <td className="px-3 py-2 text-right font-mono">{row.delivered}</td>
                     <td

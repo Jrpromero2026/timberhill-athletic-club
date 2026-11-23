@@ -76,3 +76,11 @@ export function summarize(rows: readonly PackageBalanceRow[]): PackageAuditSumma
     low: count("low"),
   };
 }
+
+/**
+ * How a balance's session length reads in a table. Hybrid Coaching keeps its
+ * own balance, which the ledger stores under length 0.
+ */
+export function lengthLabel(minutes: number): string {
+  return minutes === 0 ? "Hybrid" : String(minutes);
+}
