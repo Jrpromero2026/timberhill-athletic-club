@@ -66,16 +66,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     images: [OG_IMAGE],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  // Locked behind sign-in (see `src/proxy.ts`), so not for the index.
+  robots: { index: false, follow: false },
   title: {
     template: `%s | ${CLUB.name}`,
     default: `Personal Training | ${CLUB.name}`,

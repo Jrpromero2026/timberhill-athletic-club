@@ -65,21 +65,9 @@ test.describe("kept out of the index", () => {
     );
   });
 
-  test("robots.txt disallows the destination, slash or no slash", async ({
-    request,
-  }) => {
+  test("robots.txt disallows the destination", async ({ request }) => {
     const body = await (await request.get("/robots.txt")).text();
-
-    // `Disallow: /performance-operations/` is a prefix match, so it does NOT
-    // cover `/performance-operations` — which is exactly the URL this tab
-    // links to. The gap only mattered once the link became public.
-    expect(body).toContain("Disallow: /performance-operations");
-    const rules = body.match(/Disallow: \/performance-operations\S*/g) ?? [];
-    expect(rules.some((rule) => !rule.endsWith("/"))).toBe(true);
-  });
-
-  test("the destination is not in the sitemap", async ({ request }) => {
-    const body = await (await request.get("/sitemap.xml")).text();
-    expect(body).not.toContain("performance-operations");
+    // The whole deployment is disallowed, which covers the staff application.
+    expect(body).toMatch(/Disallow: \/\s*$/);
   });
 });

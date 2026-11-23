@@ -82,7 +82,7 @@ export const STICKY_CTA = "BOOK A CONSULTATION";
  */
 export const SITE_ORIGIN = (
   process.env.NEXT_PUBLIC_SITE_ORIGIN ??
-  "https://timberhill-athletic-club.vercel.app"
+  "https://timberhill-hub.vercel.app"
 ).replace(/\/$/, "");
 
 /**
