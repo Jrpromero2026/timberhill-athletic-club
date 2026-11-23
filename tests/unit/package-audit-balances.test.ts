@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  lengthLabel,
   summarize,
   type PackageBalanceRow,
   type PackageStatus,
@@ -59,5 +60,16 @@ describe("package audit summary", () => {
       negative: 0,
       low: 0,
     });
+  });
+});
+
+describe("lengthLabel", () => {
+  it("shows the session length in minutes", () => {
+    expect(lengthLabel(60)).toBe("60");
+    expect(lengthLabel(30)).toBe("30");
+  });
+
+  it("names the Hybrid balance, which the ledger stores under length 0", () => {
+    expect(lengthLabel(0)).toBe("Hybrid");
   });
 });
